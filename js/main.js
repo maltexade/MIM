@@ -680,3 +680,337 @@ container.addEventListener('touchend', e => {
 startAuto();
 // Prevent long-press context menu on mobile
 container.addEventListener('contextmenu', e => e.preventDefault());
+
+
+// JavaScript to trigger animation on scroll for each card
+document.addEventListener('DOMContentLoaded', () => {
+  const cards = document.querySelectorAll('.why-card');
+
+  const observer = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target); // run once
+      }
+    });
+  }, {
+    threshold: 0.05 // trigger when 5% is visible
+  });
+
+  cards.forEach(card => observer.observe(card));
+});
+
+//statistic counter
+document.addEventListener("DOMContentLoaded", () => {
+  const stats = document.querySelectorAll(".stat-number");
+  const currentYear = new Date().getFullYear();
+
+  const getDynamicTarget = (el) => {
+    const base = parseInt(el.getAttribute("data-base"));
+    const type = el.getAttribute("data-type");
+
+    switch (type) {
+      case "years":
+        return currentYear - base;
+      case "clients":
+        return base + (currentYear - 2020) * 20;
+      case "projects":
+        return base + (currentYear - 2020) * 50;
+      case "support":
+        return base + (currentYear - 2020);
+      default:
+        return base;
+    }
+  };
+
+  const animateCount = (el, target) => {
+    const speed = 200;
+    const increment = target / speed;
+    let count = 0;
+
+    const updateCount = () => {
+      count += increment;
+      if (count < target) {
+        el.textContent = Math.floor(count) + "+";
+        requestAnimationFrame(updateCount);
+      } else {
+        el.textContent = target + "+";
+      }
+    };
+    updateCount();
+  };
+
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const targetValue = getDynamicTarget(entry.target);
+        animateCount(entry.target, targetValue);
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  stats.forEach(stat => observer.observe(stat));
+});
+
+// Featured Products data
+        const featuredProducts = [
+            {
+                name: "Digital Pricing Scale",
+                category: "Retail Solutions",
+                price: "₦299,999",
+                originalPrice: "₦399,999",
+                rating: 4.8,
+                reviews: 234,
+                image: "https://images.unsplash.com/photo-1586864387967-d02ef85d93e8?w=300&h=200&fit=crop",
+                badge: "25% OFF",
+                badgeColor: "featured-badge-red"
+            },
+            {
+                name: "Platform Scale 500kg",
+                category: "Industrial",
+                price: "₦1,499,999",
+                originalPrice: "₦1,899,999",
+                rating: 4.9,
+                reviews: 156,
+                image: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=300&h=200&fit=crop",
+                badge: "BESTSELLER",
+                badgeColor: "featured-badge-green"
+            },
+            {
+                name: "Precision Balance",
+                category: "Laboratory",
+                price: "₦899,999",
+                originalPrice: "₦1,199,999",
+                rating: 4.7,
+                reviews: 89,
+                image: "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=300&h=200&fit=crop",
+                badge: "HIGH PRECISION",
+                badgeColor: "featured-badge-blue"
+            },
+            {
+                name: "Weighbridge 60T",
+                category: "Heavy Duty",
+                price: "₦8,999,999",
+                originalPrice: "₦12,999,999",
+                rating: 4.9,
+                reviews: 67,
+                image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&h=200&fit=crop",
+                badge: "ENTERPRISE",
+                badgeColor: "featured-badge-purple"
+            },
+            {
+                name: "Crane Scale 5T",
+                category: "Lifting Equipment",
+                price: "₦3,499,999",
+                originalPrice: "₦4,299,999",
+                rating: 4.6,
+                reviews: 123,
+                image: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=300&h=200&fit=crop",
+                badge: "WIRELESS",
+                badgeColor: "featured-badge-orange"
+            },
+            {
+                name: "Analog Scale Classic",
+                category: "Traditional",
+                price: "₦149,999",
+                originalPrice: "₦199,999",
+                rating: 4.5,
+                reviews: 345,
+                image: "https://images.unsplash.com/photo-1574634534894-89d7576c8259?w=300&h=200&fit=crop",
+                badge: "RELIABLE",
+                badgeColor: "featured-badge-gray"
+            }
+        ];
+
+        // Featured Carousel state
+        let featuredCurrentIndex = 0;
+        let featuredItemsToShow = 4;
+
+        // Featured DOM elements
+        const featuredCarouselTrack = document.getElementById('featuredCarouselTrack');
+        const featuredPrevBtn = document.getElementById('featuredPrevBtn');
+        const featuredNextBtn = document.getElementById('featuredNextBtn');
+        const featuredProgressIndicators = document.getElementById('featuredProgressIndicators');
+
+        // Handle responsive design for featured products
+        function featuredHandleResize() {
+            if (window.innerWidth < 640) {
+                featuredItemsToShow = 1;
+            } else if (window.innerWidth < 1024) {
+                featuredItemsToShow = 2;
+            } else if (window.innerWidth < 1280) {
+                featuredItemsToShow = 3;
+            } else {
+                featuredItemsToShow = 4;
+            }
+            featuredGenerateProductCards();
+            featuredUpdateCarousel();
+            featuredGenerateProgressIndicators();
+        }
+
+        // Generate featured product cards
+        function featuredGenerateProductCards() {
+            featuredCarouselTrack.innerHTML = featuredProducts.map(product => `
+                <div class="featured-product-card" style="width: ${100 / featuredItemsToShow}%;">
+                    <div class="featured-product-image-container">
+                        <img src="${product.image}" alt="${product.name}" class="featured-product-image">
+                        <div class="featured-product-badge ${product.badgeColor}">
+                            ${product.badge}
+                        </div>
+                        <div class="featured-product-rating">
+                            <span class="featured-star">★</span>
+                            <span>${product.rating}</span>
+                        </div>
+                    </div>
+                    <div class="featured-product-content">
+                        <div class="featured-product-category">${product.category}</div>
+                        <h3 class="featured-product-name">${product.name}</h3>
+                        <div class="featured-product-reviews">
+                            <span class="featured-stars">★★★★★</span>
+                            <span>(${product.reviews})</span>
+                        </div>
+                        <div class="featured-product-pricing">
+                            <span class="featured-current-price">${product.price}</span>
+                            <span class="featured-original-price">${product.originalPrice}</span>
+                        </div>
+                        <button class="featured-view-details-btn" onclick="featuredViewProductDetails('${product.name}')">
+                            View Details
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Generate featured progress indicators
+        function featuredGenerateProgressIndicators() {
+            const totalGroups = Math.ceil(featuredProducts.length / featuredItemsToShow);
+            featuredProgressIndicators.innerHTML = Array.from({ length: totalGroups }, (_, index) => 
+                `<button class="featured-indicator ${Math.floor(featuredCurrentIndex / featuredItemsToShow) === index ? 'active' : ''}" 
+                         onclick="featuredGoToSlide(${index * featuredItemsToShow})" 
+                         aria-label="Go to product group ${index + 1}"></button>`
+            ).join('');
+        }
+
+        // Update featured carousel position
+        function featuredUpdateCarousel() {
+            let translateX = -(featuredCurrentIndex * (100 / featuredItemsToShow));
+            const remaining = featuredProducts.length - featuredCurrentIndex;
+            if (remaining < featuredItemsToShow) {
+                const extraSpace = (featuredItemsToShow - remaining) / 2 * (100 / featuredItemsToShow);
+                translateX += extraSpace;
+            }
+            featuredCarouselTrack.style.transform = `translateX(${translateX}%)`;
+            featuredUpdateNavigationButtons();
+            featuredUpdateProgressIndicators();
+        }
+
+        // Update featured navigation buttons
+        function featuredUpdateNavigationButtons() {
+            const canGoPrev = featuredCurrentIndex > 0;
+            const canGoNext = featuredCurrentIndex + featuredItemsToShow < featuredProducts.length;
+            
+            featuredPrevBtn.disabled = !canGoPrev;
+            featuredNextBtn.disabled = !canGoNext;
+        }
+
+        // Update featured progress indicators
+        function featuredUpdateProgressIndicators() {
+            const indicators = featuredProgressIndicators.querySelectorAll('.featured-indicator');
+            indicators.forEach((indicator, index) => {
+                indicator.classList.toggle('active', Math.floor(featuredCurrentIndex / featuredItemsToShow) === index);
+            });
+        }
+
+        // Featured Navigation functions
+        function featuredNextSlide() {
+            const nextIndex = featuredCurrentIndex + featuredItemsToShow;
+            if (nextIndex < featuredProducts.length) {
+                featuredCurrentIndex = nextIndex;
+            } else {
+                featuredCurrentIndex = 0;
+            }
+            featuredUpdateCarousel();
+        }
+
+        function featuredPrevSlide() {
+            const prevIndex = featuredCurrentIndex - featuredItemsToShow;
+            if (prevIndex >= 0) {
+                featuredCurrentIndex = prevIndex;
+            } else {
+                featuredCurrentIndex = Math.floor((featuredProducts.length - 1) / featuredItemsToShow) * featuredItemsToShow;
+            }
+            featuredUpdateCarousel();
+        }
+
+        function featuredGoToSlide(index) {
+            featuredCurrentIndex = Math.min(index, featuredProducts.length - featuredItemsToShow);
+            featuredUpdateCarousel();
+        }
+
+        // Featured Product interaction
+        function featuredViewProductDetails(productName) {
+            alert(`Viewing details for: ${productName}\n\nThis would typically open a product detail page or modal.`);
+        }
+
+        // Swipe functionality for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        function handleTouchStart(event) {
+            touchStartX = event.touches[0].clientX;
+        }
+
+        function handleTouchMove(event) {
+            touchEndX = event.touches[0].clientX;
+        }
+
+        function handleTouchEnd() {
+            const swipeDistance = touchStartX - touchEndX;
+            const minSwipeDistance = 50;
+
+            if (swipeDistance > minSwipeDistance) {
+                featuredNextSlide();
+            } else if (swipeDistance < -minSwipeDistance) {
+                featuredPrevSlide();
+            }
+        }
+
+        // Featured Event listeners
+        featuredNextBtn.addEventListener('click', featuredNextSlide);
+        featuredPrevBtn.addEventListener('click', featuredPrevSlide);
+        window.addEventListener('resize', featuredHandleResize);
+
+        // Add touch events for swipe
+        featuredCarouselTrack.addEventListener('touchstart', handleTouchStart, false);
+        featuredCarouselTrack.addEventListener('touchmove', handleTouchMove, false);
+        featuredCarouselTrack.addEventListener('touchend', handleTouchEnd, false);
+
+        // Featured Auto-play functionality
+        let featuredAutoPlayInterval;
+        
+        function featuredStartAutoPlay() {
+            if (window.innerWidth >= 640) {
+                featuredAutoPlayInterval = setInterval(featuredNextSlide, 5000);
+            }
+        }
+
+        function featuredStopAutoPlay() {
+            clearInterval(featuredAutoPlayInterval);
+        }
+
+        // Initialize featured products
+        featuredHandleResize();
+        featuredGenerateProductCards();
+        featuredGenerateProgressIndicators();
+        featuredUpdateCarousel();
+
+        // Start featured auto-play
+        featuredStartAutoPlay();
+
+        // Pause featured auto-play on hover or touch
+        const featuredSection = document.querySelector('.featured-section');
+        featuredSection.addEventListener('mouseenter', featuredStopAutoPlay);
+        featuredSection.addEventListener('mouseleave', featuredStartAutoPlay);
+        featuredSection.addEventListener('touchstart', featuredStopAutoPlay);
+        featuredSection.addEventListener('touchend', featuredStartAutoPlay);
