@@ -102,18 +102,6 @@ behavior: 'smooth'
     });
 });
 
-    // WhatsApp integration
-    function handleWhatsAppClick(message = "Hello! I'm interested in your weighing equipment. Can you help me?") {
-const encodedMessage = encodeURIComponent(message);
-const url = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
-window.open(url, '_blank');
-    }
-
-    function handleCategoryClick(category) {
-const message = `I'm interested in ${category}. Can you show me available models?`;
-handleWhatsAppClick(message);
-    }
-
     // Initialize everything when DOM is loaded
     document.addEventListener('DOMContentLoaded', function() {
 initCarousel();
@@ -128,13 +116,6 @@ document.getElementById('totalSlides').textContent = slides.length;
 createFloatingParticles();
     });
 
-// WhatsApp integration
-function handleCategoryClick(categoryName) {
-    const message = `I'm interested in ${categoryName}. Can you show me available models?`;
-    const encodedMessage = encodeURIComponent(message);
-    const url = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
-    window.open(url, '_blank');
-}
 
 // Stats data
 const statsData = [
@@ -1014,3 +995,215 @@ document.addEventListener("DOMContentLoaded", () => {
         featuredSection.addEventListener('mouseleave', featuredStartAutoPlay);
         featuredSection.addEventListener('touchstart', featuredStopAutoPlay);
         featuredSection.addEventListener('touchend', featuredStartAutoPlay);
+
+
+
+
+
+        // WhatsApp Number - Replace with actual number
+        const servicesWhatsappNumber = "+2348033554867";
+
+        // Services data
+        const servicesData = [
+            {
+                icon: `<svg class="services-icon" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="3"/>
+                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                </svg>`,
+                title: "Installation & Setup",
+                description: "Professional installation and calibration of all weighing equipment",
+                image: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=300&h=200&fit=crop"
+            },
+            {
+                icon: `<svg class="services-icon" viewBox="0 0 24 24">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>`,
+                title: "Maintenance & Repair",
+                description: "Regular maintenance services and quick repair solutions",
+                image: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=300&h=200&fit=crop"
+            },
+            {
+                icon: `<svg class="services-icon" viewBox="0 0 24 24">
+                    <circle cx="12" cy="8" r="7"/>
+                    <polyline points="8.21,13.89 7,23 12,20 17,23 15.79,13.88"/>
+                </svg>`,
+                title: "Calibration Services",
+                description: "Certified calibration to ensure accuracy and compliance",
+                image: "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=300&h=200&fit=crop"
+            }
+        ];
+
+        // Testimonials data
+        const testimonialsData = [
+            {
+                name: "Chief John Okafor",
+                company: "Lagos Manufacturing Ltd",
+                message: "MIM Electronics provided excellent weighbridge installation. Professional service and reliable equipment. Highly recommended!",
+                rating: 5,
+                image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face"
+            },
+            {
+                name: "Mrs. Sarah Ibrahim",
+                company: "Ibrahim Trading Co",
+                message: "Their pricing scales have improved our retail operations significantly. Great quality and after-sales support.",
+                rating: 5,
+                image: "https://images.unsplash.com/photo-1494790108755-2616b9f4e6b1?w=100&h=100&fit=crop&crop=face"
+            },
+            {
+                name: "Engr. David Adebayo",
+                company: "Adebayo Industries",
+                message: "Professional calibration services and prompt maintenance. They understand industrial requirements perfectly.",
+                rating: 5,
+                image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face"
+            }
+        ];
+
+        // WhatsApp integration functions
+        function servicesHandleWhatsAppClick(message = "Hello! I'm interested in your weighing equipment. Can you help me?") {
+            const encodedMessage = encodeURIComponent(message);
+            const url = `https://wa.me/${servicesWhatsappNumber}?text=${encodedMessage}`;
+            window.open(url, '_blank');
+        }
+
+        function ctaHandleWhatsAppClick(message) {
+            servicesHandleWhatsAppClick(message);
+        }
+
+        // Generate Services
+        function generateServices() {
+            const servicesGrid = document.getElementById('servicesGrid');
+            servicesGrid.innerHTML = servicesData.map(service => `
+                <div class="services-card">
+                    <img src="${service.image}" alt="${service.title}" class="services-card-image">
+                    <div class="services-card-content">
+                        <div class="services-icon-container">
+                            ${service.icon}
+                        </div>
+                        <h3 class="services-card-title">${service.title}</h3>
+                        <p class="services-card-description">${service.description}</p>
+                        <button class="services-card-button" onclick="servicesHandleWhatsAppClick('I\\'m interested in ${service.title}. Can you provide more information?')">
+                            Learn More
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Generate Testimonials
+        function generateTestimonials() {
+            const testimonialsGrid = document.getElementById('testimonialsGrid');
+            testimonialsGrid.innerHTML = testimonialsData.map(testimonial => `
+                <div class="testimonials-card">
+                    <div class="testimonials-rating">
+                        ${Array.from({ length: testimonial.rating }, () => `
+                            <svg class="testimonials-star" viewBox="0 0 24 24">
+                                <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/>
+                            </svg>
+                        `).join('')}
+                    </div>
+                    <p class="testimonials-message">"${testimonial.message}"</p>
+                    <div class="testimonials-client">
+                        <img src="${testimonial.image}" alt="${testimonial.name}" class="testimonials-avatar">
+                        <div class="testimonials-client-info">
+                            <h4>${testimonial.name}</h4>
+                            <p class="testimonials-client-company">${testimonial.company}</p>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Handle Contact Form
+        function handleContactForm() {
+            const form = document.getElementById('contactForm');
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const formData = new FormData(form);
+                const name = form.querySelector('input[type="text"]').value;
+                const email = form.querySelector('input[type="email"]').value;
+                const phone = form.querySelector('input[type="tel"]').value;
+                const message = form.querySelector('textarea').value;
+                
+                const whatsappMessage = `Quote Request from Website:
+Name: ${name}
+Email: ${email}
+Phone: ${phone}
+Requirements: ${message}`;
+                
+                servicesHandleWhatsAppClick(whatsappMessage);
+            });
+        }
+
+        // Intersection Observer for animations
+        function setupScrollAnimations() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animationPlayState = 'running';
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe sections
+            const sections = document.querySelectorAll('.services-section, .testimonials-section, .cta-section, .contact-section');
+            sections.forEach(section => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(20px)';
+                section.style.transition = 'all 0.6s ease-out';
+                observer.observe(section);
+            });
+
+            // Observe cards
+            const cards = document.querySelectorAll('.services-card, .testimonials-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = `all 0.6s ease-out ${index * 0.1}s`;
+                observer.observe(card);
+            });
+        }
+
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            generateServices();
+            generateTestimonials();
+            handleContactForm();
+            
+            // Setup animations after content is generated
+            setTimeout(() => {
+                setupScrollAnimations();
+            }, 100);
+        });
+
+        // Add keyboard accessibility
+        document.addEventListener('keydown', function(e) {
+            if (e.target.classList.contains('services-card-button') || 
+                e.target.classList.contains('cta-button-primary') || 
+                e.target.classList.contains('cta-button-secondary')) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    e.target.click();
+                }
+            }
+        });
+
+        // Performance optimization - pause animations when not visible
+        document.addEventListener('visibilitychange', function() {
+            const animatedElements = document.querySelectorAll('.services-card, .testimonials-card');
+            
+            animatedElements.forEach(element => {
+                if (document.hidden) {
+                    element.style.animationPlayState = 'paused';
+                } else {
+                    element.style.animationPlayState = 'running';
+                }
+            });
+        });

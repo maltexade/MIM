@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analog Scales - MIM Electronics Enterprise</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #374151;
+            background-color: #ffffff;
+        }
+
+        /* Header Styles */
+        .analog-header {
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .analog-header-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .analog-logo-section {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .analog-logo-image {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            background: white;
+            border: 1px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .analog-logo-image img {
+            width: 2rem;
+            height: 2rem;
+            object-fit: contain;
+        }
+
+        .analog-brand-info h1 {
+            color: #1f2937;
+            font-size: 1.125rem;
+            margin-bottom: 0.125rem;
+        }
+
+        .analog-brand-info p {
+            color: #6b7280;
+            font-size: 0.75rem;
+        }
+
+        .analog-header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .analog-help-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: transparent;
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            color: #374151;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: all 0.2s ease;
+        }
+
+        .analog-help-btn:hover {
+            background-color: #f9fafb;
+            border-color: #9ca3af;
+        }
+
+        /* Hero Section */
+        .analog-hero {
+            background: linear-gradient(to right, #2563eb, #1d4ed8);
+            color: white;
+            padding: 3rem 0;
+        }
+
+        .analog-hero-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            text-align: center;
+        }
+
+        .analog-hero-icon {
+            width: 4rem;
+            height: 4rem;
+            color: #bfdbfe;
+            margin: 0 auto 1rem;
+        }
+
+        .analog-hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .analog-hero-description {
+            font-size: 1.25rem;
+            color: #bfdbfe;
+            margin-bottom: 2rem;
+            max-width: 48rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .analog-hero-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            max-width: 48rem;
+            margin: 0 auto;
+        }
+
+        .analog-hero-feature {
+            text-align: center;
+        }
+
+        .analog-hero-feature-icon {
+            width: 3rem;
+            height: 3rem;
+            background: #3b82f6;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.75rem;
+        }
+
+        .analog-hero-feature h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        .analog-hero-feature p {
+            font-size: 0.875rem;
+            color: #bfdbfe;
+        }
+
+        /* Filters Section */
+        .analog-filters {
+            background: #f9fafb;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 1.5rem 0;
+        }
+
+        .analog-filters-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .analog-filters-top {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .analog-search-container {
+            flex: 1;
+            max-width: 24rem;
+            position: relative;
+        }
+
+        .analog-search-icon {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9ca3af;
+            width: 1rem;
+            height: 1rem;
+        }
+
+        .analog-search-input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            font-size: 1rem;
+            transition: border-color 0.2s ease;
+        }
+
+        .analog-search-input:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .analog-filter-toggle {
+            display: none;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            background: transparent;
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            color: #374151;
+            cursor: pointer;
+            font-size: 0.875rem;
+        }
+
+        .analog-view-sort {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .analog-view-toggle {
+            display: flex;
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            overflow: hidden;
+        }
+
+        .analog-view-btn {
+            padding: 0.5rem;
+            background: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .analog-view-btn.active {
+            background: #2563eb;
+            color: white;
+        }
+
+        .analog-sort-select {
+            width: 12rem;
+            padding: 0.5rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            background: white;
+            font-size: 0.875rem;
+        }
+
+        .analog-filters-row {
+            margin-top: 1rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .analog-filter-select {
+            padding: 0.5rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            background: white;
+            font-size: 0.875rem;
+        }
+
+        .analog-results-count {
+            margin-top: 1rem;
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        /* Products Grid */
+        .analog-products {
+            padding: 2rem 0;
+        }
+
+        .analog-products-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .analog-products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .analog-products-grid.list-view {
+            grid-template-columns: 1fr;
+        }
+
+        .analog-product-card {
+            background: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            overflow: hidden;
+            border: 1px solid #e5e7eb;
+        }
+
+        .analog-product-card:hover {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .analog-product-card.list-view {
+            display: flex;
+        }
+
+        .analog-product-image-container {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .analog-product-card:not(.list-view) .analog-product-image-container {
+            aspect-ratio: 1;
+        }
+
+        .analog-product-card.list-view .analog-product-image-container {
+            width: 16rem;
+            flex-shrink: 0;
+        }
+
+        .analog-product-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .analog-product-card:hover .analog-product-image {
+            transform: scale(1.05);
+        }
+
+        .analog-product-badge {
+            position: absolute;
+            top: 0.75rem;
+            left: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: white;
+        }
+
+        .analog-product-actions {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .analog-product-action-btn {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .analog-product-action-btn:hover {
+            background: white;
+            transform: scale(1.1);
+        }
+
+        .analog-product-content {
+            padding: 1.5rem;
+            flex: 1;
+        }
+
+        .analog-product-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .analog-product-category {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            background: #f3f4f6;
+            color: #374151;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .analog-product-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        .analog-product-name {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .analog-product-description {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .analog-product-features {
+            margin-bottom: 1rem;
+        }
+
+        .analog-product-features h4 {
+            font-size: 0.875rem;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        .analog-product-features-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.25rem;
+        }
+
+        .analog-product-feature-tag {
+            padding: 0.125rem 0.375rem;
+            background: #e5e7eb;
+            color: #374151;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+        }
+
+        .analog-product-specs {
+            margin-bottom: 1rem;
+            font-size: 0.875rem;
+        }
+
+        .analog-product-specs-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+        }
+
+        .analog-product-spec {
+            color: #6b7280;
+        }
+
+        .analog-product-spec span {
+            color: #1f2937;
+            margin-left: 0.25rem;
+        }
+
+        .analog-product-price-stock {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .analog-product-price {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .analog-product-current-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1f2937;
+        }
+
+        .analog-product-original-price {
+            font-size: 0.875rem;
+            color: #6b7280;
+            text-decoration: line-through;
+        }
+
+        .analog-product-stock {
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .analog-product-stock.in-stock {
+            color: #059669;
+        }
+
+        .analog-product-stock.out-of-stock {
+            color: #dc2626;
+        }
+
+        .analog-product-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .analog-product-btn {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border: none;
+            border-radius: 0.375rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .analog-product-btn-primary {
+            background: #2563eb;
+            color: white;
+        }
+
+        .analog-product-btn-primary:hover {
+            background: #1d4ed8;
+        }
+
+        .analog-product-btn-primary:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        .analog-product-btn-secondary {
+            background: transparent;
+            color: #374151;
+            border: 1px solid #d1d5db;
+            padding: 0.75rem;
+        }
+
+        .analog-product-btn-secondary:hover {
+            background: #f9fafb;
+        }
+
+        /* Benefits Section */
+        .analog-benefits {
+            background: #f9fafb;
+            padding: 4rem 0;
+        }
+
+        .analog-benefits-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            text-align: center;
+        }
+
+        .analog-benefits h2 {
+            font-size: 2rem;
+            color: #1f2937;
+            margin-bottom: 1rem;
+        }
+
+        .analog-benefits-description {
+            font-size: 1.25rem;
+            color: #6b7280;
+            margin-bottom: 3rem;
+            max-width: 48rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .analog-benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .analog-benefit-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .analog-benefit-card:hover {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .analog-benefit-icon {
+            width: 4rem;
+            height: 4rem;
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+        }
+
+        .analog-benefit-icon.yellow {
+            background: #fef3c7;
+            color: #d97706;
+        }
+
+        .analog-benefit-icon.blue {
+            background: #dbeafe;
+            color: #2563eb;
+        }
+
+        .analog-benefit-icon.green {
+            background: #d1fae5;
+            color: #059669;
+        }
+
+        .analog-benefit-icon.purple {
+            background: #e9d5ff;
+            color: #7c3aed;
+        }
+
+        .analog-benefit-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 0.75rem;
+        }
+
+        .analog-benefit-description {
+            color: #6b7280;
+        }
+
+        /* CTA Section */
+        .analog-cta {
+            background: linear-gradient(to right, #ea580c, #dc2626);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .analog-cta-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .analog-cta h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .analog-cta-description {
+            font-size: 1.25rem;
+            color: #fed7aa;
+            margin-bottom: 2rem;
+            max-width: 32rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .analog-cta-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .analog-cta-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 0.375rem;
+            font-size: 1.125rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .analog-cta-btn-primary {
+            background: white;
+            color: #ea580c;
+        }
+
+        .analog-cta-btn-primary:hover {
+            background: #f3f4f6;
+        }
+
+        .analog-cta-btn-secondary {
+            background: transparent;
+            color: white;
+            border: 1px solid white;
+        }
+
+        .analog-cta-btn-secondary:hover {
+            background: white;
+            color: #ea580c;
+        }
+
+        /* Contact Section */
+        .analog-contact {
+            background: #1f2937;
+            color: white;
+            padding: 3rem 0;
+        }
+
+        .analog-contact-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .analog-contact-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+        }
+
+        .analog-contact-icon {
+            width: 1.5rem;
+            height: 1.5rem;
+            color: #f97316;
+        }
+
+        .analog-contact-info p:first-child {
+            font-size: 0.875rem;
+            color: #9ca3af;
+            margin-bottom: 0.25rem;
+        }
+
+        .analog-contact-info p:last-child {
+            font-size: 1.125rem;
+        }
+
+        /* Floating WhatsApp Button */
+        .analog-whatsapp-float {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            z-index: 50;
+        }
+
+        .analog-whatsapp-btn {
+            width: 4rem;
+            height: 4rem;
+            background: #10b981;
+            border: none;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .analog-whatsapp-btn:hover {
+            background: #059669;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            transform: scale(1.05);
+        }
+
+        /* Icons */
+        .icon {
+            width: 1.5rem;
+            height: 1.5rem;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .icon-filled {
+            fill: currentColor;
+        }
+
+        /* Responsive Design */
+        @media (min-width: 640px) {
+            .analog-cta-buttons {
+                flex-direction: row;
+            }
+
+            .analog-filters-top {
+                flex-direction: row;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .analog-hero h1 {
+                font-size: 2rem;
+            }
+
+            .analog-hero-description {
+                font-size: 1.125rem;
+            }
+
+            .analog-filter-toggle {
+                display: flex;
+            }
+
+            .analog-filters-row.hidden {
+                display: none;
+            }
+
+            .analog-products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .analog-product-card.list-view {
+                flex-direction: column;
+            }
+
+            .analog-product-card.list-view .analog-product-image-container {
+                width: 100%;
+                aspect-ratio: 1;
+            }
+        }
+
+        /* Utility Classes */
+        .hidden {
+            display: none;
+        }
+
+        .no-products {
+            text-align: center;
+            padding: 3rem 0;
+        }
+
+        .no-products-icon {
+            width: 4rem;
+            height: 4rem;
+            color: #d1d5db;
+            margin: 0 auto 1rem;
+        }
+
+        .no-products h3 {
+            font-size: 1.25rem;
+            color: #6b7280;
+            margin-bottom: 0.5rem;
+        }
+
+        .no-products p {
+            color: #9ca3af;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="analog-header">
+        <div class="analog-header-container">
+            <div class="analog-logo-section">
+                <div class="analog-logo-image">
+                    <a href="https://Cotascale.com"><img src="/assets/images/cota.png" alt="logo" class="logo-image"></a>
+                </div>
+                <div class="analog-brand-info">
+                    <h1>MIM Electronics</h1>
+                    <p>Analog Scales</p>
+                </div>
+            </div>
+            
+            <div class="analog-header-actions">
+                <button class="analog-help-btn" onclick="analogHandleWhatsAppClick('I need help choosing the right analog scale for my business')">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                    </svg>
+                    Get Help
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="analog-hero">
+        <div class="analog-hero-container">
+            <svg class="analog-hero-icon" fill="currentColor" height="23px" width="25px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 210.61 210.61" xml:space="preserve" stroke="#3e3caf"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <g> <path d="M190.289,44.338h-35.418l8.21-24.989c0.408-1.245,0.126-2.614-0.74-3.596c-0.866-0.983-2.19-1.434-3.475-1.183 l-35.087,6.815v-5.022c0-1.505-0.913-2.859-2.306-3.424L90.223,0.27c-1.061-0.428-2.262-0.345-3.255,0.235 c-0.989,0.577-1.653,1.582-1.801,2.719l-5.283,41.115H20.322c-2.042,0-3.695,1.655-3.695,3.695v12.932 c0,9.169,7.451,16.627,16.609,16.627h144.138c9.158,0,16.609-7.459,16.609-16.627V48.033 C193.983,45.992,192.331,44.338,190.289,44.338z M123.78,28.91l30.317-5.886l-7.003,21.314H123.78V28.91z M91.886,8.919 l24.504,9.934v7.013v18.473H87.336L91.886,8.919z M186.594,60.965c0,5.093-4.135,9.237-9.219,9.237H33.237 c-5.084,0-9.219-4.144-9.219-9.237v-9.237h59.119h36.94c0,0,0.006,0.002,0.009,0.002h29.682c0.004,0,0.007-0.002,0.011-0.002 h36.815V60.965z"></path> <path d="M157.189,84.24c-0.349-1.719-1.865-2.953-3.619-2.953H57.041c-1.754,0-3.269,1.234-3.619,2.953L31.483,191.393 c-0.224,1.088,0.054,2.217,0.758,3.078c0.7,0.859,1.75,1.359,2.861,1.359h25.864v14.78h7.39v-14.78h73.898v14.78h7.39v-14.78 h25.864c1.111,0,2.162-0.5,2.861-1.359c0.704-0.861,0.981-1.99,0.758-3.078L157.189,84.24z M149.644,188.439h-7.39H68.356h-7.39 H39.631l20.427-99.763h90.497l20.427,99.763H149.644z"></path> <path d="M105.305,103.456c-18.338,0-33.254,14.919-33.254,33.254c0,18.335,14.917,33.254,33.254,33.254 c18.337,0,33.254-14.919,33.254-33.254C138.559,118.375,123.643,103.456,105.305,103.456z M105.305,162.575 c-14.26,0-25.864-11.602-25.864-25.864c0-14.262,11.604-25.864,25.864-25.864c2.844,0,5.573,0.479,8.135,1.331l-13.093,26.186 l6.611,3.305l13.09-26.18c6.712,4.677,11.122,12.44,11.122,21.222C131.17,150.973,119.566,162.575,105.305,162.575z"></path> </g> </g> </g> </g></svg>
+            <h1>Analog Scales Collection</h1>
+            <p class="analog-hero-description">
+                Discover our comprehensive range of reliable, mechanical weighing solutions. 
+                No power required, built to last, and perfect for any environment.
+            </p>
+            <div class="analog-hero-features">
+                <div class="analog-hero-feature">
+                    <div class="analog-hero-feature-icon">
+                        <svg class="icon" viewBox="0 0 24 24">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        </svg>
+                    </div>
+                    <h3>No Power Needed</h3>
+                    <p>Mechanical operation ensures reliability anywhere</p>
+                </div>
+                <div class="analog-hero-feature">
+                    <div class="analog-hero-feature-icon">
+                        <svg class="icon" viewBox="0 0 24 24">
+                            <circle cx="12" cy="8" r="7"/>
+                            <polyline points="8.21,13.89 7,23 12,20 17,23 15.79,13.88"/>
+                        </svg>
+                    </div>
+                    <h3>Proven Accuracy</h3>
+                    <p>Time-tested precision you can trust</p>
+                </div>
+                <div class="analog-hero-feature">
+                    <div class="analog-hero-feature-icon">
+                        <svg class="icon" viewBox="0 0 24 24">
+                            <path d="M14 9V5a3 3 0 0 0-6 0v4"/>
+                            <rect x="2" y="9" width="20" height="12" rx="2" ry="2"/>
+                        </svg>
+                    </div>
+                    <h3>Built to Last</h3>
+                    <p>Heavy-duty construction for long-term use</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filters Section -->
+    <section class="analog-filters">
+        <div class="analog-filters-container">
+            <div class="analog-filters-top">
+                <div class="analog-search-container">
+                    <svg class="analog-search-icon" viewBox="0 0 24 24">
+                        <circle cx="11" cy="11" r="8"/>
+                        <path d="m21 21-4.35-4.35"/>
+                    </svg>
+                    <input type="text" class="analog-search-input" placeholder="Search analog scales..." id="analogSearchInput">
+                </div>
+
+                <button class="analog-filter-toggle" onclick="analogToggleFilters()">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <polygon points="22,3 2,3 10,12.46 10,19 14,21 14,12.46"/>
+                    </svg>
+                    Filters
+                </button>
+
+                <div class="analog-view-sort">
+                    <div class="analog-view-toggle">
+                        <button class="analog-view-btn active" id="analogGridBtn" onclick="analogSetViewMode('grid')">
+                            <svg class="icon" viewBox="0 0 24 24">
+                                <rect x="3" y="3" width="7" height="7"/>
+                                <rect x="14" y="3" width="7" height="7"/>
+                                <rect x="14" y="14" width="7" height="7"/>
+                                <rect x="3" y="14" width="7" height="7"/>
+                            </svg>
+                        </button>
+                        <button class="analog-view-btn" id="analogListBtn" onclick="analogSetViewMode('list')">
+                            <svg class="icon" viewBox="0 0 24 24">
+                                <line x1="8" y1="6" x2="21" y2="6"/>
+                                <line x1="8" y1="12" x2="21" y2="12"/>
+                                <line x1="8" y1="18" x2="21" y2="18"/>
+                                <line x1="3" y1="6" x2="3.01" y2="6"/>
+                                <line x1="3" y1="12" x2="3.01" y2="12"/>
+                                <line x1="3" y1="18" x2="3.01" y2="18"/>
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <select class="analog-sort-select" id="analogSortSelect" onchange="analogSortProducts()">
+                        <option value="name">Name A-Z</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="rating">Highest Rated</option>
+                        <option value="capacity">Capacity</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="analog-filters-row" id="analogFiltersRow">
+                <select class="analog-filter-select" id="analogCategoryFilter" onchange="analogFilterProducts()">
+                    <option value="all">All Categories</option>
+                    <option value="platform">Platform</option>
+                    <option value="floor">Floor Scale</option>
+                    <option value="hanging">Hanging Scale</option>
+                    <option value="balance">Balance Scale</option>
+                    <option value="counter">Counter Scale</option>
+                    <option value="bench">Bench Scale</option>
+                </select>
+
+                <select class="analog-filter-select" id="analogCapacityFilter" onchange="analogFilterProducts()">
+                    <option value="all">All Capacities</option>
+                    <option value="0-50">0-50kg</option>
+                    <option value="51-100">51-100kg</option>
+                    <option value="101-200">101-200kg</option>
+                    <option value="200+">200kg+</option>
+                </select>
+
+                <select class="analog-filter-select" id="analogPriceFilter" onchange="analogFilterProducts()">
+                    <option value="all">All Prices</option>
+                    <option value="0-50000">₦0-₦50,000</option>
+                    <option value="50001-100000">₦50,001-₦100,000</option>
+                    <option value="100001-150000">₦100,001-₦150,000</option>
+                    <option value="150000+">₦150,000+</option>
+                </select>
+            </div>
+
+            <div class="analog-results-count" id="analogResultsCount">
+                Showing 6 of 6 products
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="analog-products">
+        <div class="analog-products-container">
+            <div class="analog-products-grid" id="analogProductsGrid">
+                <!-- Products will be generated by JavaScript -->
+            </div>
+            
+            <div class="no-products hidden" id="analogNoProducts">
+                <svg class="no-products-icon" viewBox="0 0 24 24">
+                    <path d="M16 11V3a1 1 0 0 0-1-1h-6a1 1 0 0 0-1 1v8.001L6.757 9.757a1 1 0 0 0-1.414 1.414l3 3A1 1 0 0 0 9 14h6a1 1 0 0 0 .657-.286l3-3a1 1 0 0 0-1.414-1.414L16 11z"/>
+                    <path d="M5 16v1a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3v-1"/>
+                </svg>
+                <h3>No products found</h3>
+                <p>Try adjusting your search or filters</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="analog-benefits">
+        <div class="analog-benefits-container">
+            <h2>Why Choose Analog Scales?</h2>
+            <p class="analog-benefits-description">
+                Experience the reliability and simplicity of mechanical weighing technology
+            </p>
+            
+            <div class="analog-benefits-grid">
+                <div class="analog-benefit-card">
+                    <div class="analog-benefit-icon yellow">
+                        <svg class="icon" viewBox="0 0 24 24">
+                            <polygon points="13,2 3,14 12,14 11,22 21,10 12,10"/>
+                        </svg>
+                    </div>
+                    <h3 class="analog-benefit-title">No Power Required</h3>
+                    <p class="analog-benefit-description">Works anywhere, anytime without electricity</p>
+                </div>
+                
+                <div class="analog-benefit-card">
+                    <div class="analog-benefit-icon blue">
+                        <svg class="icon" viewBox="0 0 24 24">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        </svg>
+                    </div>
+                    <h3 class="analog-benefit-title">Weather Resistant</h3>
+                    <p class="analog-benefit-description">Built to withstand harsh environmental conditions</p>
+                </div>
+                
+                <div class="analog-benefit-card">
+                    <div class="analog-benefit-icon green">
+                        <svg class="icon" viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="10"/>
+                            <circle cx="12" cy="12" r="6"/>
+                            <circle cx="12" cy="12" r="2"/>
+                        </svg>
+                    </div>
+                    <h3 class="analog-benefit-title">Proven Accuracy</h3>
+                    <p class="analog-benefit-description">Mechanical precision that doesn't drift over time</p>
+                </div>
+                
+                <div class="analog-benefit-card">
+                    <div class="analog-benefit-icon purple">
+                        <svg class="icon" viewBox="0 0 24 24">
+                            <path d="M23 6l-9.5 9.5-5-5L1 18"/>
+                        </svg>
+                    </div>
+                    <h3 class="analog-benefit-title">Low Maintenance</h3>
+                    <p class="analog-benefit-description">Minimal upkeep with maximum reliability</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="analog-cta">
+        <div class="analog-cta-container">
+            <h2>Need Help Choosing?</h2>
+            <p class="analog-cta-description">
+                Our experts are here to help you find the perfect analog scale for your needs
+            </p>
+            <div class="analog-cta-buttons">
+                <button class="analog-cta-btn analog-cta-btn-primary" onclick="analogHandleWhatsAppClick('I need expert advice on choosing the right analog scale for my business')">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                    </svg>
+                    Get Expert Advice
+                </button>
+                <button class="analog-cta-btn analog-cta-btn-secondary" onclick="analogHandleWhatsAppClick('Please send me a catalog of all your analog scales with pricing')">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                    </svg>
+                    Request Catalog
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="analog-contact">
+        <div class="analog-contact-container">
+            <div class="analog-contact-item">
+                <svg class="analog-contact-icon" viewBox="0 0 24 24">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                </svg>
+                <div class="analog-contact-info">
+                    <p>Call Us</p>
+                    <p>+234 803 355 4867</p>
+                </div>
+            </div>
+            <div class="analog-contact-item">
+                <svg class="analog-contact-icon" viewBox="0 0 24 24">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                    <polyline points="22,6 12,13 2,6"/>
+                </svg>
+                <div class="analog-contact-info">
+                    <p>Email</p>
+                    <p>info@mimelectronics.com</p>
+                </div>
+            </div>
+            <div class="analog-contact-item">
+                <svg class="analog-contact-icon" viewBox="0 0 24 24">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                    <circle cx="12" cy="10" r="3"/>
+                </svg>
+                <div class="analog-contact-info">
+                    <p>Location</p>
+                    <p>Lagos, Nigeria</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Floating WhatsApp Button -->
+    <div class="analog-whatsapp-float">
+        <button class="analog-whatsapp-btn" onclick="analogHandleWhatsAppClick()">
+            <svg class="icon" viewBox="0 0 24 24">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+            </svg>
+        </button>
+    </div>
+
+    <script>
+        // WhatsApp Number
+        const analogWhatsappNumber = "+2348033554867";
+        
+        // Product Data
+        const analogScalesProducts = [
+            {
+                id: 1,
+                name: "Classic Analog Platform Scale 100kg",
+                category: "platform",
+                capacity: 100,
+                price: 89999,
+                originalPrice: 120000,
+                rating: 4.8,
+                reviews: 156,
+                image: "https://images.unsplash.com/photo-1574634534894-89d7576c8259?w=400&h=300&fit=crop",
+                badge: "BESTSELLER",
+                badgeColor: "background: #10b981;",
+                inStock: true,
+                features: ["Mechanical Movement", "No Power Required", "Heavy Duty Construction", "Easy to Read Dial"],
+                specifications: {
+                    capacity: "100kg",
+                    readability: "500g",
+                    platform: "400mm x 500mm",
+                    material: "Stainless Steel",
+                    warranty: "2 Years"
+                },
+                description: "Reliable mechanical platform scale perfect for markets, warehouses, and industrial applications. Built to last with precision engineering."
+            },
+            {
+                id: 2,
+                name: "Heavy Duty Analog Floor Scale 300kg",
+                category: "floor",
+                capacity: 300,
+                price: 149999,
+                originalPrice: 199999,
+                rating: 4.9,
+                reviews: 89,
+                image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop",
+                badge: "25% OFF",
+                badgeColor: "background: #ef4444;",
+                inStock: true,
+                features: ["Extra Large Platform", "Weather Resistant", "Precision Mechanics", "Anti-Vibration Base"],
+                specifications: {
+                    capacity: "300kg",
+                    readability: "1kg",
+                    platform: "600mm x 800mm",
+                    material: "Cast Iron with Steel Deck",
+                    warranty: "3 Years"
+                },
+                description: "Industrial-grade floor scale designed for heavy-duty applications. Perfect for shipping, receiving, and warehouse operations."
+            },
+            {
+                id: 3,
+                name: "Portable Analog Hanging Scale 50kg",
+                category: "hanging",
+                capacity: 50,
+                price: 45999,
+                originalPrice: 65000,
+                rating: 4.6,
+                reviews: 234,
+                image: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=400&h=300&fit=crop",
+                badge: "PORTABLE",
+                badgeColor: "background: #3b82f6;",
+                inStock: true,
+                features: ["Compact Design", "Spring Mechanism", "S-Hook Included", "Lightweight"],
+                specifications: {
+                    capacity: "50kg",
+                    readability: "200g",
+                    dimensions: "300mm x 150mm",
+                    material: "Aluminum Body",
+                    warranty: "1 Year"
+                },
+                description: "Compact and portable hanging scale ideal for farms, markets, and field applications. Easy to use and transport."
+            },
+            {
+                id: 4,
+                name: "Precision Analog Balance Scale 10kg",
+                category: "balance",
+                capacity: 10,
+                price: 129999,
+                originalPrice: 169999,
+                rating: 4.7,
+                reviews: 67,
+                image: "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=400&h=300&fit=crop",
+                badge: "HIGH PRECISION",
+                badgeColor: "background: #8b5cf6;",
+                inStock: false,
+                features: ["High Precision", "Dual Pan Design", "Calibration Weights", "Anti-Draft Chamber"],
+                specifications: {
+                    capacity: "10kg",
+                    readability: "0.1g",
+                    platform: "200mm x 200mm",
+                    material: "Stainless Steel",
+                    warranty: "2 Years"
+                },
+                description: "Professional balance scale for laboratories, pharmacies, and precision weighing applications. Exceptional accuracy and reliability."
+            },
+            {
+                id: 5,
+                name: "Commercial Analog Counter Scale 30kg",
+                category: "counter",
+                capacity: 30,
+                price: 69999,
+                originalPrice: 89999,
+                rating: 4.5,
+                reviews: 178,
+                image: "https://images.unsplash.com/photo-1586864387967-d02ef85d93e8?w=400&h=300&fit=crop",
+                badge: "COMMERCIAL",
+                badgeColor: "background: #f97316;",
+                inStock: true,
+                features: ["Dual Display", "Price Computing", "Tare Function", "Compact Footprint"],
+                specifications: {
+                    capacity: "30kg",
+                    readability: "10g",
+                    platform: "300mm x 400mm",
+                    material: "ABS Plastic with Steel Base",
+                    warranty: "1 Year"
+                },
+                description: "Perfect for retail environments, markets, and small businesses. Features dual display for easy customer interaction."
+            },
+            {
+                id: 6,
+                name: "Industrial Analog Bench Scale 150kg",
+                category: "bench",
+                capacity: 150,
+                price: 119999,
+                originalPrice: 159999,
+                rating: 4.8,
+                reviews: 92,
+                image: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=400&h=300&fit=crop",
+                badge: "INDUSTRIAL",
+                badgeColor: "background: #6b7280;",
+                inStock: true,
+                features: ["Robust Construction", "Overload Protection", "Easy Calibration", "Non-Slip Base"],
+                specifications: {
+                    capacity: "150kg",
+                    readability: "50g",
+                    platform: "400mm x 600mm",
+                    material: "Steel with Powder Coating",
+                    warranty: "2 Years"
+                },
+                description: "Heavy-duty bench scale designed for industrial applications. Built to withstand harsh working conditions while maintaining accuracy."
+            }
+        ];
+
+        // State Variables
+        let analogCurrentViewMode = 'grid';
+        let analogFilteredProducts = [...analogScalesProducts];
+        let analogFiltersVisible = false;
+
+        // WhatsApp Integration
+        function analogHandleWhatsAppClick(message = "Hello! I'm interested in your analog scales. Can you help me?") {
+            const encodedMessage = encodeURIComponent(message);
+            const url = `https://wa.me/${analogWhatsappNumber}?text=${encodedMessage}`;
+            window.open(url, '_blank');
+        }
+
+        function analogHandleProductInquiry(product) {
+            const message = `I'm interested in the ${product.name} (${product.specifications.capacity}). Price: ₦${product.price.toLocaleString()}. Can you provide more details and availability?`;
+            analogHandleWhatsAppClick(message);
+        }
+
+        // View Mode Functions
+        function analogSetViewMode(mode) {
+            analogCurrentViewMode = mode;
+            const gridBtn = document.getElementById('analogGridBtn');
+            const listBtn = document.getElementById('analogListBtn');
+            const productsGrid = document.getElementById('analogProductsGrid');
+
+            if (mode === 'grid') {
+                gridBtn.classList.add('active');
+                listBtn.classList.remove('active');
+                productsGrid.classList.remove('list-view');
+            } else {
+                listBtn.classList.add('active');
+                gridBtn.classList.remove('active');
+                productsGrid.classList.add('list-view');
+            }
+
+            analogRenderProducts();
+        }
+
+        function analogToggleFilters() {
+            analogFiltersVisible = !analogFiltersVisible;
+            const filtersRow = document.getElementById('analogFiltersRow');
+            if (analogFiltersVisible) {
+                filtersRow.classList.remove('hidden');
+            } else {
+                filtersRow.classList.add('hidden');
+            }
+        }
+
+        // Filter Functions
+        function analogFilterProducts() {
+            const searchQuery = document.getElementById('analogSearchInput').value.toLowerCase();
+            const categoryFilter = document.getElementById('analogCategoryFilter').value;
+            const capacityFilter = document.getElementById('analogCapacityFilter').value;
+            const priceFilter = document.getElementById('analogPriceFilter').value;
+
+            analogFilteredProducts = analogScalesProducts.filter(product => {
+                // Search filter
+                const matchesSearch = product.name.toLowerCase().includes(searchQuery) ||
+                                    product.description.toLowerCase().includes(searchQuery);
+
+                // Category filter
+                const matchesCategory = categoryFilter === 'all' || product.category === categoryFilter;
+
+                // Capacity filter
+                let matchesCapacity = true;
+                if (capacityFilter !== 'all') {
+                    const capacity = product.capacity;
+                    switch (capacityFilter) {
+                        case '0-50':
+                            matchesCapacity = capacity <= 50;
+                            break;
+                        case '51-100':
+                            matchesCapacity = capacity > 50 && capacity <= 100;
+                            break;
+                        case '101-200':
+                            matchesCapacity = capacity > 100 && capacity <= 200;
+                            break;
+                        case '200+':
+                            matchesCapacity = capacity > 200;
+                            break;
+                    }
+                }
+
+                // Price filter
+                let matchesPrice = true;
+                if (priceFilter !== 'all') {
+                    const price = product.price;
+                    switch (priceFilter) {
+                        case '0-50000':
+                            matchesPrice = price <= 50000;
+                            break;
+                        case '50001-100000':
+                            matchesPrice = price > 50000 && price <= 100000;
+                            break;
+                        case '100001-150000':
+                            matchesPrice = price > 100000 && price <= 150000;
+                            break;
+                        case '150000+':
+                            matchesPrice = price > 150000;
+                            break;
+                    }
+                }
+
+                return matchesSearch && matchesCategory && matchesCapacity && matchesPrice;
+            });
+
+            analogSortProducts();
+            analogRenderProducts();
+            analogUpdateResultsCount();
+        }
+
+        function analogSortProducts() {
+            const sortBy = document.getElementById('analogSortSelect').value;
+
+            analogFilteredProducts.sort((a, b) => {
+                switch (sortBy) {
+                    case 'price-low':
+                        return a.price - b.price;
+                    case 'price-high':
+                        return b.price - a.price;
+                    case 'rating':
+                        return b.rating - a.rating;
+                    case 'capacity':
+                        return a.capacity - b.capacity;
+                    default:
+                        return a.name.localeCompare(b.name);
+                }
+            });
+        }
+
+        function analogUpdateResultsCount() {
+            const resultsCount = document.getElementById('analogResultsCount');
+            resultsCount.textContent = `Showing ${analogFilteredProducts.length} of ${analogScalesProducts.length} products`;
+        }
+
+        // Render Functions
+        function analogRenderProducts() {
+            const productsGrid = document.getElementById('analogProductsGrid');
+            const noProducts = document.getElementById('analogNoProducts');
+
+            if (analogFilteredProducts.length === 0) {
+                productsGrid.style.display = 'none';
+                noProducts.classList.remove('hidden');
+                return;
+            }
+
+            productsGrid.style.display = 'grid';
+            noProducts.classList.add('hidden');
+
+            productsGrid.innerHTML = analogFilteredProducts.map(product => `
+                <div class="analog-product-card ${analogCurrentViewMode === 'list' ? 'list-view' : ''}">
+                    <div class="analog-product-image-container">
+                        <img src="${product.image}" alt="${product.name}" class="analog-product-image">
+                        <div class="analog-product-badge" style="${product.badgeColor}">
+                            ${product.badge}
+                        </div>
+                        ${!product.inStock ? `
+                            <div style="position: absolute; inset: 0; background: rgba(0, 0, 0, 0.5); display: flex; align-items: center; justify-content: center;">
+                                <div style="background: #dc2626; color: white; padding: 0.25rem 0.5rem; border-radius: 0.25rem; font-size: 0.75rem; font-weight: 600;">
+                                    Out of Stock
+                                </div>
+                            </div>
+                        ` : ''}
+                        <div class="analog-product-actions">
+                            <button class="analog-product-action-btn">
+                                <svg class="icon" viewBox="0 0 24 24">
+                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                                </svg>
+                            </button>
+                            <button class="analog-product-action-btn">
+                                <svg class="icon" viewBox="0 0 24 24">
+                                    <circle cx="18" cy="5" r="3"/>
+                                    <circle cx="6" cy="12" r="3"/>
+                                    <circle cx="18" cy="19" r="3"/>
+                                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+                                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="analog-product-content">
+                        <div class="analog-product-header">
+                            <div class="analog-product-category">${product.category.charAt(0).toUpperCase() + product.category.slice(1)}</div>
+                            <div class="analog-product-rating">
+                                <svg class="icon icon-filled" style="color: #fbbf24; width: 1rem; height: 1rem;" viewBox="0 0 24 24">
+                                    <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/>
+                                </svg>
+                                <span>${product.rating}</span>
+                                <span style="color: #9ca3af;">(${product.reviews})</span>
+                            </div>
+                        </div>
+
+                        <h3 class="analog-product-name">${product.name}</h3>
+                        <p class="analog-product-description">${product.description}</p>
+
+                        <div class="analog-product-features">
+                            <h4>Key Features:</h4>
+                            <div class="analog-product-features-list">
+                                ${product.features.slice(0, 2).map(feature => 
+                                    `<span class="analog-product-feature-tag">${feature}</span>`
+                                ).join('')}
+                                ${product.features.length > 2 ? 
+                                    `<span class="analog-product-feature-tag">+${product.features.length - 2} more</span>` 
+                                    : ''
+                                }
+                            </div>
+                        </div>
+
+                        <div class="analog-product-specs">
+                            <div class="analog-product-specs-grid">
+                                <div class="analog-product-spec">Capacity:<span>${product.specifications.capacity}</span></div>
+                                <div class="analog-product-spec">Platform:<span>${product.specifications.platform}</span></div>
+                            </div>
+                        </div>
+
+                        <div class="analog-product-price-stock">
+                            <div class="analog-product-price">
+                                <span class="analog-product-current-price">₦${product.price.toLocaleString()}</span>
+                                <span class="analog-product-original-price">₦${product.originalPrice.toLocaleString()}</span>
+                            </div>
+                            <div class="analog-product-stock ${product.inStock ? 'in-stock' : 'out-of-stock'}">
+                                ${product.inStock ? `
+                                    <svg class="icon" style="width: 1rem; height: 1rem;" viewBox="0 0 24 24">
+                                        <path d="M9 12l2 2 4-4"/>
+                                        <circle cx="12" cy="12" r="10"/>
+                                    </svg>
+                                    In Stock
+                                ` : 'Out of Stock'}
+                            </div>
+                        </div>
+
+                        <div class="analog-product-buttons">
+                            <button class="analog-product-btn analog-product-btn-primary" ${!product.inStock ? 'disabled' : ''} onclick="analogHandleProductInquiry(${JSON.stringify(product).replace(/"/g, '&quot;')})">
+                                <svg class="icon" viewBox="0 0 24 24">
+                                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                                </svg>
+                                Inquire Now
+                            </button>
+                            <button class="analog-product-btn analog-product-btn-secondary">
+                                <svg class="icon" viewBox="0 0 24 24">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                    <circle cx="12" cy="12" r="3"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Event Listeners
+        document.getElementById('analogSearchInput').addEventListener('input', analogFilterProducts);
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            analogRenderProducts();
+            analogUpdateResultsCount();
+        });
+
+        // Responsive behavior
+        window.addEventListener('resize', function() {
+            if (window.innerWidth >= 768) {
+                document.getElementById('analogFiltersRow').classList.remove('hidden');
+                analogFiltersVisible = true;
+            } else {
+                if (!analogFiltersVisible) {
+                    document.getElementById('analogFiltersRow').classList.add('hidden');
+                }
+            }
+        });
+    </script>
+</body>
+</html>

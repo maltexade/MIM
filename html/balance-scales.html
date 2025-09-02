@@ -1,0 +1,1571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Balance Scales - MIM Electronics Enterprise</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #374151;
+            background-color: #ffffff;
+        }
+
+        /* Header with balance- prefix */
+        .balance-header {
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .balance-header-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .balance-logo-section {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .balance-logo-image {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            background: white;
+            border: 1px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .balance-logo-image img {
+            width: 2rem;
+            height: 2rem;
+            object-fit: contain;
+        }
+
+        .balance-brand-info h1 {
+            color: #1f2937;
+            font-size: 1.125rem;
+            margin-bottom: 0.125rem;
+        }
+
+        .balance-brand-info p {
+            color: #6b7280;
+            font-size: 0.75rem;
+        }
+
+        .balance-header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .balance-help-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: transparent;
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            color: #374151;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: all 0.2s ease;
+        }
+
+        .balance-help-btn:hover {
+            background-color: #f9fafb;
+            border-color: #9ca3af;
+        }
+
+        /* Hero Section */
+        .balance-hero {
+            background: linear-gradient(to right, #0891b2, #0e7490);
+            color: white;
+            padding: 3rem 0;
+        }
+
+        .balance-hero-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            text-align: center;
+        }
+
+        .balance-hero-icon {
+            width: 4rem;
+            height: 4rem;
+            color: #67e8f9;
+            margin: 0 auto 1rem;
+        }
+
+        .balance-hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .balance-hero-description {
+            font-size: 1.25rem;
+            color: #67e8f9;
+            margin-bottom: 2rem;
+            max-width: 48rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .balance-hero-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            max-width: 48rem;
+            margin: 0 auto;
+        }
+
+        .balance-hero-feature {
+            text-align: center;
+        }
+
+        .balance-hero-feature-icon {
+            width: 3rem;
+            height: 3rem;
+            background: #0e7490;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.75rem;
+        }
+
+        .balance-hero-feature h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        .balance-hero-feature p {
+            font-size: 0.875rem;
+            color: #67e8f9;
+        }
+
+        /* Same pattern for filters, products, benefits sections with balance- prefix */
+        .balance-filters {
+            background: #f9fafb;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 1.5rem 0;
+        }
+
+        .balance-filters-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .balance-filters-top {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .balance-search-container {
+            flex: 1;
+            max-width: 24rem;
+            position: relative;
+        }
+
+        .balance-search-icon {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9ca3af;
+            width: 1rem;
+            height: 1rem;
+        }
+
+        .balance-search-input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            font-size: 1rem;
+            transition: border-color 0.2s ease;
+        }
+
+        .balance-search-input:focus {
+            outline: none;
+            border-color: #0891b2;
+            box-shadow: 0 0 0 3px rgba(8, 145, 178, 0.1);
+        }
+
+        .balance-filter-toggle {
+            display: none;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            background: transparent;
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            color: #374151;
+            cursor: pointer;
+            font-size: 0.875rem;
+        }
+
+        .balance-view-sort {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .balance-view-toggle {
+            display: flex;
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            overflow: hidden;
+        }
+
+        .balance-view-btn {
+            padding: 0.5rem;
+            background: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .balance-view-btn.active {
+            background: #0891b2;
+            color: white;
+        }
+
+        .balance-sort-select {
+            width: 12rem;
+            padding: 0.5rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            background: white;
+            font-size: 0.875rem;
+        }
+
+        .balance-filters-row {
+            margin-top: 1rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .balance-filter-select {
+            padding: 0.5rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            background: white;
+            font-size: 0.875rem;
+        }
+
+        .balance-results-count {
+            margin-top: 1rem;
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        /* All product grid styles follow same pattern with balance- prefix */
+        .balance-products {
+            padding: 2rem 0;
+        }
+
+        .balance-products-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .balance-products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .balance-products-grid.list-view {
+            grid-template-columns: 1fr;
+        }
+
+        .balance-product-card {
+            background: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            overflow: hidden;
+            border: 1px solid #e5e7eb;
+        }
+
+        .balance-product-card:hover {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .balance-product-card.list-view {
+            display: flex;
+        }
+
+        .balance-product-image-container {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .balance-product-card:not(.list-view) .balance-product-image-container {
+            aspect-ratio: 1;
+        }
+
+        .balance-product-card.list-view .balance-product-image-container {
+            width: 16rem;
+            flex-shrink: 0;
+        }
+
+        .balance-product-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .balance-product-card:hover .balance-product-image {
+            transform: scale(1.05);
+        }
+
+        .balance-product-badge {
+            position: absolute;
+            top: 0.75rem;
+            left: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: white;
+        }
+
+        .balance-product-actions {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .balance-product-action-btn {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .balance-product-action-btn:hover {
+            background: white;
+            transform: scale(1.1);
+        }
+
+        .balance-product-content {
+            padding: 1.5rem;
+            flex: 1;
+        }
+
+        .balance-product-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .balance-product-category {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            background: #f3f4f6;
+            color: #374151;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .balance-product-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        .balance-product-name {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .balance-product-description {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .balance-product-features {
+            margin-bottom: 1rem;
+        }
+
+        .balance-product-features h4 {
+            font-size: 0.875rem;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        .balance-product-features-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.25rem;
+        }
+
+        .balance-product-feature-tag {
+            padding: 0.125rem 0.375rem;
+            background: #e5e7eb;
+            color: #374151;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+        }
+
+        .balance-product-specs {
+            margin-bottom: 1rem;
+            font-size: 0.875rem;
+        }
+
+        .balance-product-specs-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+        }
+
+        .balance-product-spec {
+            color: #6b7280;
+        }
+
+        .balance-product-spec span {
+            color: #1f2937;
+            margin-left: 0.25rem;
+        }
+
+        .balance-product-price-stock {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .balance-product-price {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .balance-product-current-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1f2937;
+        }
+
+        .balance-product-original-price {
+            font-size: 0.875rem;
+            color: #6b7280;
+            text-decoration: line-through;
+        }
+
+        .balance-product-stock {
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .balance-product-stock.in-stock {
+            color: #059669;
+        }
+
+        .balance-product-stock.out-of-stock {
+            color: #dc2626;
+        }
+
+        .balance-product-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .balance-product-btn {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border: none;
+            border-radius: 0.375rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .balance-product-btn-primary {
+            background: #0891b2;
+            color: white;
+        }
+
+        .balance-product-btn-primary:hover {
+            background: #0e7490;
+        }
+
+        .balance-product-btn-primary:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        .balance-product-btn-secondary {
+            background: transparent;
+            color: #374151;
+            border: 1px solid #d1d5db;
+            padding: 0.75rem;
+        }
+
+        .balance-product-btn-secondary:hover {
+            background: #f9fafb;
+        }
+
+        /* Benefits Section */
+        .balance-benefits {
+            background: #f9fafb;
+            padding: 4rem 0;
+        }
+
+        .balance-benefits-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            text-align: center;
+        }
+
+        .balance-benefits h2 {
+            font-size: 2rem;
+            color: #1f2937;
+            margin-bottom: 1rem;
+        }
+
+        .balance-benefits-description {
+            font-size: 1.25rem;
+            color: #6b7280;
+            margin-bottom: 3rem;
+            max-width: 48rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .balance-benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .balance-benefit-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .balance-benefit-card:hover {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .balance-benefit-icon {
+            width: 4rem;
+            height: 4rem;
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+        }
+
+        .balance-benefit-icon.cyan {
+            background: #cffafe;
+            color: #0891b2;
+        }
+
+        .balance-benefit-icon.blue {
+            background: #dbeafe;
+            color: #2563eb;
+        }
+
+        .balance-benefit-icon.indigo {
+            background: #e0e7ff;
+            color: #4f46e5;
+        }
+
+        .balance-benefit-icon.teal {
+            background: #ccfbf1;
+            color: #0d9488;
+        }
+
+        .balance-benefit-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 0.75rem;
+        }
+
+        .balance-benefit-description {
+            color: #6b7280;
+        }
+
+        /* CTA Section */
+        .balance-cta {
+            background: linear-gradient(to right, #dc2626, #991b1b);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .balance-cta-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .balance-cta h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .balance-cta-description {
+            font-size: 1.25rem;
+            color: #fecaca;
+            margin-bottom: 2rem;
+            max-width: 32rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .balance-cta-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .balance-cta-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 0.375rem;
+            font-size: 1.125rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .balance-cta-btn-primary {
+            background: white;
+            color: #dc2626;
+        }
+
+        .balance-cta-btn-primary:hover {
+            background: #f3f4f6;
+        }
+
+        .balance-cta-btn-secondary {
+            background: transparent;
+            color: white;
+            border: 1px solid white;
+        }
+
+        .balance-cta-btn-secondary:hover {
+            background: white;
+            color: #dc2626;
+        }
+
+        /* Contact Section */
+        .balance-contact {
+            background: #1f2937;
+            color: white;
+            padding: 3rem 0;
+        }
+
+        .balance-contact-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .balance-contact-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+        }
+
+        .balance-contact-icon {
+            width: 1.5rem;
+            height: 1.5rem;
+            color: #f97316;
+        }
+
+        .balance-contact-info p:first-child {
+            font-size: 0.875rem;
+            color: #9ca3af;
+            margin-bottom: 0.25rem;
+        }
+
+        .balance-contact-info p:last-child {
+            font-size: 1.125rem;
+        }
+
+        /* Floating WhatsApp Button */
+        .balance-whatsapp-float {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            z-index: 50;
+        }
+
+        .balance-whatsapp-btn {
+            width: 4rem;
+            height: 4rem;
+            background: #10b981;
+            border: none;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .balance-whatsapp-btn:hover {
+            background: #059669;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            transform: scale(1.05);
+        }
+
+        /* Icons */
+        .icon {
+            width: 1.5rem;
+            height: 1.5rem;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .icon-filled {
+            fill: currentColor;
+        }
+
+        /* Responsive Design */
+        @media (min-width: 640px) {
+            .balance-cta-buttons {
+                flex-direction: row;
+            }
+
+            .balance-filters-top {
+                flex-direction: row;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .balance-hero h1 {
+                font-size: 2rem;
+            }
+
+            .balance-hero-description {
+                font-size: 1.125rem;
+            }
+
+            .balance-filter-toggle {
+                display: flex;
+            }
+
+            .balance-filters-row.hidden {
+                display: none;
+            }
+
+            .balance-products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .balance-product-card.list-view {
+                flex-direction: column;
+            }
+
+            .balance-product-card.list-view .balance-product-image-container {
+                width: 100%;
+                aspect-ratio: 1;
+            }
+        }
+
+        /* Utility Classes */
+        .hidden {
+            display: none;
+        }
+
+        .no-products {
+            text-align: center;
+            padding: 3rem 0;
+        }
+
+        .no-products-icon {
+            width: 4rem;
+            height: 4rem;
+            color: #d1d5db;
+            margin: 0 auto 1rem;
+        }
+
+        .no-products h3 {
+            font-size: 1.25rem;
+            color: #6b7280;
+            margin-bottom: 0.5rem;
+        }
+
+        .no-products p {
+            color: #9ca3af;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="balance-header">
+        <div class="balance-header-container">
+            <div class="balance-logo-section">
+                <div class="balance-logo-image">
+                    <a href="https://Cotascale.com"><img src="/assets/images/cota.png" alt="logo" class="logo-image"></a>
+                </div>
+                <div class="balance-brand-info">
+                    <h1>MIM Electronics</h1>
+                    <p>Balance Scales</p>
+                </div>
+            </div>
+            
+            <div class="balance-header-actions">
+                <button class="balance-help-btn" onclick="balanceHandleWhatsAppClick('I need help choosing the right balance scale for my laboratory')">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                    </svg>
+                    Get Help
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="balance-hero">
+        <div class="balance-hero-container">
+            <svg class="balance-hero-icon" fill="currentColor" height="28px" width="28px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M511.991,459.768c-0.004-0.184-0.01-0.367-0.027-0.552c-0.012-0.127-0.033-0.251-0.05-0.376 c-0.019-0.128-0.034-0.255-0.059-0.384c-0.035-0.18-0.081-0.354-0.127-0.53c-0.017-0.064-0.027-0.128-0.046-0.192l-0.026-0.088 c-0.005-0.016-0.009-0.033-0.014-0.048l-42.013-142.845c-0.986-3.356-4.067-5.66-7.564-5.66h-42.58v-29.963 c0-4.356-3.529-7.885-7.885-7.885h-59.4V117.224c0-21.74-17.686-39.425-39.425-39.425h-6.834V17.873h8.936 c4.356,0,7.885-3.529,7.885-7.885c0-4.356-3.529-7.885-7.885-7.885h-117.75c-4.355,0-7.885,3.529-7.885,7.885 c0,4.356,3.53,7.885,7.885,7.885h8.936v59.926h-6.834c-21.739,0-39.425,17.686-39.425,39.425v154.021h-59.4 c-4.355,0-7.885,3.529-7.885,7.885v29.963H49.938c-3.498,0-6.577,2.303-7.564,5.66L0.361,457.599 c-0.005,0.015-0.008,0.031-0.014,0.045l-0.026,0.09c-0.019,0.065-0.029,0.13-0.046,0.195c-0.046,0.174-0.093,0.349-0.126,0.528 c-0.025,0.126-0.04,0.253-0.058,0.38c-0.018,0.127-0.04,0.252-0.052,0.382c-0.017,0.181-0.022,0.361-0.027,0.54 C0.008,459.825,0,459.891,0,459.959v0.095c0,0.015,0,0.03,0,0.045v41.914c0,4.356,3.53,7.885,7.885,7.885h288.066 c4.356,0,7.885-3.529,7.885-7.885c0-4.356-3.529-7.885-7.885-7.885H15.77v-26.283h480.46v26.283H347.466 c-4.356,0-7.885,3.529-7.885,7.885c0,4.356,3.529,7.885,7.885,7.885h156.649c4.356,0,7.885-3.529,7.885-7.885v-41.91 c0-0.018,0-0.036,0-0.054v-0.089C512,459.895,511.992,459.832,511.991,459.768z M175.573,117.224 c0-13.043,10.611-23.655,23.655-23.655h14.719c4.355,0,7.885-3.529,7.885-7.885V17.873h68.337v67.811 c0,4.356,3.529,7.885,7.885,7.885h14.719c13.043,0,23.655,10.612,23.655,23.655v6.834H175.573V117.224z M175.573,139.827h160.854 V157.7h-29.963c-4.356,0-7.885,3.529-7.885,7.885c0,4.356,3.529,7.885,7.885,7.885h29.963v17.873h-29.963 c-4.356,0-7.885,3.529-7.885,7.885c0,4.356,3.529,7.885,7.885,7.885h29.963v17.873h-29.963c-4.356,0-7.885,3.529-7.885,7.885 c0,4.356,3.529,7.885,7.885,7.885h29.963v30.489H175.573V139.827z M108.287,287.014h295.425v22.078H108.287V287.014z M18.424,452.074l37.415-127.211h400.324l37.415,127.211H18.424z"></path> </g> </g> <g> <g> <path d="M403.187,346.94H108.813c-4.355,0-7.885,3.529-7.885,7.885v63.08c0,4.356,3.53,7.885,7.885,7.885h294.374 c4.356,0,7.885-3.529,7.885-7.885v-63.08C411.072,350.47,407.543,346.94,403.187,346.94z M395.302,410.021H116.698v-47.31h278.604 V410.021z"></path> </g> </g> <g> <g> <path d="M70.965,363.762c-13.623,0-24.706,11.083-24.706,24.706c0,13.623,11.083,24.706,24.706,24.706 c13.623,0,24.706-11.083,24.706-24.706C95.671,374.845,84.588,363.762,70.965,363.762z M70.965,397.405 c-4.928,0-8.936-4.009-8.936-8.936s4.009-8.936,8.936-8.936s8.936,4.009,8.936,8.936S75.893,397.405,70.965,397.405z"></path> </g> </g> <g> <g> <path d="M441.035,363.762c-13.623,0-24.706,11.083-24.706,24.706c0,13.623,11.083,24.706,24.706,24.706 c13.623,0,24.706-11.083,24.706-24.706C465.741,374.845,454.658,363.762,441.035,363.762z M441.035,397.405 c-4.928,0-8.936-4.009-8.936-8.936s4.01-8.936,8.936-8.936c4.928,0,8.936,4.009,8.936,8.936S445.963,397.405,441.035,397.405z"></path> </g> </g> <g> <g> <path d="M196.074,153.495c-4.355,0-7.885,3.529-7.885,7.885v46.259c0,4.356,3.53,7.885,7.885,7.885s7.885-3.529,7.885-7.885 V161.38C203.959,157.024,200.429,153.495,196.074,153.495z"></path> </g> </g> <g> <g> <path d="M196.074,224.986c-4.355,0-7.885,3.529-7.885,7.885v4.69c0,4.356,3.53,7.885,7.885,7.885s7.885-3.529,7.885-7.885v-4.69 C203.959,228.515,200.429,224.986,196.074,224.986z"></path> </g> </g> </g></svg>
+            <h1>Balance Scales Collection</h1>
+            <p class="balance-hero-description">
+                Precision balance scales for laboratory, analytical, and scientific applications. 
+                Offering exceptional accuracy and reliability for the most demanding measurements.
+            </p>
+            <div class="balance-hero-features">
+                <div class="balance-hero-feature">
+                    <div class="balance-hero-feature-icon">
+                        <svg class="icon" viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="10"/>
+                            <circle cx="12" cy="12" r="6"/>
+                            <circle cx="12" cy="12" r="2"/>
+                        </svg>
+                    </div>
+                    <h3>High Precision</h3>
+                    <p>Exceptional accuracy down to 0.1mg resolution</p>
+                </div>
+                <div class="balance-hero-feature">
+                    <div class="balance-hero-feature-icon">
+                        <svg class="icon" viewBox="0 0 24 24">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        </svg>
+                    </div>
+                    <h3>Laboratory Grade</h3>
+                    <p>Built for scientific and analytical applications</p>
+                </div>
+                <div class="balance-hero-feature">
+                    <div class="balance-hero-feature-icon">
+                        <svg class="icon" viewBox="0 0 24 24">
+                            <path d="M9 12l2 2 4-4"/>
+                            <circle cx="12" cy="12" r="10"/>
+                        </svg>
+                    </div>
+                    <h3>Calibration Ready</h3>
+                    <p>Built-in calibration features for consistent accuracy</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filters Section -->
+    <section class="balance-filters">
+        <div class="balance-filters-container">
+            <div class="balance-filters-top">
+                <div class="balance-search-container">
+                    <svg class="balance-search-icon" viewBox="0 0 24 24">
+                        <circle cx="11" cy="11" r="8"/>
+                        <path d="m21 21-4.35-4.35"/>
+                    </svg>
+                    <input type="text" class="balance-search-input" placeholder="Search balance scales..." id="balanceSearchInput">
+                </div>
+
+                <button class="balance-filter-toggle" onclick="balanceToggleFilters()">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <polygon points="22,3 2,3 10,12.46 10,19 14,21 14,12.46"/>
+                    </svg>
+                    Filters
+                </button>
+
+                <div class="balance-view-sort">
+                    <div class="balance-view-toggle">
+                        <button class="balance-view-btn active" id="balanceGridBtn" onclick="balanceSetViewMode('grid')">
+                            <svg class="icon" viewBox="0 0 24 24">
+                                <rect x="3" y="3" width="7" height="7"/>
+                                <rect x="14" y="3" width="7" height="7"/>
+                                <rect x="14" y="14" width="7" height="7"/>
+                                <rect x="3" y="14" width="7" height="7"/>
+                            </svg>
+                        </button>
+                        <button class="balance-view-btn" id="balanceListBtn" onclick="balanceSetViewMode('list')">
+                            <svg class="icon" viewBox="0 0 24 24">
+                                <line x1="8" y1="6" x2="21" y2="6"/>
+                                <line x1="8" y1="12" x2="21" y2="12"/>
+                                <line x1="8" y1="18" x2="21" y2="18"/>
+                                <line x1="3" y1="6" x2="3.01" y2="6"/>
+                                <line x1="3" y1="12" x2="3.01" y2="12"/>
+                                <line x1="3" y1="18" x2="3.01" y2="18"/>
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <select class="balance-sort-select" id="balanceSortSelect" onchange="balanceSortProducts()">
+                        <option value="name">Name A-Z</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="rating">Highest Rated</option>
+                        <option value="capacity">Capacity</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="balance-filters-row" id="balanceFiltersRow">
+                <select class="balance-filter-select" id="balanceTypeFilter" onchange="balanceFilterProducts()">
+                    <option value="all">All Types</option>
+                    <option value="analytical">Analytical Balance</option>
+                    <option value="precision">Precision Balance</option>
+                    <option value="micro">Micro Balance</option>
+                    <option value="semi-micro">Semi-Micro Balance</option>
+                </select>
+
+                <select class="balance-filter-select" id="balanceCapacityFilter" onchange="balanceFilterProducts()">
+                    <option value="all">All Capacities</option>
+                    <option value="0-100">0-100g</option>
+                    <option value="101-500">101-500g</option>
+                    <option value="501-1000">501-1000g</option>
+                    <option value="1000+">1000g+</option>
+                </select>
+
+                <select class="balance-filter-select" id="balancePriceFilter" onchange="balanceFilterProducts()">
+                    <option value="all">All Prices</option>
+                    <option value="0-500000">₦0-₦500,000</option>
+                    <option value="500001-1000000">₦500,001-₦1,000,000</option>
+                    <option value="1000001-2000000">₦1,000,001-₦2,000,000</option>
+                    <option value="2000000+">₦2,000,000+</option>
+                </select>
+            </div>
+
+            <div class="balance-results-count" id="balanceResultsCount">
+                Showing 6 of 6 products
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="balance-products">
+        <div class="balance-products-container">
+            <div class="balance-products-grid" id="balanceProductsGrid">
+                <!-- Products will be generated by JavaScript -->
+            </div>
+            
+            <div class="no-products hidden" id="balanceNoProducts">
+                <svg class="no-products-icon" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="3"/>
+                    <circle cx="12" cy="12" r="7"/>
+                    <circle cx="12" cy="12" r="11"/>
+                </svg>
+                <h3>No products found</h3>
+                <p>Try adjusting your search or filters</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="balance-benefits">
+        <div class="balance-benefits-container">
+            <h2>Why Choose Balance Scales?</h2>
+            <p class="balance-benefits-description">
+                Precision balance scales provide exceptional accuracy for laboratory and analytical applications
+            </p>
+            
+            <div class="balance-benefits-grid">
+                <div class="balance-benefit-card">
+                    <div class="balance-benefit-icon cyan">
+                        <svg class="icon" viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="10"/>
+                            <circle cx="12" cy="12" r="6"/>
+                            <circle cx="12" cy="12" r="2"/>
+                        </svg>
+                    </div>
+                    <h3 class="balance-benefit-title">Ultra Precision</h3>
+                    <p class="balance-benefit-description">Exceptional accuracy down to 0.1mg for critical measurements</p>
+                </div>
+                
+                <div class="balance-benefit-card">
+                    <div class="balance-benefit-icon blue">
+                        <svg class="icon" viewBox="0 0 24 24">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        </svg>
+                    </div>
+                    <h3 class="balance-benefit-title">Laboratory Grade</h3>
+                    <p class="balance-benefit-description">Built to meet stringent laboratory standards and requirements</p>
+                </div>
+                
+                <div class="balance-benefit-card">
+                    <div class="balance-benefit-icon indigo">
+                        <svg class="icon" viewBox="0 0 24 24">
+                            <path d="M9 12l2 2 4-4"/>
+                            <circle cx="12" cy="12" r="10"/>
+                        </svg>
+                    </div>
+                    <h3 class="balance-benefit-title">Built-in Calibration</h3>
+                    <p class="balance-benefit-description">Automatic calibration features ensure consistent accuracy</p>
+                </div>
+                
+                <div class="balance-benefit-card">
+                    <div class="balance-benefit-icon teal">
+                        <svg class="icon" viewBox="0 0 24 24">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                            <circle cx="8.5" cy="7" r="4"/>
+                            <polyline points="17,11 19,13 23,9"/>
+                        </svg>
+                    </div>
+                    <h3 class="balance-benefit-title">Expert Support</h3>
+                    <p class="balance-benefit-description">Professional installation and calibration services</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="balance-cta">
+        <div class="balance-cta-container">
+            <h2>Need Precision Weighing Solutions?</h2>
+            <p class="balance-cta-description">
+                Our balance scale experts can help you choose the perfect precision instrument for your laboratory
+            </p>
+            <div class="balance-cta-buttons">
+                <button class="balance-cta-btn balance-cta-btn-primary" onclick="balanceHandleWhatsAppClick('I need expert advice on choosing the right balance scale for my laboratory applications')">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                    </svg>
+                    Get Expert Consultation
+                </button>
+                <button class="balance-cta-btn balance-cta-btn-secondary" onclick="balanceHandleWhatsAppClick('Please send me a complete catalog of balance scales with specifications and pricing')">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                    </svg>
+                    Request Catalog
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="balance-contact">
+        <div class="balance-contact-container">
+            <div class="balance-contact-item">
+                <svg class="balance-contact-icon" viewBox="0 0 24 24">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                </svg>
+                <div class="balance-contact-info">
+                    <p>Call Us</p>
+                    <p>+234 803 355 4867</p>
+                </div>
+            </div>
+            <div class="balance-contact-item">
+                <svg class="balance-contact-icon" viewBox="0 0 24 24">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                    <polyline points="22,6 12,13 2,6"/>
+                </svg>
+                <div class="balance-contact-info">
+                    <p>Email</p>
+                    <p>info@mimelectronics.com</p>
+                </div>
+            </div>
+            <div class="balance-contact-item">
+                <svg class="balance-contact-icon" viewBox="0 0 24 24">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                    <circle cx="12" cy="10" r="3"/>
+                </svg>
+                <div class="balance-contact-info">
+                    <p>Location</p>
+                    <p>Lagos, Nigeria</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Floating WhatsApp Button -->
+    <div class="balance-whatsapp-float">
+        <button class="balance-whatsapp-btn" onclick="balanceHandleWhatsAppClick()">
+            <svg class="icon" viewBox="0 0 24 24">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+            </svg>
+        </button>
+    </div>
+
+    <script>
+        const balanceWhatsappNumber = "+2348033554867";
+        
+        const balanceScalesProducts = [
+            {
+                id: 1,
+                name: "Analytical Balance 220g x 0.1mg",
+                type: "analytical",
+                capacity: 220,
+                price: 1299999,
+                originalPrice: 1699999,
+                rating: 4.9,
+                reviews: 145,
+                image: "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=400&h=300&fit=crop",
+                badge: "ANALYTICAL",
+                badgeColor: "background: #0891b2;",
+                inStock: true,
+                features: ["0.1mg Readability", "Internal Calibration", "Anti-Draft Chamber", "Data Interface"],
+                specifications: {
+                    capacity: "220g",
+                    readability: "0.1mg",
+                    pan: "90mm diameter",
+                    calibration: "Internal",
+                    warranty: "3 Years"
+                },
+                description: "High-precision analytical balance for laboratory applications requiring exceptional accuracy and reliability."
+            },
+            {
+                id: 2,
+                name: "Precision Balance 5200g x 0.01g",
+                type: "precision",
+                capacity: 5200,
+                price: 899999,
+                originalPrice: 1199999,
+                rating: 4.8,
+                reviews: 98,
+                image: "https://images.unsplash.com/photo-1574634534894-89d7576c8259?w=400&h=300&fit=crop",
+                badge: "PRECISION",
+                badgeColor: "background: #2563eb;",
+                inStock: true,
+                features: ["0.01g Precision", "Large Capacity", "Multiple Units", "RS232 Interface"],
+                specifications: {
+                    capacity: "5200g",
+                    readability: "0.01g",
+                    pan: "180mm x 180mm",
+                    calibration: "External",
+                    warranty: "2 Years"
+                },
+                description: "High-capacity precision balance ideal for industrial and research applications requiring accurate measurements."
+            },
+            {
+                id: 3,
+                name: "Micro Balance 5.1g x 0.001mg",
+                type: "micro",
+                capacity: 5.1,
+                price: 2499999,
+                originalPrice: 3299999,
+                rating: 4.9,
+                reviews: 67,
+                image: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=400&h=300&fit=crop",
+                badge: "ULTRA PRECISION",
+                badgeColor: "background: #7c3aed;",
+                inStock: false,
+                features: ["0.001mg Resolution", "Vibration Filter", "Ionizer", "Climate Module"],
+                specifications: {
+                    capacity: "5.1g",
+                    readability: "0.001mg",
+                    pan: "26mm diameter",
+                    calibration: "Automatic Internal",
+                    warranty: "5 Years"
+                },
+                description: "Ultra-high precision micro balance for the most demanding analytical applications and research work."
+            },
+            {
+                id: 4,
+                name: "Semi-Micro Balance 120g x 0.01mg",
+                type: "semi-micro",
+                capacity: 120,
+                price: 1899999,
+                originalPrice: 2499999,
+                rating: 4.7,
+                reviews: 89,
+                image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop",
+                badge: "SEMI-MICRO",
+                badgeColor: "background: #059669;",
+                inStock: true,
+                features: ["0.01mg Readability", "Dual Range", "Built-in Ionizer", "Touch Screen"],
+                specifications: {
+                    capacity: "120g",
+                    readability: "0.01mg",
+                    pan: "80mm diameter",
+                    calibration: "Motorized Internal",
+                    warranty: "3 Years"
+                },
+                description: "Advanced semi-micro balance combining high precision with user-friendly operation for laboratory environments."
+            },
+            {
+                id: 5,
+                name: "Laboratory Balance 2200g x 0.01g",
+                type: "precision",
+                capacity: 2200,
+                price: 649999,
+                originalPrice: 849999,
+                rating: 4.6,
+                reviews: 156,
+                image: "https://images.unsplash.com/photo-1586864387967-d02ef85d93e8?w=400&h=300&fit=crop",
+                badge: "LABORATORY",
+                badgeColor: "background: #f97316;",
+                inStock: true,
+                features: ["Color Touch Display", "Multiple Applications", "Draft Shield", "Ethernet Connection"],
+                specifications: {
+                    capacity: "2200g",
+                    readability: "0.01g",
+                    pan: "160mm diameter",
+                    calibration: "External",
+                    warranty: "2 Years"
+                },
+                description: "Versatile laboratory balance with modern features and connectivity options for efficient workflow integration."
+            },
+            {
+                id: 6,
+                name: "Compact Analytical Balance 120g x 0.1mg",
+                type: "analytical",
+                capacity: 120,
+                price: 999999,
+                originalPrice: 1299999,
+                rating: 4.8,
+                reviews: 123,
+                image: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=400&h=300&fit=crop",
+                badge: "COMPACT",
+                badgeColor: "background: #dc2626;",
+                inStock: true,
+                features: ["Space Saving Design", "Fast Stabilization", "Memory Storage", "USB Interface"],
+                specifications: {
+                    capacity: "120g",
+                    readability: "0.1mg",
+                    pan: "85mm diameter",
+                    calibration: "Internal",
+                    warranty: "3 Years"
+                },
+                description: "Compact analytical balance perfect for laboratories with limited space while maintaining high precision and reliability."
+            }
+        ];
+
+        let balanceCurrentViewMode = 'grid';
+        let balanceFilteredProducts = [...balanceScalesProducts];
+        let balanceFiltersVisible = false;
+
+        function balanceHandleWhatsAppClick(message = "Hello! I'm interested in your balance scales. Can you help me?") {
+            const encodedMessage = encodeURIComponent(message);
+            const url = `https://wa.me/${balanceWhatsappNumber}?text=${encodedMessage}`;
+            window.open(url, '_blank');
+        }
+
+        function balanceHandleProductInquiry(product) {
+            const message = `I'm interested in the ${product.name} (${product.specifications.capacity}). Price: ₦${product.price.toLocaleString()}. Can you provide more details and availability?`;
+            balanceHandleWhatsAppClick(message);
+        }
+
+        function balanceSetViewMode(mode) {
+            balanceCurrentViewMode = mode;
+            const gridBtn = document.getElementById('balanceGridBtn');
+            const listBtn = document.getElementById('balanceListBtn');
+            const productsGrid = document.getElementById('balanceProductsGrid');
+
+            if (mode === 'grid') {
+                gridBtn.classList.add('active');
+                listBtn.classList.remove('active');
+                productsGrid.classList.remove('list-view');
+            } else {
+                listBtn.classList.add('active');
+                gridBtn.classList.remove('active');
+                productsGrid.classList.add('list-view');
+            }
+
+            balanceRenderProducts();
+        }
+
+        function balanceToggleFilters() {
+            balanceFiltersVisible = !balanceFiltersVisible;
+            const filtersRow = document.getElementById('balanceFiltersRow');
+            if (balanceFiltersVisible) {
+                filtersRow.classList.remove('hidden');
+            } else {
+                filtersRow.classList.add('hidden');
+            }
+        }
+
+        function balanceFilterProducts() {
+            const searchQuery = document.getElementById('balanceSearchInput').value.toLowerCase();
+            const typeFilter = document.getElementById('balanceTypeFilter').value;
+            const capacityFilter = document.getElementById('balanceCapacityFilter').value;
+            const priceFilter = document.getElementById('balancePriceFilter').value;
+
+            balanceFilteredProducts = balanceScalesProducts.filter(product => {
+                const matchesSearch = product.name.toLowerCase().includes(searchQuery) ||
+                                    product.description.toLowerCase().includes(searchQuery);
+                const matchesType = typeFilter === 'all' || product.type === typeFilter;
+
+                let matchesCapacity = true;
+                if (capacityFilter !== 'all') {
+                    const capacity = product.capacity;
+                    switch (capacityFilter) {
+                        case '0-100':
+                            matchesCapacity = capacity <= 100;
+                            break;
+                        case '101-500':
+                            matchesCapacity = capacity > 100 && capacity <= 500;
+                            break;
+                        case '501-1000':
+                            matchesCapacity = capacity > 500 && capacity <= 1000;
+                            break;
+                        case '1000+':
+                            matchesCapacity = capacity > 1000;
+                            break;
+                    }
+                }
+
+                let matchesPrice = true;
+                if (priceFilter !== 'all') {
+                    const price = product.price;
+                    switch (priceFilter) {
+                        case '0-500000':
+                            matchesPrice = price <= 500000;
+                            break;
+                        case '500001-1000000':
+                            matchesPrice = price > 500000 && price <= 1000000;
+                            break;
+                        case '1000001-2000000':
+                            matchesPrice = price > 1000000 && price <= 2000000;
+                            break;
+                        case '2000000+':
+                            matchesPrice = price > 2000000;
+                            break;
+                    }
+                }
+
+                return matchesSearch && matchesType && matchesCapacity && matchesPrice;
+            });
+
+            balanceSortProducts();
+            balanceRenderProducts();
+            balanceUpdateResultsCount();
+        }
+
+        function balanceSortProducts() {
+            const sortBy = document.getElementById('balanceSortSelect').value;
+
+            balanceFilteredProducts.sort((a, b) => {
+                switch (sortBy) {
+                    case 'price-low':
+                        return a.price - b.price;
+                    case 'price-high':
+                        return b.price - a.price;
+                    case 'rating':
+                        return b.rating - a.rating;
+                    case 'capacity':
+                        return a.capacity - b.capacity;
+                    default:
+                        return a.name.localeCompare(b.name);
+                }
+            });
+        }
+
+        function balanceUpdateResultsCount() {
+            const resultsCount = document.getElementById('balanceResultsCount');
+            resultsCount.textContent = `Showing ${balanceFilteredProducts.length} of ${balanceScalesProducts.length} products`;
+        }
+
+        function balanceRenderProducts() {
+            const productsGrid = document.getElementById('balanceProductsGrid');
+            const noProducts = document.getElementById('balanceNoProducts');
+
+            if (balanceFilteredProducts.length === 0) {
+                productsGrid.style.display = 'none';
+                noProducts.classList.remove('hidden');
+                return;
+            }
+
+            productsGrid.style.display = 'grid';
+            noProducts.classList.add('hidden');
+
+            productsGrid.innerHTML = balanceFilteredProducts.map(product => `
+                <div class="balance-product-card ${balanceCurrentViewMode === 'list' ? 'list-view' : ''}">
+                    <div class="balance-product-image-container">
+                        <img src="${product.image}" alt="${product.name}" class="balance-product-image">
+                        <div class="balance-product-badge" style="${product.badgeColor}">
+                            ${product.badge}
+                        </div>
+                        ${!product.inStock ? `
+                            <div style="position: absolute; inset: 0; background: rgba(0, 0, 0, 0.5); display: flex; align-items: center; justify-content: center;">
+                                <div style="background: #dc2626; color: white; padding: 0.25rem 0.5rem; border-radius: 0.25rem; font-size: 0.75rem; font-weight: 600;">
+                                    Out of Stock
+                                </div>
+                            </div>
+                        ` : ''}
+                        <div class="balance-product-actions">
+                            <button class="balance-product-action-btn">
+                                <svg class="icon" viewBox="0 0 24 24">
+                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                                </svg>
+                            </button>
+                            <button class="balance-product-action-btn">
+                                <svg class="icon" viewBox="0 0 24 24">
+                                    <circle cx="18" cy="5" r="3"/>
+                                    <circle cx="6" cy="12" r="3"/>
+                                    <circle cx="18" cy="19" r="3"/>
+                                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+                                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="balance-product-content">
+                        <div class="balance-product-header">
+                            <div class="balance-product-category">${product.type.charAt(0).toUpperCase() + product.type.slice(1)}</div>
+                            <div class="balance-product-rating">
+                                <svg class="icon icon-filled" style="color: #fbbf24; width: 1rem; height: 1rem;" viewBox="0 0 24 24">
+                                    <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/>
+                                </svg>
+                                <span>${product.rating}</span>
+                                <span style="color: #9ca3af;">(${product.reviews})</span>
+                            </div>
+                        </div>
+
+                        <h3 class="balance-product-name">${product.name}</h3>
+                        <p class="balance-product-description">${product.description}</p>
+
+                        <div class="balance-product-features">
+                            <h4>Key Features:</h4>
+                            <div class="balance-product-features-list">
+                                ${product.features.slice(0, 2).map(feature => 
+                                    `<span class="balance-product-feature-tag">${feature}</span>`
+                                ).join('')}
+                                ${product.features.length > 2 ? 
+                                    `<span class="balance-product-feature-tag">+${product.features.length - 2} more</span>` 
+                                    : ''
+                                }
+                            </div>
+                        </div>
+
+                        <div class="balance-product-specs">
+                            <div class="balance-product-specs-grid">
+                                <div class="balance-product-spec">Capacity:<span>${product.specifications.capacity}</span></div>
+                                <div class="balance-product-spec">Readability:<span>${product.specifications.readability}</span></div>
+                            </div>
+                        </div>
+
+                        <div class="balance-product-price-stock">
+                            <div class="balance-product-price">
+                                <span class="balance-product-current-price">₦${product.price.toLocaleString()}</span>
+                                <span class="balance-product-original-price">₦${product.originalPrice.toLocaleString()}</span>
+                            </div>
+                            <div class="balance-product-stock ${product.inStock ? 'in-stock' : 'out-of-stock'}">
+                                ${product.inStock ? `
+                                    <svg class="icon" style="width: 1rem; height: 1rem;" viewBox="0 0 24 24">
+                                        <path d="M9 12l2 2 4-4"/>
+                                        <circle cx="12" cy="12" r="10"/>
+                                    </svg>
+                                    In Stock
+                                ` : 'Out of Stock'}
+                            </div>
+                        </div>
+
+                        <div class="balance-product-buttons">
+                            <button class="balance-product-btn balance-product-btn-primary" ${!product.inStock ? 'disabled' : ''} onclick="balanceHandleProductInquiry(${JSON.stringify(product).replace(/"/g, '&quot;')})">
+                                <svg class="icon" viewBox="0 0 24 24">
+                                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                                </svg>
+                                Inquire Now
+                            </button>
+                            <button class="balance-product-btn balance-product-btn-secondary">
+                                <svg class="icon" viewBox="0 0 24 24">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                    <circle cx="12" cy="12" r="3"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        document.getElementById('balanceSearchInput').addEventListener('input', balanceFilterProducts);
+
+        document.addEventListener('DOMContentLoaded', function() {
+            balanceRenderProducts();
+            balanceUpdateResultsCount();
+        });
+
+        window.addEventListener('resize', function() {
+            if (window.innerWidth >= 768) {
+                document.getElementById('balanceFiltersRow').classList.remove('hidden');
+                balanceFiltersVisible = true;
+            } else {
+                if (!balanceFiltersVisible) {
+                    document.getElementById('balanceFiltersRow').classList.add('hidden');
+                }
+            }
+        });
+    </script>
+</body>
+</html>
