@@ -1,0 +1,1377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results - MIM Electronics Enterprise</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #3b82f6;
+            --secondary-color: #f59e0b;
+            --success-color: #10b981;
+            --danger-color: #ef4444;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            --orange-500: #f97316;
+            --orange-600: #ea580c;
+            --green-500: #22c55e;
+            --green-600: #16a34a;
+            --red-500: #ef4444;
+            --red-600: #dc2626;
+            --blue-500: #3b82f6;
+            --blue-600: #2563eb;
+            --purple-500: #a855f7;
+            --cyan-500: #06b6d4;
+            --yellow-400: #facc15;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--gray-900);
+            background-color: #ffffff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Header Styles */
+        .header {
+            background: white;
+            border-bottom: 1px solid var(--gray-200);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 0;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            border: 1px solid var(--gray-200);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        }
+
+        .logo img {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+        }
+
+        .logo-text h1 {
+            font-size: 1.125rem;
+            font-weight: 500;
+            color: var(--gray-900);
+        }
+
+        .logo-text p {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s;
+            font-size: 0.875rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--blue-600);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--gray-300);
+            color: var(--gray-700);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--gray-50);
+        }
+
+        .btn-sm {
+            padding: 0.25rem 0.75rem;
+            font-size: 0.75rem;
+        }
+
+        .btn-lg {
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+        }
+
+        /* Search Section */
+        .search-section {
+            background: var(--gray-50);
+            border-bottom: 1px solid var(--gray-200);
+            padding: 1.5rem 0;
+        }
+
+        .search-container {
+            max-width: 32rem;
+            margin: 0 auto;
+        }
+
+        .search-input-container {
+            position: relative;
+            margin-bottom: 0.5rem;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 3rem;
+            border: 1px solid var(--gray-300);
+            border-radius: 0.5rem;
+            font-size: 1.125rem;
+            height: 3rem;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-400);
+            width: 1.25rem;
+            height: 1.25rem;
+        }
+
+        .clear-search {
+            position: absolute;
+            right: 0.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--gray-400);
+            cursor: pointer;
+            padding: 0.25rem;
+            border-radius: 0.25rem;
+        }
+
+        .clear-search:hover {
+            color: var(--gray-600);
+        }
+
+        .search-help-text {
+            text-align: center;
+            font-size: 0.875rem;
+            color: var(--gray-600);
+        }
+
+        .popular-searches {
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .popular-searches p {
+            font-size: 0.875rem;
+            color: var(--gray-500);
+            margin-bottom: 0.5rem;
+        }
+
+        .popular-tags {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        /* Filter Section */
+        .filter-section {
+            background: white;
+            border-bottom: 1px solid var(--gray-200);
+            padding: 1rem 0;
+        }
+
+        .filter-header {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .filter-info {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+        }
+
+        .filter-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .view-toggle {
+            display: flex;
+            border: 1px solid var(--gray-300);
+            border-radius: 0.375rem;
+            overflow: hidden;
+        }
+
+        .view-btn {
+            padding: 0.5rem;
+            border: none;
+            background: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .view-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .select-container {
+            position: relative;
+            min-width: 12rem;
+        }
+
+        .select {
+            width: 100%;
+            padding: 0.5rem 2rem 0.5rem 0.75rem;
+            border: 1px solid var(--gray-300);
+            border-radius: 0.375rem;
+            background: white;
+            cursor: pointer;
+            appearance: none;
+        }
+
+        .filter-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .filter-toggle {
+            display: none;
+        }
+
+        .filter-row.hidden {
+            display: none;
+        }
+
+        /* Products Grid */
+        .products-section {
+            padding: 2rem 0;
+        }
+
+        .products-grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .products-grid.grid-view {
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        }
+
+        .products-grid.list-view {
+            grid-template-columns: 1fr;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+            overflow: hidden;
+            border: 1px solid var(--gray-200);
+        }
+
+        .product-card:hover {
+            box-shadow: 0 10px 25px 0 rgba(0, 0, 0, 0.15);
+        }
+
+        .list-view .product-card {
+            display: flex;
+        }
+
+        .product-image {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 1;
+        }
+
+        .list-view .product-image {
+            width: 16rem;
+            flex-shrink: 0;
+            aspect-ratio: auto;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 0.75rem;
+            left: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .badge-green { background-color: var(--success-color); }
+        .badge-red { background-color: var(--red-500); }
+        .badge-blue { background-color: var(--blue-500); }
+        .badge-cyan { background-color: var(--cyan-500); }
+
+        .product-actions {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            display: flex;
+            gap: 0.5rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .product-card:hover .product-actions {
+            opacity: 1;
+        }
+
+        .action-btn {
+            width: 2rem;
+            height: 2rem;
+            border: none;
+            border-radius: 0.25rem;
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--gray-600);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .product-content {
+            padding: 1.5rem;
+            flex: 1;
+        }
+
+        .product-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .category-badge {
+            padding: 0.125rem 0.5rem;
+            background-color: var(--gray-100);
+            color: var(--gray-700);
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .star {
+            width: 1rem;
+            height: 1rem;
+            fill: var(--yellow-400);
+            color: var(--yellow-400);
+        }
+
+        .rating-text {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+        }
+
+        .reviews-count {
+            font-size: 0.75rem;
+            color: var(--gray-400);
+        }
+
+        .product-title {
+            font-size: 1.125rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--gray-900);
+            line-height: 1.4;
+        }
+
+        .product-card:hover .product-title {
+            color: var(--primary-color);
+        }
+
+        .product-description {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            margin-bottom: 0.75rem;
+            line-height: 1.5;
+        }
+
+        .product-pricing {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .price-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .current-price {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .original-price {
+            font-size: 0.875rem;
+            color: var(--gray-500);
+            text-decoration: line-through;
+        }
+
+        .stock-status {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.875rem;
+        }
+
+        .stock-in {
+            color: var(--success-color);
+        }
+
+        .stock-out {
+            color: var(--red-500);
+        }
+
+        .product-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-inquire {
+            flex: 1;
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-inquire:hover {
+            background-color: var(--blue-600);
+        }
+
+        .btn-inquire:disabled {
+            background-color: var(--gray-400);
+            cursor: not-allowed;
+        }
+
+        .btn-view {
+            padding: 0.5rem 0.75rem;
+            background: transparent;
+            border: 1px solid var(--gray-300);
+            color: var(--gray-600);
+        }
+
+        /* No Results */
+        .no-results {
+            text-align: center;
+            padding: 3rem 0;
+        }
+
+        .no-results-icon {
+            width: 4rem;
+            height: 4rem;
+            color: var(--gray-300);
+            margin: 0 auto 1rem;
+        }
+
+        .no-results h3 {
+            font-size: 1.25rem;
+            color: var(--gray-500);
+            margin-bottom: 0.5rem;
+        }
+
+        .no-results p {
+            color: var(--gray-400);
+            margin-bottom: 1rem;
+        }
+
+        /* Floating WhatsApp Button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            z-index: 50;
+        }
+
+        .whatsapp-btn {
+            width: 4rem;
+            height: 4rem;
+            background-color: var(--green-500);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            box-shadow: 0 10px 25px 0 rgba(34, 197, 94, 0.3);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            animation: pulse 2s infinite;
+        }
+
+        .whatsapp-btn:hover {
+            background-color: var(--green-600);
+            box-shadow: 0 15px 35px 0 rgba(34, 197, 94, 0.4);
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Icons */
+        .icon {
+            width: 1rem;
+            height: 1rem;
+            display: inline-block;
+        }
+
+        .icon-lg {
+            width: 2rem;
+            height: 2rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .filter-header {
+                align-items: stretch;
+            }
+
+            .filter-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .view-toggle {
+                align-self: flex-start;
+            }
+
+            .filter-toggle {
+                display: block;
+            }
+
+            .filter-row {
+                grid-template-columns: 1fr;
+            }
+
+            .list-view .product-card {
+                flex-direction: column;
+            }
+
+            .list-view .product-image {
+                width: 100%;
+                aspect-ratio: 1;
+            }
+
+            .header-content {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .filter-header {
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            .filter-row {
+                display: grid !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-section">
+                    <button class="btn btn-outline btn-sm" id="backToHome">
+                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                        </svg>
+                        Back to Home
+                    </button>
+                    <div class="logo-section">
+                        <div class="logo">
+                            <img src="https://images.unsplash.com/photo-1560472355-536de3962603?w=40&h=40&fit=crop&crop=center" alt="MIM Electronics Logo">
+                        </div>
+                        <div class="logo-text">
+                            <h1>MIM Electronics</h1>
+                            <p>Search Results</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <button class="btn btn-outline btn-sm" id="getHelp">
+                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                        </svg>
+                        Get Help
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Search Bar -->
+    <section class="search-section">
+        <div class="container">
+            <div class="search-container">
+                <div class="search-input-container">
+                    <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                    <input type="text" id="searchInput" class="search-input" placeholder="Search for scales, parts, and equipment...">
+                    <button class="clear-search" id="clearSearch" style="display: none;">
+                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+                <p class="search-help-text">
+                    Search across all categories: Analog Scales, Platform Scales, Crane Scales, and more...
+                </p>
+                
+                <!-- Popular Searches -->
+                <div class="popular-searches" id="popularSearches">
+                    <p>Popular searches:</p>
+                    <div class="popular-tags">
+                        <button class="btn btn-outline btn-sm popular-tag">platform scale</button>
+                        <button class="btn btn-outline btn-sm popular-tag">analog scale</button>
+                        <button class="btn btn-outline btn-sm popular-tag">weighbridge</button>
+                        <button class="btn btn-outline btn-sm popular-tag">loadcell</button>
+                        <button class="btn btn-outline btn-sm popular-tag">crane scale</button>
+                        <button class="btn btn-outline btn-sm popular-tag">pricing scale</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filters -->
+    <section class="filter-section">
+        <div class="container">
+            <div class="filter-header">
+                <!-- Results Count -->
+                <div class="filter-info">
+                    <span id="resultsInfo">Showing 16 of 16 products</span>
+                </div>
+
+                <!-- Filter Toggle -->
+                <button class="btn btn-outline filter-toggle" id="filterToggle">
+                    <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
+                    </svg>
+                    Filters
+                </button>
+
+                <!-- View Mode and Sort -->
+                <div class="filter-controls">
+                    <div class="view-toggle">
+                        <button class="view-btn active" id="gridView">
+                            <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
+                            </svg>
+                        </button>
+                        <button class="view-btn" id="listView">
+                            <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <div class="select-container">
+                        <select id="sortBy" class="select">
+                            <option value="relevance">Most Relevant</option>
+                            <option value="name">Name A-Z</option>
+                            <option value="price-low">Price: Low to High</option>
+                            <option value="price-high">Price: High to Low</option>
+                            <option value="rating">Highest Rated</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filters Row -->
+            <div class="filter-row" id="filterRow">
+                <div class="select-container">
+                    <select id="categoryFilter" class="select">
+                        <option value="All">All Categories</option>
+                        <option value="Analog Scales">Analog Scales</option>
+                        <option value="Platform Scales">Platform Scales</option>
+                        <option value="Crane Scales">Crane Scales</option>
+                        <option value="Pricing Scales">Pricing Scales</option>
+                        <option value="Balance Scales">Balance Scales</option>
+                        <option value="Weighbridge Scales">Weighbridge Scales</option>
+                        <option value="Loadcell & Scale Parts">Loadcell & Scale Parts</option>
+                    </select>
+                </div>
+
+                <div class="select-container">
+                    <select id="priceFilter" class="select">
+                        <option value="All">All Price Ranges</option>
+                        <option value="₦0-₦100,000">₦0-₦100,000</option>
+                        <option value="₦100,001-₦500,000">₦100,001-₦500,000</option>
+                        <option value="₦500,001-₦1,000,000">₦500,001-₦1,000,000</option>
+                        <option value="₦1,000,000+">₦1,000,000+</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search Results -->
+    <section class="products-section">
+        <div class="container">
+            <div id="productsContainer">
+                <div id="productsGrid" class="products-grid grid-view">
+                    <!-- Products will be inserted here -->
+                </div>
+
+                <!-- No Results -->
+                <div id="noResults" class="no-results" style="display: none;">
+                    <svg class="no-results-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                    <h3 id="noResultsTitle">No results found</h3>
+                    <p id="noResultsText">Try adjusting your search terms or filters</p>
+                    <button class="btn btn-outline" id="clearFilters">Clear All Filters</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Floating WhatsApp Button -->
+    <div class="whatsapp-float">
+        <button class="whatsapp-btn" id="whatsappFloat">
+            <svg class="icon-lg" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.700"/>
+            </svg>
+        </button>
+    </div>
+
+    <script>
+        // Product Database
+        const allProducts = [
+            {
+                id: "analog-1",
+                name: "Classic Analog Platform Scale 100kg",
+                category: "Analog Scales",
+                subcategory: "Platform",
+                capacity: "100kg",
+                price: 89999,
+                originalPrice: 120000,
+                rating: 4.8,
+                reviews: 156,
+                image: "https://images.unsplash.com/photo-1574634534894-89d7576c8259?w=400&h=300&fit=crop",
+                badge: "BESTSELLER",
+                badgeColor: "badge-green",
+                inStock: true,
+                description: "Reliable mechanical platform scale perfect for markets, warehouses, and industrial applications."
+            },
+            {
+                id: "analog-2",
+                name: "Heavy Duty Analog Floor Scale 300kg",
+                category: "Analog Scales",
+                subcategory: "Floor Scale",
+                capacity: "300kg",
+                price: 149999,
+                originalPrice: 199999,
+                rating: 4.9,
+                reviews: 89,
+                image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop",
+                badge: "25% OFF",
+                badgeColor: "badge-red",
+                inStock: true,
+                description: "Industrial-grade floor scale designed for heavy-duty applications."
+            },
+            {
+                id: "analog-3",
+                name: "Portable Analog Hanging Scale 50kg",
+                category: "Analog Scales",
+                subcategory: "Hanging Scale",
+                capacity: "50kg",
+                price: 45999,
+                originalPrice: 65000,
+                rating: 4.6,
+                reviews: 234,
+                image: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=400&h=300&fit=crop",
+                badge: "PORTABLE",
+                badgeColor: "badge-blue",
+                inStock: true,
+                description: "Compact and portable hanging scale ideal for farms, markets, and field applications."
+            },
+            {
+                id: "platform-1",
+                name: "Industrial Floor Platform Scale 500kg",
+                category: "Platform Scales",
+                subcategory: "Floor Platform",
+                capacity: "500kg",
+                price: 299999,
+                originalPrice: 399999,
+                rating: 4.8,
+                reviews: 156,
+                image: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=400&h=300&fit=crop",
+                badge: "BESTSELLER",
+                badgeColor: "badge-green",
+                inStock: true,
+                description: "Heavy-duty floor platform scale designed for industrial applications."
+            },
+            {
+                id: "platform-2",
+                name: "Bench Platform Scale 150kg",
+                category: "Platform Scales",
+                subcategory: "Bench Platform",
+                capacity: "150kg",
+                price: 189999,
+                originalPrice: 249999,
+                rating: 4.7,
+                reviews: 89,
+                image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop",
+                badge: "25% OFF",
+                badgeColor: "badge-red",
+                inStock: true,
+                description: "Versatile bench platform scale perfect for laboratory and industrial weighing applications."
+            },
+            {
+                id: "crane-1",
+                name: "Wireless Crane Scale 5T",
+                category: "Crane Scales",
+                subcategory: "Wireless",
+                capacity: "5T",
+                price: 899999,
+                originalPrice: 1199999,
+                rating: 4.8,
+                reviews: 156,
+                image: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=400&h=300&fit=crop",
+                badge: "WIRELESS",
+                badgeColor: "badge-blue",
+                inStock: true,
+                description: "Advanced wireless crane scale with remote display capability."
+            },
+            {
+                id: "crane-2",
+                name: "Heavy Duty Crane Scale 10T",
+                category: "Crane Scales",
+                subcategory: "Heavy Duty",
+                capacity: "10T",
+                price: 1499999,
+                originalPrice: 1999999,
+                rating: 4.9,
+                reviews: 89,
+                image: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=400&h=300&fit=crop",
+                badge: "HEAVY DUTY",
+                badgeColor: "badge-red",
+                inStock: true,
+                description: "Heavy-duty crane scale designed for extreme lifting applications."
+            },
+            {
+                id: "pricing-1",
+                name: "Digital Retail Pricing Scale 30kg",
+                category: "Pricing Scales",
+                subcategory: "Retail",
+                capacity: "30kg",
+                price: 159999,
+                originalPrice: 199999,
+                rating: 4.8,
+                reviews: 234,
+                image: "https://images.unsplash.com/photo-1586864387967-d02ef85d93e8?w=400&h=300&fit=crop",
+                badge: "BESTSELLER",
+                badgeColor: "badge-green",
+                inStock: true,
+                description: "Perfect digital pricing scale for retail environments with dual display."
+            },
+            {
+                id: "pricing-2",
+                name: "Commercial Pricing Scale 60kg",
+                category: "Pricing Scales",
+                subcategory: "Commercial",
+                capacity: "60kg",
+                price: 229999,
+                originalPrice: 299999,
+                rating: 4.7,
+                reviews: 156,
+                image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop",
+                badge: "COMMERCIAL",
+                badgeColor: "badge-blue",
+                inStock: true,
+                description: "Heavy-duty commercial pricing scale with advanced features."
+            },
+            {
+                id: "balance-1",
+                name: "Analytical Balance 220g x 0.1mg",
+                category: "Balance Scales",
+                subcategory: "Analytical",
+                capacity: "220g",
+                price: 1299999,
+                originalPrice: 1699999,
+                rating: 4.9,
+                reviews: 145,
+                image: "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=400&h=300&fit=crop",
+                badge: "ANALYTICAL",
+                badgeColor: "badge-cyan",
+                inStock: true,
+                description: "High-precision analytical balance for laboratory applications."
+            },
+            {
+                id: "balance-2",
+                name: "Precision Balance 5200g x 0.01g",
+                category: "Balance Scales",
+                subcategory: "Precision",
+                capacity: "5200g",
+                price: 899999,
+                originalPrice: 1199999,
+                rating: 4.8,
+                reviews: 98,
+                image: "https://images.unsplash.com/photo-1574634534894-89d7576c8259?w=400&h=300&fit=crop",
+                badge: "PRECISION",
+                badgeColor: "badge-blue",
+                inStock: true,
+                description: "High-capacity precision balance for industrial and research applications."
+            },
+            {
+                id: "weighbridge-1",
+                name: "Truck Weighbridge 60T - 18m x 3m",
+                category: "Weighbridge Scales",
+                subcategory: "Truck Weighbridge",
+                capacity: "60T",
+                price: 8999999,
+                originalPrice: 12999999,
+                rating: 4.8,
+                reviews: 67,
+                image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop",
+                badge: "BESTSELLER",
+                badgeColor: "badge-green",
+                inStock: true,
+                description: "Heavy-duty truck weighbridge for accurate vehicle weighing."
+            },
+            {
+                id: "weighbridge-2",
+                name: "Industrial Weighbridge 80T - 21m x 3.5m",
+                category: "Weighbridge Scales",
+                subcategory: "Industrial",
+                capacity: "80T",
+                price: 12999999,
+                originalPrice: 16999999,
+                rating: 4.9,
+                reviews: 45,
+                image: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=400&h=300&fit=crop",
+                badge: "INDUSTRIAL",
+                badgeColor: "badge-red",
+                inStock: true,
+                description: "Ultra heavy-duty weighbridge for industrial applications."
+            },
+            {
+                id: "parts-1",
+                name: "Single Point Loadcell 500kg",
+                category: "Loadcell & Scale Parts",
+                subcategory: "Loadcells",
+                capacity: "500kg",
+                price: 89999,
+                originalPrice: 119999,
+                rating: 4.7,
+                reviews: 123,
+                image: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=400&h=300&fit=crop",
+                badge: "BESTSELLER",
+                badgeColor: "badge-green",
+                inStock: true,
+                description: "High-quality single point loadcell for platform and bench scales."
+            },
+            {
+                id: "parts-2",
+                name: "Digital Indicator Display",
+                category: "Loadcell & Scale Parts",
+                subcategory: "Displays",
+                capacity: "N/A",
+                price: 159999,
+                originalPrice: 199999,
+                rating: 4.6,
+                reviews: 89,
+                image: "https://images.unsplash.com/photo-1586864387967-d02ef85d93e8?w=400&h=300&fit=crop",
+                badge: "DIGITAL",
+                badgeColor: "badge-blue",
+                inStock: true,
+                description: "Professional digital weight indicator with advanced features."
+            }
+        ];
+
+        // State
+        let currentSearchQuery = '';
+        let currentCategory = 'All';
+        let currentPriceRange = 'All';
+        let currentSort = 'relevance';
+        let currentView = 'grid';
+        let filteredProducts = [...allProducts];
+
+        const whatsappNumber = "+2348033554867";
+
+        // DOM Elements
+        const searchInput = document.getElementById('searchInput');
+        const clearSearch = document.getElementById('clearSearch');
+        const categoryFilter = document.getElementById('categoryFilter');
+        const priceFilter = document.getElementById('priceFilter');
+        const sortBy = document.getElementById('sortBy');
+        const gridView = document.getElementById('gridView');
+        const listView = document.getElementById('listView');
+        const productsGrid = document.getElementById('productsGrid');
+        const noResults = document.getElementById('noResults');
+        const resultsInfo = document.getElementById('resultsInfo');
+        const popularSearches = document.getElementById('popularSearches');
+        const filterToggle = document.getElementById('filterToggle');
+        const filterRow = document.getElementById('filterRow');
+        const clearFilters = document.getElementById('clearFilters');
+
+        // WhatsApp Functions
+        function handleWhatsAppClick(message = "Hello! I'm interested in your products. Can you help me?") {
+            const encodedMessage = encodeURIComponent(message);
+            window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
+        }
+
+        function handleProductInquiry(product) {
+            const message = `I'm interested in the ${product.name} (${product.capacity}). Price: ₦${product.price.toLocaleString()}. Can you provide more details and availability?`;
+            handleWhatsAppClick(message);
+        }
+
+        // Filter Functions
+        function filterProducts() {
+            return allProducts.filter(product => {
+                const matchesSearch = currentSearchQuery === "" || 
+                    product.name.toLowerCase().includes(currentSearchQuery.toLowerCase()) ||
+                    product.category.toLowerCase().includes(currentSearchQuery.toLowerCase()) ||
+                    product.subcategory.toLowerCase().includes(currentSearchQuery.toLowerCase()) ||
+                    product.description.toLowerCase().includes(currentSearchQuery.toLowerCase());
+                
+                const matchesCategory = currentCategory === "All" || product.category === currentCategory;
+                
+                let matchesPrice = true;
+                if (currentPriceRange !== "All") {
+                    const price = product.price;
+                    switch (currentPriceRange) {
+                        case "₦0-₦100,000":
+                            matchesPrice = price <= 100000;
+                            break;
+                        case "₦100,001-₦500,000":
+                            matchesPrice = price > 100000 && price <= 500000;
+                            break;
+                        case "₦500,001-₦1,000,000":
+                            matchesPrice = price > 500000 && price <= 1000000;
+                            break;
+                        case "₦1,000,000+":
+                            matchesPrice = price > 1000000;
+                            break;
+                    }
+                }
+
+                return matchesSearch && matchesCategory && matchesPrice;
+            });
+        }
+
+        function sortProducts(products) {
+            return [...products].sort((a, b) => {
+                switch (currentSort) {
+                    case "price-low":
+                        return a.price - b.price;
+                    case "price-high":
+                        return b.price - a.price;
+                    case "rating":
+                        return b.rating - a.rating;
+                    case "name":
+                        return a.name.localeCompare(b.name);
+                    case "relevance":
+                    default:
+                        if (currentSearchQuery === "") return 0;
+                        const aRelevance = a.name.toLowerCase().includes(currentSearchQuery.toLowerCase()) ? 1 : 0;
+                        const bRelevance = b.name.toLowerCase().includes(currentSearchQuery.toLowerCase()) ? 1 : 0;
+                        return bRelevance - aRelevance;
+                }
+            });
+        }
+
+        // Render Functions
+        function createProductCard(product) {
+            return `
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="${product.image}" alt="${product.name}" loading="lazy">
+                        <div class="product-badge ${product.badgeColor}">${product.badge}</div>
+                        ${!product.inStock ? '<div style="position: absolute; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center;"><span style="background: #ef4444; color: white; padding: 0.25rem 0.5rem; border-radius: 0.25rem; font-size: 0.75rem;">Out of Stock</span></div>' : ''}
+                        <div class="product-actions">
+                            <button class="action-btn">
+                                <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                                </svg>
+                            </button>
+                            <button class="action-btn">
+                                <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="product-content">
+                        <div class="product-header">
+                            <span class="category-badge">${product.category}</span>
+                            <div class="product-rating">
+                                <svg class="star" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                </svg>
+                                <span class="rating-text">${product.rating}</span>
+                                <span class="reviews-count">(${product.reviews})</span>
+                            </div>
+                        </div>
+
+                        <h3 class="product-title">${product.name}</h3>
+                        <p class="product-description">${product.description}</p>
+
+                        <div class="product-pricing">
+                            <div class="price-container">
+                                <span class="current-price">₦${product.price.toLocaleString()}</span>
+                                <span class="original-price">₦${product.originalPrice.toLocaleString()}</span>
+                            </div>
+                            <div class="stock-status ${product.inStock ? 'stock-in' : 'stock-out'}">
+                                <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                ${product.inStock ? 'In Stock' : 'Out of Stock'}
+                            </div>
+                        </div>
+
+                        <div class="product-buttons">
+                            <button class="btn btn-inquire" ${!product.inStock ? 'disabled' : ''} onclick="handleProductInquiry(${JSON.stringify(product).replace(/"/g, '&quot;')})">
+                                <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                                </svg>
+                                Inquire Now
+                            </button>
+                            <button class="btn btn-view">
+                                <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderProducts() {
+            const filtered = filterProducts();
+            filteredProducts = sortProducts(filtered);
+
+            if (filteredProducts.length === 0) {
+                productsGrid.style.display = 'none';
+                noResults.style.display = 'block';
+                document.getElementById('noResultsTitle').textContent = 
+                    currentSearchQuery ? `No results found for "${currentSearchQuery}"` : "No products found";
+            } else {
+                productsGrid.style.display = 'grid';
+                noResults.style.display = 'none';
+                productsGrid.innerHTML = filteredProducts.map(createProductCard).join('');
+            }
+
+            // Update results info
+            const searchInfo = currentSearchQuery ? `Search results for "${currentSearchQuery}" - ` : '';
+            resultsInfo.textContent = `${searchInfo}Showing ${filteredProducts.length} of ${allProducts.length} products`;
+
+            // Show/hide popular searches
+            popularSearches.style.display = currentSearchQuery ? 'none' : 'block';
+
+            // Show/hide clear search button
+            clearSearch.style.display = currentSearchQuery ? 'block' : 'none';
+        }
+
+        function updateViewMode() {
+            productsGrid.className = `products-grid ${currentView}-view`;
+            gridView.classList.toggle('active', currentView === 'grid');
+            listView.classList.toggle('active', currentView === 'list');
+        }
+
+        // Event Listeners
+        searchInput.addEventListener('input', (e) => {
+            currentSearchQuery = e.target.value;
+            renderProducts();
+        });
+
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                renderProducts();
+            }
+        });
+
+        clearSearch.addEventListener('click', () => {
+            currentSearchQuery = '';
+            searchInput.value = '';
+            renderProducts();
+        });
+
+        categoryFilter.addEventListener('change', (e) => {
+            currentCategory = e.target.value;
+            renderProducts();
+        });
+
+        priceFilter.addEventListener('change', (e) => {
+            currentPriceRange = e.target.value;
+            renderProducts();
+        });
+
+        sortBy.addEventListener('change', (e) => {
+            currentSort = e.target.value;
+            renderProducts();
+        });
+
+        gridView.addEventListener('click', () => {
+            currentView = 'grid';
+            updateViewMode();
+        });
+
+        listView.addEventListener('click', () => {
+            currentView = 'list';
+            updateViewMode();
+        });
+
+        // Popular search tags
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('popular-tag')) {
+                currentSearchQuery = e.target.textContent;
+                searchInput.value = currentSearchQuery;
+                renderProducts();
+            }
+        });
+
+        // Filter toggle for mobile
+        filterToggle.addEventListener('click', () => {
+            filterRow.classList.toggle('hidden');
+        });
+
+        // Clear all filters
+        clearFilters.addEventListener('click', () => {
+            currentSearchQuery = '';
+            currentCategory = 'All';
+            currentPriceRange = 'All';
+            currentSort = 'relevance';
+            searchInput.value = '';
+            categoryFilter.value = 'All';
+            priceFilter.value = 'All';
+            sortBy.value = 'relevance';
+            renderProducts();
+        });
+
+        // WhatsApp buttons
+        document.getElementById('whatsappFloat').addEventListener('click', () => {
+            handleWhatsAppClick();
+        });
+
+        document.getElementById('getHelp').addEventListener('click', () => {
+            handleWhatsAppClick("I need help finding the right product for my needs");
+        });
+
+        document.getElementById('backToHome').addEventListener('click', () => {
+            // This would navigate back to home page in a real application
+            window.history.back();
+        });
+
+        // Initialize
+        function init() {
+            // Check for initial search query from URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const initialQuery = urlParams.get('q');
+            if (initialQuery) {
+                currentSearchQuery = initialQuery;
+                searchInput.value = initialQuery;
+            }
+
+            renderProducts();
+            updateViewMode();
+        }
+
+        // Start the application
+        document.addEventListener('DOMContentLoaded', init);
+
+        // Make handleProductInquiry available globally
+        window.handleProductInquiry = handleProductInquiry;
+    </script>
+</body>
+</html>

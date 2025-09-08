@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details - MIM Electronics Enterprise</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #fff;
+        }
+
+        /* Header Styles */
+        .header {
+            background: #fff;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0.5rem 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-image {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 0.25rem;
+            overflow: hidden;
+            background: #fff;
+            border: 1px solid #e5e5e5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-image img {
+            width: 1.5rem;
+            height: 1.5rem;
+            object-fit: contain;
+        }
+
+        .brand-info h1 {
+            color: #000;
+            font-size: 1rem;
+            margin-bottom: 0;
+        }
+
+        .brand-info p {
+            color: #666;
+            font-size: 0.75rem;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .help-btn, .cart-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem;
+            border: none;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: background 0.2s;
+        }
+
+        .help-btn {
+            background: #f68b1e;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            gap: 0.5rem;
+        }
+
+        .help-btn:hover {
+            background: #e57a0d;
+        }
+
+        .cart-btn {
+            background: #fff;
+            width: 2rem;
+            height: 2rem;
+            position: relative;
+        }
+
+        .cart-btn:hover {
+            background: #f9fafb;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -0.5rem;
+            right: -0.5rem;
+            background: #d32f2f;
+            color: #fff;
+            border-radius: 50%;
+            width: 1.2rem;
+            height: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        /* Breadcrumb Navigation */
+        .breadcrumb {
+            max-width: 1200px;
+            margin: 0.5rem auto;
+            font-size: 0.875rem;
+            color: #666;
+            position: sticky;
+            top: 60px;
+            background: #fff;
+            padding: 10px 15px;
+            z-index: 900;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .breadcrumb a {
+            color: #f68b1e;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        /* Product Details Section */
+        .product-details {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .product-image-container {
+            flex: 1;
+            min-width: 300px;
+            background: #f8f8f8;
+            border-radius: 0.25rem;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 400px;
+            object-fit: contain;
+            padding: 2rem;
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 0.5rem;
+            left: 0.5rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .product-discount {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            padding: 0.25rem 0.5rem;
+            background: #f68b1e;
+            color: #fff;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .product-info {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .product-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-price {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-current-price {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #f68b1e;
+        }
+
+        .product-original-price {
+            font-size: 1rem;
+            color: #999;
+            text-decoration: line-through;
+        }
+
+        .product-negotiable {
+            font-size: 0.875rem;
+            color: #25D366;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        .product-negotiable:hover {
+            color: #20b354;
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.875rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .product-stock {
+            font-size: 0.875rem;
+            color: #008000;
+            margin-bottom: 1rem;
+        }
+
+        .product-description {
+            font-size: 1rem;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .product-btn {
+            width: 100%;
+            max-width: 300px;
+            padding: 0.75rem;
+            background: #f68b1e;
+            color: #fff;
+            border: none;
+            border-radius: 0.25rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .product-btn:hover {
+            background: #e57a0d;
+        }
+
+        .product-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        /* Cart Notification */
+        .cart-notification {
+            position: fixed;
+            bottom: 2rem;
+            right: 1rem;
+            background: #28a745;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            border-radius: 0.25rem;
+            display: none;
+            z-index: 100;
+            font-size: 0.875rem;
+        }
+
+        /* Icons */
+        .icon {
+            width: 1rem;
+            height: 1rem;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .star-icon {
+            fill: #ffa500;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .product-details {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .product-image {
+                height: 300px;
+            }
+
+            .product-name {
+                font-size: 1.25rem;
+            }
+
+            .product-current-price {
+                font-size: 1rem;
+            }
+        }
+        /* Related Products Section */
+.related-products {
+    margin: 2rem 0;
+    padding: 1rem 0;
+    background: #f9fafb;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.related-products h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    position: relative;
+}
+
+.related-products h2::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: #f68b1e;
+    margin: 0.5rem auto;
+    border-radius: 2px;
+}
+
+.related-products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.5rem;
+    padding: 0 1rem;
+}
+
+.related-product-card {
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+}
+
+.related-product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.related-product-image-container {
+    position: relative;
+    height: 160px;
+    background: #f8f8f8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.related-product-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 1rem;
+    transition: transform 0.3s ease;
+}
+
+.related-product-card:hover .related-product-image {
+    transform: scale(1.05);
+}
+
+.related-product-content {
+    padding: 1rem;
+    text-align: center;
+}
+
+.related-product-name {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 0.5rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.related-product-name a {
+    color: #f68b1e;
+    text-decoration: none;
+}
+
+.related-product-name a:hover {
+    text-decoration: underline;
+}
+
+.related-product-price {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #f68b1e;
+    margin-bottom: 0.5rem;
+}
+
+.related-product-badge {
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
+    background: #f68b1e;
+    color: #fff;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+        /* Footer Section */
+        .footer-section {
+            background: #1f2937;
+            color: #fff;
+            padding: 2rem 0;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-brand {
+            text-align: left;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-logo-image {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 0.25rem;
+            overflow: hidden;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .footer-logo-image img {
+            width: 1.5rem;
+            height: 1.5rem;
+            object-fit: contain;
+        }
+
+        .footer-brand-info h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0;
+        }
+
+        .footer-brand-info p {
+            font-size: 0.75rem;
+            color: #9ca3af;
+        }
+
+        .footer-description {
+            font-size: 0.875rem;
+            color: #d1d5db;
+            margin-bottom: 1rem;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .footer-social-link {
+            width: 2rem;
+            height: 2rem;
+            background: #374151;
+            color: #fff;
+            border-radius: 0.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+
+        .footer-social-link:hover {
+            background: #4b5563;
+        }
+
+        .footer-column h4 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: #d1d5db;
+            text-decoration: none;
+            font-size: 0.875rem;
+        }
+
+        .footer-links a:hover {
+            color: #f68b1e;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #374151;
+            padding-top: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-copyright {
+            font-size: 0.875rem;
+            color: #9ca3af;
+        }
+
+        .footer-legal {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .footer-legal a {
+            color: #d1d5db;
+            text-decoration: none;
+            font-size: 0.875rem;
+        }
+
+        .footer-legal a:hover {
+            color: #f68b1e;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo-section">
+                <div class="logo-image">
+                    <a href="https://Cotascales.com"><img src="/MIM/assets/images/cota.png" alt="logo"></a>
+                </div>
+                <div class="brand-info">
+                    <h1>MIM Electronics</h1>
+                    <p>Analog Scales</p>
+                </div>
+            </div>
+            
+            <div class="header-actions">
+                <button class="help-btn" onclick="handleWhatsAppClick('I need help with a product')">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                    </svg>
+                    Get Help
+                </button>
+                <a href="cart.html" class="cart-btn">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <circle cx="9" cy="21" r="1"/>
+                        <circle cx="20" cy="21" r="1"/>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                    </svg>
+                    <span class="cart-count" id="cartCount">0</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb">
+        <a href="index.html">Home</a> &gt; <a href="index.html">Analog Scales</a> &gt; <span id="productNameBreadcrumb">Product</span>
+    </nav>
+
+    <!-- Product Details -->
+    <section class="product-details" id="productDetails">
+        <!-- Product details will be generated by JavaScript -->
+    </section>
+
+    <!-- Cart Notification -->
+    <div class="cart-notification" id="cartNotification">
+        Added to Cart
+    </div>
+
+    <!-- Related Products Section -->
+    <section class="related-products" id="relatedProducts" style="display: none;">
+        <div class="cart-section">
+            <h2>You May Also Like</h2>
+            <div class="related-products-grid" id="relatedProductsGrid"></div>
+        </div>
+    </section>
+    <!-- Footer Section -->
+    <footer class="footer-section">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <div class="footer-logo-image">
+                            <img src="/MIM/assets/images/cota.png" alt="MIM Electronics Logo">
+                        </div>
+                        <div class="footer-brand-info">
+                            <h3>MIM Electronics</h3>
+                            <p class="footer-brand-subtitle">Enterprise</p>
+                        </div>
+                    </div>
+                    <p class="footer-description">
+                        Your trusted partner for precision weighing solutions and industrial scale equipment across Nigeria. We specialize in analog scales, platform scales, crane scales, and more, with a commitment to quality and customer satisfaction.
+                    </p>
+                    <div class="footer-social">
+                        <a href="#" class="footer-social-link">f</a>
+                        <a href="#" class="footer-social-link">t</a>
+                        <a href="#" class="footer-social-link">in</a>
+                    </div>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Products</h4>
+                    <ul class="footer-links">
+                        <li><a href="html/analog-scales.html">Analog Scales</a></li>
+                        <li><a href="html/platform-scales.html">Platform Scales</a></li>
+                        <li><a href="html/crane-scales.html">Crane Scales</a></li>
+                        <li><a href="html/pricing-scales.html">Pricing Scales</a></li>
+                        <li><a href="html/balance-scales.html">Balance Scales</a></li>
+                        <li><a href="html/weighbridge.html">Weighbridge</a></li>
+                        <li><a href="html/loadcell-and-scale-parts.html">Loadcell & Scale Parts</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Services</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Installation</a></li>
+                        <li><a href="#">Calibration</a></li>
+                        <li><a href="#">Maintenance</a></li>
+                        <li><a href="#">Repair Services</a></li>
+                        <li><a href="#">Technical Support</a></li>
+                        <li><a href="#">Parts Supply</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Company</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Support</a></li>
+                        <li><a href="#">Warranty</a></li>
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">Careers</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Contact Us</h4>
+                    <ul class="footer-links">
+                        <li><a href="tel:+2348033554867">+234 803 355 4867</a></li>
+                        <li><a href="mailto:info@mimelectronics.com">info@mimelectronics.com</a></li>
+                        <li><a href="#">Lagos, Nigeria</a></li>
+                        <li><a href="#" onclick="handleWhatsAppClick('I have a question about your products or services')">Chat with Us</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p class="footer-copyright">&copy; 2025 MIM Electronics Enterprise. All rights reserved.</p>
+                <div class="footer-legal">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // WhatsApp Number
+        const whatsappNumber = "+2348033554867";
+
+        // Product Data (same as index.html)
+        const scalesProducts = [
+            {
+                id: 1,
+                name: "Classic Analog Platform Scale 100kg",
+                category: "platform",
+                capacity: 100,
+                price: 89999,
+                originalPrice: 120000,
+                rating: 4.8,
+                reviews: 156,
+                image: "https://images.unsplash.com/photo-1574634534894-89d7576c8259?w=400&h=300&fit=crop",
+                badge: "BESTSELLER",
+                badgeColor: "#008000",
+                inStock: true,
+                description: "Reliable mechanical platform scale perfect for markets, warehouses, and industrial applications. Built to last with precision engineering."
+            },
+            {
+                id: 2,
+                name: "Heavy Duty Analog Floor Scale 300kg",
+                category: "floor",
+                capacity: 300,
+                price: 149999,
+                originalPrice: 199999,
+                rating: 4.9,
+                reviews: 89,
+                image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop",
+                badge: "25% OFF",
+                badgeColor: "#f00",
+                inStock: true,
+                description: "Industrial-grade floor scale designed for heavy-duty applications. Perfect for shipping, receiving, and warehouse operations."
+            },
+            {
+                id: 3,
+                name: "Portable Analog Hanging Scale 50kg",
+                category: "hanging",
+                capacity: 50,
+                price: 45999,
+                originalPrice: 65000,
+                rating: 4.6,
+                reviews: 234,
+                image: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=400&h=300&fit=crop",
+                badge: "PORTABLE",
+                badgeColor: "#00f",
+                inStock: true,
+                description: "Compact and portable hanging scale ideal for farms, markets, and field applications. Easy to use and transport."
+            },
+            {
+                id: 4,
+                name: "Precision Analog Balance Scale 10kg",
+                category: "balance",
+                capacity: 10,
+                price: 129999,
+                originalPrice: 169999,
+                rating: 4.7,
+                reviews: 67,
+                image: "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=400&h=300&fit=crop",
+                badge: "HIGH PRECISION",
+                badgeColor: "#800080",
+                inStock: false,
+                description: "Professional balance scale for laboratories, pharmacies, and precision weighing applications. Exceptional accuracy and reliability."
+            },
+            {
+                id: 5,
+                name: "Commercial Analog Counter Scale 30kg",
+                category: "counter",
+                capacity: 30,
+                price: 69999,
+                originalPrice: 89999,
+                rating: 4.5,
+                reviews: 178,
+                image: "https://images.unsplash.com/photo-1586864387967-d02ef85d93e8?w=400&h=300&fit=crop",
+                badge: "COMMERCIAL",
+                badgeColor: "#f90",
+                inStock: true,
+                description: "Perfect for retail environments, markets, and small businesses. Features dual display for easy customer interaction."
+            },
+            {
+                id: 6,
+                name: "Industrial Analog Bench Scale 150kg",
+                category: "bench",
+                capacity: 150,
+                price: 119999,
+                originalPrice: 159999,
+                rating: 4.8,
+                reviews: 92,
+                image: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=400&h=300&fit=crop",
+                badge: "INDUSTRIAL",
+                badgeColor: "#666",
+                inStock: true,
+                description: "Heavy-duty bench scale designed for industrial applications. Built to withstand harsh working conditions while maintaining accuracy."
+            },
+            {
+                id: 7,
+                name: "Camry Dial Spring Scale 100kg",
+                category: "hanging",
+                capacity: 100,
+                price: 25000,
+                originalPrice: 32000,
+                rating: 4.5,
+                reviews: 50,
+                image: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=400&h=300&fit=crop",
+                badge: "POPULAR",
+                badgeColor: "#008000",
+                inStock: true,
+                description: "Durable analog hanging scale for markets and farms, equivalent to 220lbs. Ideal for commercial food processing and scrap metals."
+            },
+            {
+                id: 8,
+                name: "Camry Bathroom Analog Weight Scale 150kg",
+                category: "bathroom",
+                capacity: 150,
+                price: 20500,
+                originalPrice: 25000,
+                rating: 4.6,
+                reviews: 120,
+                image: "https://images.unsplash.com/photo-1586864387967-d02ef85d93e8?w=400&h=300&fit=crop",
+                badge: "BATHROOM",
+                badgeColor: "#3b82f6",
+                inStock: true,
+                description: "Personal analog weight scale for home use, reliable for daily body weight monitoring."
+            },
+            {
+                id: 9,
+                name: "Analog Pocket Scale 22kg",
+                category: "general",
+                capacity: 22,
+                price: 4500,
+                originalPrice: 6000,
+                rating: 4.4,
+                reviews: 80,
+                image: "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=400&h=300&fit=crop",
+                badge: "POCKET",
+                badgeColor: "#f90",
+                inStock: true,
+                description: "Compact analog pocket scale, ideal for travelers and small-scale weighing needs."
+            },
+            {
+                id: 10,
+                name: "Analog Kitchen Scale 10kg",
+                category: "kitchen",
+                capacity: 10,
+                price: 5500,
+                originalPrice: 7000,
+                rating: 4.2,
+                reviews: 45,
+                image: "https://images.unsplash.com/photo-1574634534894-89d7576c8259?w=400&h=300&fit=crop",
+                badge: "BASIC",
+                badgeColor: "#666",
+                inStock: true,
+                description: "Small analog scale for kitchen use, perfect for measuring ingredients."
+            },
+            {
+                id: 11,
+                name: "Analog Kitchen Scale 20kg",
+                category: "kitchen",
+                capacity: 20,
+                price: 5200,
+                originalPrice: 6500,
+                rating: 4.3,
+                reviews: 60,
+                image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop",
+                badge: "VALUE",
+                badgeColor: "#008000",
+                inStock: true,
+                description: "Affordable analog scale for daily kitchen use."
+            },
+            {
+                id: 12,
+                name: "Analog Hanging Scale 200kg",
+                category: "hanging",
+                capacity: 200,
+                price: 35000,
+                originalPrice: 45000,
+                rating: 4.4,
+                reviews: 70,
+                image: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=400&h=300&fit=crop",
+                badge: "HEAVY DUTY",
+                badgeColor: "#f00",
+                inStock: true,
+                description: "High-capacity analog hanging scale for commercial and industrial use."
+            }
+        ];
+
+        // Cart State
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        // WhatsApp Integration
+        function handleWhatsAppClick(message = "Hello! I'm interested in your analog scales. Can you help me?") {
+            const encodedMessage = encodeURIComponent(message);
+            const url = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+            window.open(url, '_blank');
+        }
+
+        // Cart Functions
+        function addToCart(product) {
+            if (product.inStock) {
+                cart.push(product);
+                localStorage.setItem('cart', JSON.stringify(cart));
+                updateCartCount();
+                showCartNotification(product);
+            }
+        }
+
+        function updateCartCount() {
+            const cartCount = document.getElementById('cartCount');
+            cartCount.textContent = cart.length;
+        }
+
+        function showCartNotification(product) {
+            const notification = document.getElementById('cartNotification');
+            notification.style.display = 'block';
+            
+            const cartBtn = document.querySelector('.cart-btn');
+            const cartBtnRect = cartBtn.getBoundingClientRect();
+            
+            gsap.fromTo(notification, 
+                { opacity: 0, y: 20 },
+                { 
+                    opacity: 1, 
+                    y: 0, 
+                    duration: 0.5, 
+                    ease: "power2.out",
+                    onComplete: () => {
+                        gsap.to(notification, {
+                            x: cartBtnRect.left - window.innerWidth + cartBtnRect.width / 2 + 100,
+                            y: cartBtnRect.top - window.innerHeight + cartBtnRect.height / 2 + 60,
+                            scale: 0.2,
+                            opacity: 0,
+                            duration: 0.8,
+                            ease: "power2.in",
+                            onComplete: () => {
+                                notification.style.display = 'none';
+                                gsap.set(notification, { x: 0, y: 0, scale: 1, opacity: 1 });
+                            }
+                        });
+                    }
+                }
+            );
+        }
+
+        // Render Product Details
+        function renderProductDetails() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = parseInt(urlParams.get('id'));
+            const product = scalesProducts.find(p => p.id === productId);
+
+            if (!product) {
+                document.getElementById('productDetails').innerHTML = '<p>Product not found.</p>';
+                return;
+            }
+
+            const discount = Math.round((1 - (product.price / product.originalPrice)) * 100);
+            document.getElementById('productDetails').innerHTML = `
+                <div class="product-image-container">
+                    <img src="${product.image}" alt="${product.name}" class="product-image">
+                    <div class="product-badge" style="background: ${product.badgeColor};">${product.badge}</div>
+                    ${discount > 0 ? `<div class="product-discount">-${discount}%</div>` : ''}
+                </div>
+                <div class="product-info">
+                    <h1 class="product-name">${product.name}</h1>
+                    <div class="product-price">
+                        <span class="product-current-price">₦${product.price.toLocaleString()}</span>
+                        <span class="product-original-price">₦${product.originalPrice.toLocaleString()}</span>
+                    </div>
+                    <div class="product-negotiable" onclick="handleWhatsAppClick('I want to negotiate the price for ${product.name}')">
+                        Negotiate Price via DM
+                    </div>
+                    <div class="product-rating">
+                        ${product.rating} <svg class="icon star-icon" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26"/></svg>
+                        (${product.reviews} reviews)
+                    </div>
+                    <div class="product-stock">${product.inStock ? 'In Stock' : 'Out of Stock'}</div>
+                    <p class="product-description">${product.description}</p>
+                    <button class="product-btn" ${!product.inStock ? 'disabled' : ''} onclick="addToCart(${JSON.stringify(product).replace(/"/g, '&quot;')})">
+                        Add to Cart
+                    </button>
+                </div>
+            `;
+            document.getElementById('productNameBreadcrumb').textContent = product.name;
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            renderProductDetails();
+            updateCartCount();
+        });
+        function renderRelatedProducts() {
+    const relatedProducts = document.getElementById('relatedProducts');
+    const relatedProductsGrid = document.getElementById('relatedProductsGrid');
+    const cartItemIds = cart.map(item => item.id);
+    const availableProducts = scalesProducts
+        .filter(product => !cartItemIds.includes(product.id) && product.inStock)
+        .sort(() => Math.random() - 0.5)
+        .slice(0, 4);
+
+    if (availableProducts.length === 0) {
+        relatedProducts.style.display = 'none';
+        return;
+    }
+
+    relatedProducts.style.display = 'block';
+    relatedProductsGrid.innerHTML = availableProducts.map(product => `
+        <div class="related-product-card">
+            <div class="related-product-image-container">
+                <img src="${product.image}" alt="${product.name}" class="related-product-image">
+                ${product.badge ? `<span class="related-product-badge" style="background: ${product.badgeColor}">${product.badge}</span>` : ''}
+            </div>
+            <div class="related-product-content">
+                <h3 class="related-product-name"><a href="product.html?id=${product.id}">${product.name}</a></h3>
+                <div class="related-product-price">₦${product.price.toLocaleString()}</div>
+            </div>
+        </div>
+    `).join('');
+}
+    </script>
+</body>
+</html>

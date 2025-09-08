@@ -42,33 +42,32 @@ function performSearch() {
     const query = searchInput.value.trim();
     
     if (query) {
-// In a real application, you would perform the actual search
-// For demo purposes, we'll open WhatsApp with search query
-const searchMessage = `I'm looking for: ${query}. Can you help me find the right weighing equipment?`;
-openWhatsApp(searchMessage);
+        // Redirect to search-results.html with query as parameter
+        window.location.href = `/html/search-results.html?q=${encodeURIComponent(query)}`;
     } else {
-alert('Please enter a search term');
+        alert('Please enter a search term');
     }
 }
 
 // Handle Enter key in search inputs
 document.getElementById('searchInput').addEventListener('keypress', function(e) {
     if (e.key === 'Enter') {
-performSearch();
+        performSearch();
     }
 });
 
 document.getElementById('mobileSearchInput').addEventListener('keypress', function(e) {
     if (e.key === 'Enter') {
-const query = this.value.trim();
-if (query) {
-    const searchMessage = `I'm looking for: ${query}. Can you help me find the right weighing equipment?`;
-    openWhatsApp(searchMessage);
-} else {
-    alert('Please enter a search term');
-}
+        const query = this.value.trim();
+        if (query) {
+            // Redirect to search-results.html with query as parameter
+            window.location.href = `/html/search-results.html?q=${encodeURIComponent(query)}`;
+        } else {
+            alert('Please enter a search term');
+        }
     }
 });
+
 
 // Close mobile menu when clicking on links
 document.querySelectorAll('.mobile-nav-link, .mobile-quote-button').forEach(link => {
