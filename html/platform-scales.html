@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Platform Scales - MIM Electronics Enterprise</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caveat:wght@400;700&family=Epunda+Slab:ital,wght@0,300..900;1,300..900&family=Karla:ital,wght@0,200..800;1,200..800&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Niconne&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:wght@300;400;500;600;700&family=Stalemate&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <style>
         * {
             margin: 0;
@@ -14,669 +20,654 @@
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             line-height: 1.6;
-            color: #374151;
-            background-color: #ffffff;
+            color: #333;
+            background-color: #fff;
+        }
+
+        /* Top Banner */
+        .banner-wrapper {
+            position: relative;
+            width: 100%;
+            height: 42px;
+            overflow: hidden;
+            background: #fff;
+        }
+
+        .top-banner {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 1200px;
+            height: 42px;
+            display: block;
+            z-index: 1;
+        }
+
+        .banner-rectangle {
+            position: absolute;
+            top: 0;
+            height: 42px;
+            width: 150px;
+            background: #2563eb;
+            z-index: 2;
+            display: none;
+        }
+
+        .back-rect {
+            left: 0;
+            z-index: 0;
+        }
+
+        .front-rect {
+            right: 0;
+            z-index: 2;
+        }
+
+        @media (min-width: 768px) {
+            .banner-rectangle {
+                display: block;
+            }
+            
+            .top-banner {
+                max-width: calc(100% - 300px);
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .banner-rectangle {
+                width: 400px;
+            }
+            
+            .top-banner {
+                max-width: calc(100% - 800px);
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+
+        @media (max-width: 767px) {
+            .banner-wrapper {
+                height: auto;
+            }
+            
+            .top-banner {
+                position: static;
+                transform: none;
+                max-width: 100%;
+                width: 100%;
+            }
+            
+            .banner-rectangle {
+                display: none !important;
+            }
         }
 
         /* Header Styles */
-        .platform-header {
-            background: white;
-            border-bottom: 1px solid #e5e7eb;
+        .header {
+            background: #fff;
             position: sticky;
             top: 0;
             z-index: 50;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
 
-        .platform-header-container {
-            max-width: 1280px;
+        .header-container {
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 1rem;
+            padding: 0.5rem 1rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
 
-        .platform-logo-section {
+        .logo-section {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 0.5rem;
         }
 
-        .platform-logo-image {
-            width: 2.5rem;
-            height: 2.5rem;
-            border-radius: 0.5rem;
+        .logo-image {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 0.25rem;
             overflow: hidden;
-            background: white;
-            border: 1px solid #e5e7eb;
+            background: #fff;
+            border: 1px solid #e5e5e5;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        .platform-logo-image img {
-            width: 2rem;
-            height: 2rem;
+        .logo-image img {
+            width: 1.5rem;
+            height: 1.5rem;
             object-fit: contain;
         }
 
-        .platform-brand-info h1 {
-            color: #1f2937;
-            font-size: 1.125rem;
-            margin-bottom: 0.125rem;
+        .brand-info h1 {
+            color: #000;
+            font-size: 1rem;
+            margin-bottom: 0;
         }
 
-        .platform-brand-info p {
-            color: #6b7280;
+        .brand-info p {
+            color: #666;
             font-size: 0.75rem;
         }
 
-        .platform-header-actions {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .platform-help-btn {
+        .header-actions {
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            background: transparent;
-            border: 1px solid #d1d5db;
-            border-radius: 0.375rem;
-            color: #374151;
-            cursor: pointer;
-            font-size: 0.875rem;
-            transition: all 0.2s ease;
         }
 
-        .platform-help-btn:hover {
-            background-color: #f9fafb;
-            border-color: #9ca3af;
+        .help-btn, .cart-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem;
+            border: none;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: background 0.2s;
+        }
+
+        .help-btn {
+            background: #f68b1e;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            gap: 0.5rem;
+        }
+
+        .help-btn:hover {
+            background: #e57a0d;
+        }
+
+        .cart-btn {
+            background: #fff;
+            width: 2rem;
+            height: 2rem;
+            position: relative;
+        }
+
+        .cart-btn:hover {
+            background: #f9fafb;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -0.5rem;
+            right: -0.5rem;
+            background: #d32f2f;
+            color: #fff;
+            border-radius: 50%;
+            width: 1.2rem;
+            height: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        /* Breadcrumb Navigation */
+        .breadcrumb {
+            max-width: 100%;
+            margin: 0.5rem auto;
+            font-size: 0.875rem;
+            color: #666;
+            position: sticky;
+            top: 60px;
+            background: #fff;
+            padding: 10px 15px;
+            z-index: 900;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .breadcrumb a {
+            color: #f68b1e;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        @media (min-width: 460px) {
+            .breadcrumb {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 0.5rem 1rem;
+            }
+
+            .breadcrumb a {
+                font-size: 0.875rem;
+            }
         }
 
         /* Hero Section */
-        .platform-hero {
+        .hero {
             background: linear-gradient(to right, #10b981, #059669);
-            color: white;
-            padding: 3rem 0;
-        }
-
-        .platform-hero-container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 1rem;
+            color: #fff;
+            padding: 2rem 0;
             text-align: center;
         }
 
-        .platform-hero-icon {
-            width: 4rem;
-            height: 4rem;
-            color: #a7f3d0;
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .hero-icon {
+            width: 3rem;
+            height: 3rem;
+            color: #bfdbfe;
             margin: 0 auto 1rem;
         }
 
-        .platform-hero h1 {
-            font-size: 2.5rem;
+        .hero h1 {
+            font-size: 2rem;
             margin-bottom: 1rem;
         }
 
-        .platform-hero-description {
-            font-size: 1.25rem;
-            color: #a7f3d0;
-            margin-bottom: 2rem;
-            max-width: 48rem;
+        .hero-description {
+            font-size: 1.125rem;
+            color: #bfdbfe;
+            margin-bottom: 1.5rem;
+            max-width: 600px;
             margin-left: auto;
             margin-right: auto;
         }
 
-        .platform-hero-features {
+        .hero-features {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            max-width: 48rem;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            max-width: 800px;
             margin: 0 auto;
         }
 
-        .platform-hero-feature {
+        .hero-feature {
             text-align: center;
         }
 
-        .platform-hero-feature-icon {
-            width: 3rem;
-            height: 3rem;
-            background: #059669;
+        .hero-feature-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            background: #3b82f6;
             border-radius: 0.5rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 0.75rem;
+            margin: 0 auto 0.5rem;
         }
 
-        .platform-hero-feature h3 {
-            margin-bottom: 0.5rem;
-        }
-
-        .platform-hero-feature p {
+        .hero-feature h3 {
             font-size: 0.875rem;
-            color: #a7f3d0;
+            margin-bottom: 0.25rem;
         }
 
-        /* Filters Section */
-        .platform-filters {
-            background: #f9fafb;
-            border-bottom: 1px solid #e5e7eb;
-            padding: 1.5rem 0;
+        .hero-feature p {
+            font-size: 0.75rem;
+            color: #bfdbfe;
         }
 
-        .platform-filters-container {
-            max-width: 1280px;
+        @media (max-width: 768px) {
+            .hero {
+                padding: 1rem 0;
+            }
+
+            .hero h1 {
+                font-size: 1.5rem;
+            }
+
+            .hero-description {
+                font-size: 0.875rem;
+            }
+
+            .hero-features {
+                display: none;
+            }
+        }
+
+        /* Main Content */
+        .main-container {
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 0 1rem;
-        }
-
-        .platform-filters-top {
+            padding: 1rem;
             display: flex;
-            flex-direction: column;
             gap: 1rem;
-            align-items: center;
-            justify-content: space-between;
         }
 
-        .platform-search-container {
+        .sidebar {
+            width: 250px;
+            flex-shrink: 0;
+        }
+
+        .filter-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .filter-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .filter-select {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 0.25rem;
+            background: #fff;
+            font-size: 0.875rem;
+        }
+
+        .content-area {
             flex: 1;
-            max-width: 24rem;
-            position: relative;
         }
 
-        .platform-search-icon {
+        .top-filters {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .search-container {
+            position: relative;
+            width: 300px;
+        }
+
+        .search-icon {
             position: absolute;
             left: 0.75rem;
             top: 50%;
             transform: translateY(-50%);
-            color: #9ca3af;
+            color: #999;
             width: 1rem;
             height: 1rem;
         }
 
-        .platform-search-input {
+        .search-input {
             width: 100%;
-            padding: 0.75rem 1rem 0.75rem 2.5rem;
-            border: 1px solid #d1d5db;
-            border-radius: 0.375rem;
-            font-size: 1rem;
-            transition: border-color 0.2s ease;
-        }
-
-        .platform-search-input:focus {
-            outline: none;
-            border-color: #10b981;
-            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
-        }
-
-        .platform-filter-toggle {
-            display: none;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1rem;
-            background: transparent;
-            border: 1px solid #d1d5db;
-            border-radius: 0.375rem;
-            color: #374151;
-            cursor: pointer;
+            padding: 0.5rem 1rem 0.5rem 2.5rem;
+            border: 1px solid #ddd;
+            border-radius: 0.25rem;
             font-size: 0.875rem;
         }
 
-        .platform-view-sort {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .platform-view-toggle {
-            display: flex;
-            border: 1px solid #d1d5db;
-            border-radius: 0.375rem;
-            overflow: hidden;
-        }
-
-        .platform-view-btn {
+        .sort-select {
             padding: 0.5rem;
-            background: white;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.2s ease;
-        }
-
-        .platform-view-btn.active {
-            background: #10b981;
-            color: white;
-        }
-
-        .platform-sort-select {
-            width: 12rem;
-            padding: 0.5rem;
-            border: 1px solid #d1d5db;
-            border-radius: 0.375rem;
-            background: white;
+            border: 1px solid #ddd;
+            border-radius: 0.25rem;
             font-size: 0.875rem;
         }
 
-        .platform-filters-row {
-            margin-top: 1rem;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-        }
-
-        .platform-filter-select {
-            padding: 0.5rem;
-            border: 1px solid #d1d5db;
-            border-radius: 0.375rem;
-            background: white;
+        .results-count {
             font-size: 0.875rem;
-        }
-
-        .platform-results-count {
-            margin-top: 1rem;
-            font-size: 0.875rem;
-            color: #6b7280;
+            color: #666;
+            margin-bottom: 1rem;
         }
 
         /* Products Grid */
-        .platform-products {
-            padding: 2rem 0;
-        }
-
-        .platform-products-container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 1rem;
-        }
-
-        .platform-products-grid {
+        .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1rem;
         }
 
-        .platform-products-grid.list-view {
-            grid-template-columns: 1fr;
-        }
-
-        .platform-product-card {
-            background: white;
-            border-radius: 0.75rem;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
+        .product-card {
+            background: #fff;
+            border: 1px solid #e5e5e5;
+            border-radius: 0.25rem;
             overflow: hidden;
-            border: 1px solid #e5e7eb;
-        }
-
-        .platform-product-card:hover {
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-            transform: translateY(-2px);
-        }
-
-        .platform-product-card.list-view {
-            display: flex;
-        }
-
-        .platform-product-image-container {
+            transition: box-shadow 0.2s;
             position: relative;
-            overflow: hidden;
         }
 
-        .platform-product-card:not(.list-view) .platform-product-image-container {
-            aspect-ratio: 1;
+        .product-card:hover {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
 
-        .platform-product-card.list-view .platform-product-image-container {
-            width: 16rem;
-            flex-shrink: 0;
+        .product-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
         }
 
-        .platform-product-image {
+        .product-image-container {
+            position: relative;
+            height: 200px;
+            background: #f8f8f8;
+        }
+
+        .product-image {
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s ease;
+            object-fit: contain;
+            padding: 0.5rem;
         }
 
-        .platform-product-card:hover .platform-product-image {
-            transform: scale(1.05);
-        }
-
-        .platform-product-badge {
+        .product-badge {
             position: absolute;
-            top: 0.75rem;
-            left: 0.75rem;
+            top: 0.5rem;
+            left: 0.5rem;
             padding: 0.25rem 0.5rem;
             border-radius: 0.25rem;
             font-size: 0.75rem;
             font-weight: 600;
-            text-transform: uppercase;
-            color: white;
+            color: #fff;
         }
 
-        .platform-product-actions {
+        .product-discount {
             position: absolute;
-            top: 0.75rem;
-            right: 0.75rem;
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .platform-product-action-btn {
-            width: 2rem;
-            height: 2rem;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.9);
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s ease;
-        }
-
-        .platform-product-action-btn:hover {
-            background: white;
-            transform: scale(1.1);
-        }
-
-        .platform-product-content {
-            padding: 1.5rem;
-            flex: 1;
-        }
-
-        .platform-product-header {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            margin-bottom: 0.5rem;
-        }
-
-        .platform-product-category {
-            display: inline-block;
+            top: 0.5rem;
+            right: 0.5rem;
             padding: 0.25rem 0.5rem;
-            background: #f3f4f6;
-            color: #374151;
+            background: #f68b1e;
+            color: #fff;
             border-radius: 0.25rem;
             font-size: 0.75rem;
-            font-weight: 500;
-        }
-
-        .platform-product-rating {
-            display: flex;
-            align-items: center;
-            gap: 0.25rem;
-            font-size: 0.875rem;
-            color: #6b7280;
-        }
-
-        .platform-product-name {
-            font-size: 1.125rem;
             font-weight: 600;
-            color: #1f2937;
-            margin-bottom: 0.5rem;
-            line-height: 1.4;
         }
 
-        .platform-product-description {
-            font-size: 0.875rem;
-            color: #6b7280;
-            margin-bottom: 1rem;
-            line-height: 1.5;
-        }
-
-        .platform-product-features {
-            margin-bottom: 1rem;
-        }
-
-        .platform-product-features h4 {
-            font-size: 0.875rem;
-            color: #1f2937;
-            margin-bottom: 0.5rem;
-        }
-
-        .platform-product-features-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.25rem;
-        }
-
-        .platform-product-feature-tag {
-            padding: 0.125rem 0.375rem;
-            background: #e5e7eb;
-            color: #374151;
-            border-radius: 0.25rem;
-            font-size: 0.75rem;
-        }
-
-        .platform-product-specs {
-            margin-bottom: 1rem;
-            font-size: 0.875rem;
-        }
-
-        .platform-product-specs-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0.5rem;
-        }
-
-        .platform-product-spec {
-            color: #6b7280;
-        }
-
-        .platform-product-spec span {
-            color: #1f2937;
-            margin-left: 0.25rem;
-        }
-
-        .platform-product-price-stock {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 1rem;
-        }
-
-        .platform-product-price {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .platform-product-current-price {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #1f2937;
-        }
-
-        .platform-product-original-price {
-            font-size: 0.875rem;
-            color: #6b7280;
-            text-decoration: line-through;
-        }
-
-        .platform-product-stock {
-            font-size: 0.875rem;
-            display: flex;
-            align-items: center;
-            gap: 0.25rem;
-        }
-
-        .platform-product-stock.in-stock {
-            color: #059669;
-        }
-
-        .platform-product-stock.out-of-stock {
-            color: #dc2626;
-        }
-
-        .platform-product-buttons {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .platform-product-btn {
-            flex: 1;
-            padding: 0.75rem 1rem;
-            border: none;
-            border-radius: 0.375rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-        }
-
-        .platform-product-btn-primary {
-            background: #10b981;
-            color: white;
-        }
-
-        .platform-product-btn-primary:hover {
-            background: #059669;
-        }
-
-        .platform-product-btn-primary:disabled {
-            background: #9ca3af;
-            cursor: not-allowed;
-        }
-
-        .platform-product-btn-secondary {
-            background: transparent;
-            color: #374151;
-            border: 1px solid #d1d5db;
+        .product-content {
             padding: 0.75rem;
         }
 
-        .platform-product-btn-secondary:hover {
-            background: #f9fafb;
+        .product-name {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 0.25rem;
+            line-height: 1.3;
+            height: 2.6em;
+            overflow: hidden;
+        }
+
+        .product-price {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .product-current-price {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #f68b1e;
+        }
+
+        .product-original-price {
+            font-size: 0.875rem;
+            color: #999;
+            text-decoration: line-through;
+        }
+
+        .product-negotiable {
+            font-size: 0.75rem;
+            color: #25D366;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        .product-negotiable:hover {
+            color: #20b354;
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.75rem;
+            color: #666;
+        }
+
+        .product-stock {
+            font-size: 0.75rem;
+            color: #008000;
+            margin-bottom: 0.25rem;
+        }
+
+        .product-btn {
+            width: 100%;
+            padding: 0.5rem;
+            background: #f68b1e;
+            color: #fff;
+            border: none;
+            border-radius: 0.25rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .product-btn:hover {
+            background: #e57a0d;
+        }
+
+        .product-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        /* Cart Notification */
+        .cart-notification {
+            position: fixed;
+            bottom: 2rem;
+            right: 1rem;
+            background: #28a745;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            border-radius: 0.25rem;
+            display: none;
+            z-index: 100;
+            font-size: 0.875rem;
         }
 
         /* Benefits Section */
-        .platform-benefits {
+        .benefits {
             background: #f9fafb;
-            padding: 4rem 0;
+            padding: 2rem 0;
         }
 
-        .platform-benefits-container {
-            max-width: 1280px;
+        .benefits-container {
+            max-width: 1200px;
             margin: 0 auto;
             padding: 0 1rem;
             text-align: center;
         }
 
-        .platform-benefits h2 {
-            font-size: 2rem;
-            color: #1f2937;
+        .benefits h2 {
+            font-size: 1.5rem;
+            color: #333;
             margin-bottom: 1rem;
         }
 
-        .platform-benefits-description {
-            font-size: 1.25rem;
-            color: #6b7280;
-            margin-bottom: 3rem;
-            max-width: 48rem;
+        .benefits-description {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 2rem;
+            max-width: 600px;
             margin-left: auto;
             margin-right: auto;
         }
 
-        .platform-benefits-grid {
+        .benefits-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
         }
 
-        .platform-benefit-card {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 0.75rem;
-            text-align: center;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            transition: box-shadow 0.3s ease;
+        .benefit-card {
+            background: #fff;
+            padding: 1rem;
+            border-radius: 0.25rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
-        .platform-benefit-card:hover {
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-        }
-
-        .platform-benefit-icon {
-            width: 4rem;
-            height: 4rem;
-            border-radius: 0.75rem;
+        .benefit-icon {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 0.5rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 1rem;
+            margin: 0 auto 0.5rem;
         }
 
-        .platform-benefit-icon.green {
-            background: #d1fae5;
-            color: #059669;
-        }
+        .benefit-icon.yellow { background: #fef3c7; color: #d97706; }
+        .benefit-icon.blue { background: #dbeafe; color: #2563eb; }
+        .benefit-icon.green { background: #d1fae5; color: #059669; }
+        .benefit-icon.purple { background: #e9d5ff; color: #7c3aed; }
 
-        .platform-benefit-icon.blue {
-            background: #dbeafe;
-            color: #2563eb;
-        }
-
-        .platform-benefit-icon.orange {
-            background: #fed7aa;
-            color: #ea580c;
-        }
-
-        .platform-benefit-icon.purple {
-            background: #e9d5ff;
-            color: #7c3aed;
-        }
-
-        .platform-benefit-title {
-            font-size: 1.25rem;
+        .benefit-title {
+            font-size: 1rem;
             font-weight: 600;
-            color: #1f2937;
-            margin-bottom: 0.75rem;
+            color: #333;
+            margin-bottom: 0.5rem;
         }
 
-        .platform-benefit-description {
-            color: #6b7280;
+        .benefit-description {
+            font-size: 0.875rem;
+            color: #666;
         }
 
         /* CTA Section */
-        .platform-cta {
-            background: linear-gradient(to right, #ea580c, #dc2626);
-            color: white;
-            padding: 4rem 0;
+        .cta {
+            background: linear-gradient(to right, #f68b1e, #e57a0d);
+            color: #fff;
+            padding: 2rem 0;
             text-align: center;
         }
 
-        .platform-cta-container {
-            max-width: 1280px;
+        .cta-container {
+            max-width: 1200px;
             margin: 0 auto;
             padding: 0 1rem;
         }
 
-        .platform-cta h2 {
-            font-size: 2rem;
+        .cta h2 {
+            font-size: 1.5rem;
             margin-bottom: 1rem;
         }
 
-        .platform-cta-description {
-            font-size: 1.25rem;
+        .cta-description {
+            font-size: 1rem;
             color: #fed7aa;
-            margin-bottom: 2rem;
-            max-width: 32rem;
+            margin-bottom: 1.5rem;
+            max-width: 400px;
             margin-left: auto;
             margin-right: auto;
         }
 
-        .platform-cta-buttons {
+        .cta-buttons {
             display: flex;
             flex-direction: column;
             gap: 1rem;
@@ -684,254 +675,285 @@
             align-items: center;
         }
 
-        .platform-cta-btn {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 1rem 2rem;
+        .cta-btn {
+            padding: 0.75rem 1.5rem;
             border: none;
-            border-radius: 0.375rem;
-            font-size: 1.125rem;
+            border-radius: 0.25rem;
+            font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: background 0.2s;
         }
 
-        .platform-cta-btn-primary {
-            background: white;
-            color: #ea580c;
+        .cta-btn-primary {
+            background: #fff;
+            color: #f68b1e;
         }
 
-        .platform-cta-btn-primary:hover {
-            background: #f3f4f6;
+        .cta-btn-primary:hover {
+            background: #f3f3f3;
         }
 
-        .platform-cta-btn-secondary {
+        .cta-btn-secondary {
             background: transparent;
-            color: white;
-            border: 1px solid white;
+            color: #fff;
+            border: 1px solid #fff;
         }
 
-        .platform-cta-btn-secondary:hover {
-            background: white;
-            color: #ea580c;
+        .cta-btn-secondary:hover {
+            background: #fff;
+            color: #f68b1e;
         }
 
-        /* Contact Section */
-        .platform-contact {
+        /* Footer Section */
+        .footer-section {
             background: #1f2937;
-            color: white;
-            padding: 3rem 0;
+            color: #fff;
+            padding: 2rem 0;
         }
 
-        .platform-contact-container {
-            max-width: 1280px;
+        .footer-container {
+            max-width: 1200px;
             margin: 0 auto;
             padding: 0 1rem;
+        }
+
+        .footer-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 2rem;
-            text-align: center;
+            margin-bottom: 2rem;
         }
 
-        .platform-contact-item {
+        .footer-brand {
+            text-align: left;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-logo-image {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 0.25rem;
+            overflow: hidden;
+            background: #fff;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0.75rem;
         }
 
-        .platform-contact-icon {
+        .footer-logo-image img {
             width: 1.5rem;
             height: 1.5rem;
-            color: #f97316;
+            object-fit: contain;
         }
 
-        .platform-contact-info p:first-child {
-            font-size: 0.875rem;
+        .footer-brand-info h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0;
+        }
+
+        .footer-brand-info p {
+            font-size: 0.75rem;
             color: #9ca3af;
-            margin-bottom: 0.25rem;
         }
 
-        .platform-contact-info p:last-child {
-            font-size: 1.125rem;
+        .footer-description {
+            font-size: 0.875rem;
+            color: #d1d5db;
+            margin-bottom: 1rem;
         }
 
-        /* Floating WhatsApp Button */
-        .platform-whatsapp-float {
-            position: fixed;
-            bottom: 1.5rem;
-            right: 1.5rem;
-            z-index: 50;
+        .footer-social {
+            display: flex;
+            gap: 0.5rem;
         }
 
-        .platform-whatsapp-btn {
-            width: 4rem;
-            height: 4rem;
-            background: #10b981;
-            border: none;
-            border-radius: 50%;
-            color: white;
-            cursor: pointer;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
+        .footer-social-link {
+            width: 2rem;
+            height: 2rem;
+            background: #374151;
+            color: #fff;
+            border-radius: 0.25rem;
             display: flex;
             align-items: center;
             justify-content: center;
+            text-decoration: none;
+            font-size: 1rem;
         }
 
-        .platform-whatsapp-btn:hover {
-            background: #059669;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-            transform: scale(1.05);
+        .footer-social-link:hover {
+            background: #4b5563;
+        }
+
+        .footer-column h4 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: #d1d5db;
+            text-decoration: none;
+            font-size: 0.875rem;
+        }
+
+        .footer-links a:hover {
+            color: #f68b1e;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #374151;
+            padding-top: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-copyright {
+            font-size: 0.875rem;
+            color: #9ca3af;
+        }
+
+        .footer-legal {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .footer-legal a {
+            color: #d1d5db;
+            text-decoration: none;
+            font-size: 0.875rem;
+        }
+
+        .footer-legal a:hover {
+            color: #f68b1e;
         }
 
         /* Icons */
         .icon {
-            width: 1.5rem;
-            height: 1.5rem;
+            width: 1rem;
+            height: 1rem;
             stroke: currentColor;
             fill: none;
             stroke-width: 2;
         }
 
-        .icon-filled {
-            fill: currentColor;
+        .star-icon {
+            fill: #ffa500;
         }
 
         /* Responsive Design */
         @media (min-width: 640px) {
-            .platform-cta-buttons {
-                flex-direction: row;
-            }
-
-            .platform-filters-top {
+            .cta-buttons {
                 flex-direction: row;
             }
         }
 
         @media (max-width: 768px) {
-            .platform-hero h1 {
-                font-size: 2rem;
-            }
-
-            .platform-hero-description {
-                font-size: 1.125rem;
-            }
-
-            .platform-filter-toggle {
-                display: flex;
-            }
-
-            .platform-filters-row.hidden {
-                display: none;
-            }
-
-            .platform-products-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .platform-product-card.list-view {
+            .main-container {
                 flex-direction: column;
             }
 
-            .platform-product-card.list-view .platform-product-image-container {
+            .sidebar {
                 width: 100%;
-                aspect-ratio: 1;
             }
-        }
 
-        /* Utility Classes */
-        .hidden {
-            display: none;
-        }
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
 
-        .no-products {
-            text-align: center;
-            padding: 3rem 0;
-        }
+            .hero h1 {
+                font-size: 1.5rem;
+            }
 
-        .no-products-icon {
-            width: 4rem;
-            height: 4rem;
-            color: #d1d5db;
-            margin: 0 auto 1rem;
-        }
-
-        .no-products h3 {
-            font-size: 1.25rem;
-            color: #6b7280;
-            margin-bottom: 0.5rem;
-        }
-
-        .no-products p {
-            color: #9ca3af;
+            .hero-description {
+                font-size: 0.875rem;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Top Banner -->
+    <div class="banner-wrapper">
+        <div class="banner-rectangle back-rect"></div>
+        <img class="top-banner" src="/MIM/assets/images/cotascale-sept-hot-deal.gif" alt="Hot Deal Banner">
+        <div class="banner-rectangle front-rect"></div>
+    </div>
+
     <!-- Header -->
-    <header class="platform-header">
-        <div class="platform-header-container">
-            <div class="platform-logo-section">
-                <div class="platform-logo-image">
-                    <a href="https://Cotascales.com"><img src="/MIM/assets/images/cota.png" alt="logo" class="logo-image"></a>
+    <header class="header">
+        <div class="header-container">
+            <div class="logo-section">
+                <div class="logo-image">
+                    <a href="https://Cotascales.com"><img src="/MIM/assets/images/cota.png" alt="logo"></a>
                 </div>
-                <div class="platform-brand-info">
+                <div class="brand-info">
                     <h1>MIM Electronics</h1>
                     <p>Platform Scales</p>
                 </div>
             </div>
             
-            <div class="platform-header-actions">
-                <button class="platform-help-btn" onclick="platformHandleWhatsAppClick('I need help choosing the right platform scale for my business')">
+            <div class="header-actions">
+                <button class="help-btn" onclick="handleWhatsAppClick('I need help choosing the right platform scale for my business')">
                     <svg class="icon" viewBox="0 0 24 24">
                         <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
                     </svg>
                     Get Help
                 </button>
+                <a href="cart.html" class="cart-btn">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <circle cx="9" cy="21" r="1"/>
+                        <circle cx="20" cy="21" r="1"/>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                    </svg>
+                    <span class="cart-count" id="cartCount">0</span>
+                </a>
             </div>
         </div>
     </header>
 
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb">
+        <a href="index.html">Home</a> &gt; Platform Scales
+    </nav>
+
     <!-- Hero Section -->
-    <section class="platform-hero">
-        <div class="platform-hero-container">
-            <svg class="platform-hero-icon" viewBox="0 0 220 260" width="25" height="25" role="img" aria-labelledby="title desc"
-                                        fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
-                                    <title id="title">Platform Scale</title>
-                                    <desc id="desc">A realistic platform scale with straight neck and attached meter</desc>
-
-                                    <!-- Platform base -->
-                                    <rect x="30" y="170" width="160" height="30" rx="10" stroke-width="9" />
-
-                                    <!-- Feet (round at corners) -->
-                                    <circle cx="50" cy="210" r="8" />
-                                    <circle cx="170" cy="210" r="8" />
-
-                                    <!-- Straight vertical neck -->
-                                    <rect x="108" y="70" width="8" height="100" rx="3" stroke-width="5" />
-
-                                    <!-- Meter housing (attached directly at top of neck) -->
-                                    <rect x="85" y="34" width="54" height="36" rx="6" />
-
-                                    <!-- Meter screen -->
-                                    <rect x="92" y="39.3" width="40" height="20" rx="3" stroke-width="3" />
-
-                                    <!-- Buttons below screen -->
-                                    <circle cx="100" cy="61.9" r="2" />
-                                    <circle cx="110" cy="61.9" r="2" />
-                                    <circle cx="120" cy="61.9" r="2" />
-                                    <circle cx="130" cy="61.9" r="2" />
-                                    </svg>
+    <section class="hero">
+        <div class="hero-container">
+            <svg class="hero-icon" viewBox="0 0 220 260" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="30" y="170" width="160" height="30" rx="10" stroke-width="9" />
+                <circle cx="50" cy="210" r="8" />
+                <circle cx="170" cy="210" r="8" />
+                <rect x="108" y="70" width="8" height="100" rx="3" stroke-width="5" />
+                <rect x="85" y="34" width="54" height="36" rx="6" />
+                <rect x="92" y="39.3" width="40" height="20" rx="3" stroke-width="3" />
+                <circle cx="100" cy="61.9" r="2" />
+                <circle cx="110" cy="61.9" r="2" />
+                <circle cx="120" cy="61.9" r="2" />
+                <circle cx="130" cy="61.9" r="2" />
+            </svg>
             <h1>Platform Scales Collection</h1>
-            <p class="platform-hero-description">
-                Industrial-grade platform scales designed for heavy-duty weighing applications. 
-                Built for accuracy, durability, and reliable performance in demanding environments.
+            <p class="hero-description">
+                Industrial-grade platform scales designed for heavy-duty weighing applications. Built for accuracy, durability, and reliable performance in demanding environments.
             </p>
-            <div class="platform-hero-features">
-                <div class="platform-hero-feature">
-                    <div class="platform-hero-feature-icon">
+            <div class="hero-features">
+                <div class="hero-feature">
+                    <div class="hero-feature-icon">
                         <svg class="icon" viewBox="0 0 24 24">
                             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
                         </svg>
@@ -939,8 +961,8 @@
                     <h3>Heavy Duty</h3>
                     <p>Built to handle industrial loads with precision</p>
                 </div>
-                <div class="platform-hero-feature">
-                    <div class="platform-hero-feature-icon">
+                <div class="hero-feature">
+                    <div class="hero-feature-icon">
                         <svg class="icon" viewBox="0 0 24 24">
                             <circle cx="12" cy="12" r="10"/>
                             <circle cx="12" cy="12" r="6"/>
@@ -950,8 +972,8 @@
                     <h3>High Accuracy</h3>
                     <p>Precise measurements for critical applications</p>
                 </div>
-                <div class="platform-hero-feature">
-                    <div class="platform-hero-feature-icon">
+                <div class="hero-feature">
+                    <div class="hero-feature-icon">
                         <svg class="icon" viewBox="0 0 24 24">
                             <path d="M23 6l-9.5 9.5-5-5L1 18"/>
                         </svg>
@@ -963,75 +985,40 @@
         </div>
     </section>
 
-    <!-- Filters Section -->
-    <section class="platform-filters">
-        <div class="platform-filters-container">
-            <div class="platform-filters-top">
-                <div class="platform-search-container">
-                    <svg class="platform-search-icon" viewBox="0 0 24 24">
-                        <circle cx="11" cy="11" r="8"/>
-                        <path d="m21 21-4.35-4.35"/>
-                    </svg>
-                    <input type="text" class="platform-search-input" placeholder="Search platform scales..." id="platformSearchInput">
-                </div>
+    <!-- Cart Notification -->
+    <div class="cart-notification" id="cartNotification">
+        Added to Cart
+    </div>
 
-                <button class="platform-filter-toggle" onclick="platformToggleFilters()">
-                    <svg class="icon" viewBox="0 0 24 24">
-                        <polygon points="22,3 2,3 10,12.46 10,19 14,21 14,12.46"/>
-                    </svg>
-                    Filters
-                </button>
-
-                <div class="platform-view-sort">
-                    <div class="platform-view-toggle">
-                        <button class="platform-view-btn active" id="platformGridBtn" onclick="platformSetViewMode('grid')">
-                            <svg class="icon" viewBox="0 0 24 24">
-                                <rect x="3" y="3" width="7" height="7"/>
-                                <rect x="14" y="3" width="7" height="7"/>
-                                <rect x="14" y="14" width="7" height="7"/>
-                                <rect x="3" y="14" width="7" height="7"/>
-                            </svg>
-                        </button>
-                        <button class="platform-view-btn" id="platformListBtn" onclick="platformSetViewMode('list')">
-                            <svg class="icon" viewBox="0 0 24 24">
-                                <line x1="8" y1="6" x2="21" y2="6"/>
-                                <line x1="8" y1="12" x2="21" y2="12"/>
-                                <line x1="8" y1="18" x2="21" y2="18"/>
-                                <line x1="3" y1="6" x2="3.01" y2="6"/>
-                                <line x1="3" y1="12" x2="3.01" y2="12"/>
-                                <line x1="3" y1="18" x2="3.01" y2="18"/>
-                            </svg>
-                        </button>
-                    </div>
-                    
-                    <select class="platform-sort-select" id="platformSortSelect" onchange="platformSortProducts()">
-                        <option value="name">Name A-Z</option>
-                        <option value="price-low">Price: Low to High</option>
-                        <option value="price-high">Price: High to Low</option>
-                        <option value="rating">Highest Rated</option>
-                        <option value="capacity">Capacity</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="platform-filters-row" id="platformFiltersRow">
-                <select class="platform-filter-select" id="platformTypeFilter" onchange="platformFilterProducts()">
+    <!-- Main Content -->
+    <div class="main-container">
+        <!-- Sidebar Filters -->
+        <aside class="sidebar">
+            <div class="filter-group">
+                <div class="filter-title">Type</div>
+                <select class="filter-select" id="typeFilter" onchange="filterProducts()">
                     <option value="all">All Types</option>
                     <option value="floor">Floor Platform</option>
                     <option value="bench">Bench Platform</option>
                     <option value="portable">Portable Platform</option>
                     <option value="industrial">Industrial Platform</option>
                 </select>
+            </div>
 
-                <select class="platform-filter-select" id="platformCapacityFilter" onchange="platformFilterProducts()">
+            <div class="filter-group">
+                <div class="filter-title">Capacity</div>
+                <select class="filter-select" id="capacityFilter" onchange="filterProducts()">
                     <option value="all">All Capacities</option>
                     <option value="0-100">0-100kg</option>
                     <option value="101-500">101-500kg</option>
                     <option value="501-1000">501-1000kg</option>
                     <option value="1000+">1000kg+</option>
                 </select>
+            </div>
 
-                <select class="platform-filter-select" id="platformPriceFilter" onchange="platformFilterProducts()">
+            <div class="filter-group">
+                <div class="filter-title">Price</div>
+                <select class="filter-select" id="priceFilter" onchange="filterProducts()">
                     <option value="all">All Prices</option>
                     <option value="0-200000">₦0-₦200,000</option>
                     <option value="200001-500000">₦200,001-₦500,000</option>
@@ -1039,102 +1026,105 @@
                     <option value="1000000+">₦1,000,000+</option>
                 </select>
             </div>
+        </aside>
 
-            <div class="platform-results-count" id="platformResultsCount">
+        <!-- Content Area -->
+        <section class="content-area">
+            <div class="top-filters">
+                <div class="search-container">
+                    <svg class="search-icon" viewBox="0 0 24 24">
+                        <circle cx="11" cy="11" r="8"/>
+                        <path d="m21 21-4.35-4.35"/>
+                    </svg>
+                    <input type="text" class="search-input" placeholder="Search platform scales..." id="searchInput">
+                </div>
+
+                <select class="sort-select" id="sortSelect" onchange="sortProducts()">
+                    <option value="name">Name A-Z</option>
+                    <option value="price-low">Price: Low to High</option>
+                    <option value="price-high">Price: High to Low</option>
+                    <option value="rating">Highest Rated</option>
+                    <option value="capacity">Capacity</option>
+                </select>
+            </div>
+
+            <div class="results-count" id="resultsCount">
                 Showing 8 of 8 products
             </div>
-        </div>
-    </section>
 
-    <!-- Products Section -->
-    <section class="platform-products">
-        <div class="platform-products-container">
-            <div class="platform-products-grid" id="platformProductsGrid">
+            <div class="products-grid" id="productsGrid">
                 <!-- Products will be generated by JavaScript -->
             </div>
-            
-            <div class="no-products hidden" id="platformNoProducts">
-                <svg class="no-products-icon" viewBox="0 0 24 24">
-                    <path d="M14 9V5a3 3 0 0 0-6 0v4"/>
-                    <rect x="2" y="9" width="20" height="12" rx="2" ry="2"/>
-                </svg>
-                <h3>No products found</h3>
-                <p>Try adjusting your search or filters</p>
-            </div>
-        </div>
-    </section>
+        </section>
+    </div>
 
     <!-- Benefits Section -->
-    <section class="platform-benefits">
-        <div class="platform-benefits-container">
+    <section class="benefits">
+        <div class="benefits-container">
             <h2>Why Choose Platform Scales?</h2>
-            <p class="platform-benefits-description">
+            <p class="benefits-description">
                 Industrial-grade platform scales offer unmatched durability and precision for your weighing needs
             </p>
-            
-            <div class="platform-benefits-grid">
-                <div class="platform-benefit-card">
-                    <div class="platform-benefit-icon green">
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon yellow">
                         <svg class="icon" viewBox="0 0 24 24">
                             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
                         </svg>
                     </div>
-                    <h3 class="platform-benefit-title">Heavy Duty Construction</h3>
-                    <p class="platform-benefit-description">Built to withstand industrial environments and heavy loads</p>
+                    <h3 class="benefit-title">Heavy Duty Construction</h3>
+                    <p class="benefit-description">Built to withstand industrial environments and heavy loads</p>
                 </div>
-                
-                <div class="platform-benefit-card">
-                    <div class="platform-benefit-icon blue">
+                <div class="benefit-card">
+                    <div class="benefit-icon blue">
                         <svg class="icon" viewBox="0 0 24 24">
                             <circle cx="12" cy="12" r="10"/>
                             <circle cx="12" cy="12" r="6"/>
                             <circle cx="12" cy="12" r="2"/>
                         </svg>
                     </div>
-                    <h3 class="platform-benefit-title">High Precision</h3>
-                    <p class="platform-benefit-description">Accurate measurements for critical industrial processes</p>
+                    <h3 class="benefit-title">High Precision</h3>
+                    <p class="benefit-description">Accurate measurements for critical industrial processes</p>
                 </div>
-                
-                <div class="platform-benefit-card">
-                    <div class="platform-benefit-icon orange">
+                <div class="benefit-card">
+                    <div class="benefit-icon green">
                         <svg class="icon" viewBox="0 0 24 24">
                             <path d="M23 6l-9.5 9.5-5-5L1 18"/>
                         </svg>
                     </div>
-                    <h3 class="platform-benefit-title">Easy Integration</h3>
-                    <p class="platform-benefit-description">Seamlessly integrate into existing workflows and systems</p>
+                    <h3 class="benefit-title">Easy Integration</h3>
+                    <p class="benefit-description">Seamlessly integrate into existing workflows and systems</p>
                 </div>
-                
-                <div class="platform-benefit-card">
-                    <div class="platform-benefit-icon purple">
+                <div class="benefit-card">
+                    <div class="benefit-icon purple">
                         <svg class="icon" viewBox="0 0 24 24">
                             <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
                             <circle cx="8.5" cy="7" r="4"/>
                             <polyline points="17,11 19,13 23,9"/>
                         </svg>
                     </div>
-                    <h3 class="platform-benefit-title">Expert Support</h3>
-                    <p class="platform-benefit-description">Professional installation and ongoing technical support</p>
+                    <h3 class="benefit-title">Expert Support</h3>
+                    <p class="benefit-description">Professional installation and ongoing technical support</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- CTA Section -->
-    <section class="platform-cta">
-        <div class="platform-cta-container">
+    <section class="cta">
+        <div class="cta-container">
             <h2>Need Industrial Weighing Solutions?</h2>
-            <p class="platform-cta-description">
+            <p class="cta-description">
                 Our platform scale experts are ready to help you find the perfect solution for your industrial needs
             </p>
-            <div class="platform-cta-buttons">
-                <button class="platform-cta-btn platform-cta-btn-primary" onclick="platformHandleWhatsAppClick('I need expert advice on choosing the right platform scale for my industrial application')">
+            <div class="cta-buttons">
+                <button class="cta-btn cta-btn-primary" onclick="handleWhatsAppClick('I need expert advice on choosing the right platform scale for my industrial application')">
                     <svg class="icon" viewBox="0 0 24 24">
                         <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
                     </svg>
                     Get Expert Consultation
                 </button>
-                <button class="platform-cta-btn platform-cta-btn-secondary" onclick="platformHandleWhatsAppClick('Please send me a complete catalog of platform scales with specifications and pricing')">
+                <button class="cta-btn cta-btn-secondary" onclick="handleWhatsAppClick('Please send me a complete catalog of platform scales with specifications and pricing')">
                     <svg class="icon" viewBox="0 0 24 24">
                         <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
                     </svg>
@@ -1144,54 +1134,93 @@
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section class="platform-contact">
-        <div class="platform-contact-container">
-            <div class="platform-contact-item">
-                <svg class="platform-contact-icon" viewBox="0 0 24 24">
-                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-                </svg>
-                <div class="platform-contact-info">
-                    <p>Call Us</p>
-                    <p>+234 803 355 4867</p>
+    <!-- Footer Section -->
+    <footer class="footer-section">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <div class="footer-logo-image">
+                            <img src="/MIM/assets/images/cota.png" alt="MIM Electronics Logo">
+                        </div>
+                        <div class="footer-brand-info">
+                            <h3>MIM Electronics</h3>
+                            <p class="footer-brand-subtitle">Enterprise</p>
+                        </div>
+                    </div>
+                    <p class="footer-description">
+                        Your trusted partner for precision weighing solutions and industrial scale equipment across Nigeria. We specialize in analog scales, platform scales, crane scales, and more, with a commitment to quality and customer satisfaction.
+                    </p>
+                    <div class="footer-social">
+                        <a href="#" class="footer-social-link">f</a>
+                        <a href="#" class="footer-social-link">t</a>
+                        <a href="#" class="footer-social-link">in</a>
+                    </div>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Products</h4>
+                    <ul class="footer-links">
+                        <li><a href="html/analog-scales.html">Analog Scales</a></li>
+                        <li><a href="html/platform-scales.html">Platform Scales</a></li>
+                        <li><a href="html/crane-scales.html">Crane Scales</a></li>
+                        <li><a href="html/pricing-scales.html">Pricing Scales</a></li>
+                        <li><a href="html/balance-scales.html">Balance Scales</a></li>
+                        <li><a href="html/weighbridge.html">Weighbridge</a></li>
+                        <li><a href="html/loadcell-and-scale-parts.html">Loadcell & Scale Parts</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Services</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Installation</a></li>
+                        <li><a href="#">Calibration</a></li>
+                        <li><a href="#">Maintenance</a></li>
+                        <li><a href="#">Repair Services</a></li>
+                        <li><a href="#">Technical Support</a></li>
+                        <li><a href="#">Parts Supply</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Company</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Support</a></li>
+                        <li><a href="#">Warranty</a></li>
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">Careers</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Contact Us</h4>
+                    <ul class="footer-links">
+                        <li><a href="tel:+2348033554867">+234 803 355 4867</a></li>
+                        <li><a href="mailto:info@mimelectronics.com">info@mimelectronics.com</a></li>
+                        <li><a href="#">Lagos, Nigeria</a></li>
+                        <li><a href="#" onclick="handleWhatsAppClick('I have a question about your products or services')">Chat with Us</a></li>
+                    </ul>
                 </div>
             </div>
-            <div class="platform-contact-item">
-                <svg class="platform-contact-icon" viewBox="0 0 24 24">
-                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                    <polyline points="22,6 12,13 2,6"/>
-                </svg>
-                <div class="platform-contact-info">
-                    <p>Email</p>
-                    <p>info@mimelectronics.com</p>
-                </div>
-            </div>
-            <div class="platform-contact-item">
-                <svg class="platform-contact-icon" viewBox="0 0 24 24">
-                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                    <circle cx="12" cy="10" r="3"/>
-                </svg>
-                <div class="platform-contact-info">
-                    <p>Location</p>
-                    <p>Lagos, Nigeria</p>
+
+            <div class="footer-bottom">
+                <p class="footer-copyright">&copy; 2025 MIM Electronics Enterprise. All rights reserved.</p>
+                <div class="footer-legal">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Cookie Policy</a>
                 </div>
             </div>
         </div>
-    </section>
-
-    <!-- Floating WhatsApp Button -->
-    <div class="platform-whatsapp-float">
-        <button class="platform-whatsapp-btn" onclick="platformHandleWhatsAppClick()">
-            <svg class="icon" viewBox="0 0 24 24">
-                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-            </svg>
-        </button>
-    </div>
+    </footer>
 
     <script>
         // WhatsApp Number
-        const platformWhatsappNumber = "+2348033554867";
-        
+        const whatsappNumber = "+2348033554867";
+
         // Product Data
         const platformScalesProducts = [
             {
@@ -1205,16 +1234,8 @@
                 reviews: 156,
                 image: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=400&h=300&fit=crop",
                 badge: "BESTSELLER",
-                badgeColor: "background: #10b981;",
+                badgeColor: "#10b981",
                 inStock: true,
-                features: ["Stainless Steel Platform", "Digital Display", "High Capacity", "Overload Protection"],
-                specifications: {
-                    capacity: "500kg",
-                    readability: "100g",
-                    platform: "600mm x 800mm",
-                    material: "Stainless Steel",
-                    warranty: "3 Years"
-                },
                 description: "Heavy-duty floor platform scale designed for industrial applications. Features stainless steel construction and digital display for precise measurements."
             },
             {
@@ -1228,16 +1249,8 @@
                 reviews: 89,
                 image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop",
                 badge: "25% OFF",
-                badgeColor: "background: #ef4444;",
+                badgeColor: "#ef4444",
                 inStock: true,
-                features: ["Compact Design", "Easy Calibration", "Battery Operation", "RS232 Interface"],
-                specifications: {
-                    capacity: "150kg",
-                    readability: "50g",
-                    platform: "400mm x 500mm",
-                    material: "Aluminum Alloy",
-                    warranty: "2 Years"
-                },
                 description: "Versatile bench platform scale perfect for laboratory and industrial weighing applications. Compact design with high accuracy."
             },
             {
@@ -1251,16 +1264,8 @@
                 reviews: 234,
                 image: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=400&h=300&fit=crop",
                 badge: "PORTABLE",
-                badgeColor: "background: #3b82f6;",
+                badgeColor: "#3b82f6",
                 inStock: true,
-                features: ["Lightweight Design", "Rechargeable Battery", "Carry Handle", "IP65 Rating"],
-                specifications: {
-                    capacity: "100kg",
-                    readability: "20g",
-                    platform: "300mm x 400mm",
-                    material: "Carbon Steel",
-                    warranty: "2 Years"
-                },
                 description: "Lightweight and portable platform scale ideal for field use. Features rechargeable battery and weatherproof construction."
             },
             {
@@ -1274,16 +1279,8 @@
                 reviews: 67,
                 image: "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=400&h=300&fit=crop",
                 badge: "INDUSTRIAL",
-                badgeColor: "background: #8b5cf6;",
+                badgeColor: "#8b5cf6",
                 inStock: true,
-                features: ["Ultra Heavy Duty", "Load Cell Technology", "Anti-Vibration", "Data Logging"],
-                specifications: {
-                    capacity: "1000kg",
-                    readability: "200g",
-                    platform: "800mm x 1000mm",
-                    material: "Steel with Anti-Slip",
-                    warranty: "5 Years"
-                },
                 description: "Ultimate heavy-duty platform scale for industrial applications. Features advanced load cell technology and superior build quality."
             },
             {
@@ -1297,16 +1294,8 @@
                 reviews: 178,
                 image: "https://images.unsplash.com/photo-1586864387967-d02ef85d93e8?w=400&h=300&fit=crop",
                 badge: "VETERINARY",
-                badgeColor: "background: #f97316;",
+                badgeColor: "#f97316",
                 inStock: true,
-                features: ["Non-Slip Surface", "Easy Cleaning", "Animal-Friendly", "Hold Function"],
-                specifications: {
-                    capacity: "300kg",
-                    readability: "100g",
-                    platform: "700mm x 900mm",
-                    material: "Stainless Steel Non-Slip",
-                    warranty: "3 Years"
-                },
                 description: "Specialized platform scale designed for veterinary applications. Features non-slip surface and hold function for accurate animal weighing."
             },
             {
@@ -1320,16 +1309,8 @@
                 reviews: 92,
                 image: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=400&h=300&fit=crop",
                 badge: "WATERPROOF",
-                badgeColor: "background: #6b7280;",
+                badgeColor: "#6b7280",
                 inStock: false,
-                features: ["IP68 Waterproof", "Wash-Down Design", "Corrosion Resistant", "Food Grade"],
-                specifications: {
-                    capacity: "200kg",
-                    readability: "50g",
-                    platform: "500mm x 600mm",
-                    material: "Stainless Steel 316",
-                    warranty: "3 Years"
-                },
                 description: "Fully waterproof platform scale designed for wet environments. Features IP68 rating and food-grade stainless steel construction."
             },
             {
@@ -1343,16 +1324,8 @@
                 reviews: 145,
                 image: "https://images.unsplash.com/photo-1574634534894-89d7576c8259?w=400&h=300&fit=crop",
                 badge: "PRECISION",
-                badgeColor: "background: #dc2626;",
+                badgeColor: "#dc2626",
                 inStock: true,
-                features: ["High Precision", "Internal Calibration", "Draft Shield", "Data Interface"],
-                specifications: {
-                    capacity: "50kg",
-                    readability: "1g",
-                    platform: "300mm x 300mm",
-                    material: "Cast Aluminum",
-                    warranty: "3 Years"
-                },
                 description: "High-precision platform scale for laboratory applications. Features internal calibration and superior accuracy for critical measurements."
             },
             {
@@ -1366,289 +1339,195 @@
                 reviews: 203,
                 image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop",
                 badge: "VERSATILE",
-                badgeColor: "background: #059669;",
+                badgeColor: "#059669",
                 inStock: true,
-                features: ["Multi-Function", "Remote Display", "Counting Mode", "Percentage Mode"],
-                specifications: {
-                    capacity: "250kg",
-                    readability: "50g",
-                    platform: "500mm x 700mm",
-                    material: "Powder Coated Steel",
-                    warranty: "2 Years"
-                },
                 description: "Versatile platform scale with multiple weighing modes. Perfect for various applications including counting and percentage weighing."
             }
         ];
 
+        // Cart State
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
         // State Variables
-        let platformCurrentViewMode = 'grid';
-        let platformFilteredProducts = [...platformScalesProducts];
-        let platformFiltersVisible = false;
+        let filteredProducts = [...platformScalesProducts];
 
         // WhatsApp Integration
-        function platformHandleWhatsAppClick(message = "Hello! I'm interested in your platform scales. Can you help me?") {
+        function handleWhatsAppClick(message = "Hello! I'm interested in your platform scales. Can you help me?") {
             const encodedMessage = encodeURIComponent(message);
-            const url = `https://wa.me/${platformWhatsappNumber}?text=${encodedMessage}`;
+            const url = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
             window.open(url, '_blank');
         }
 
-        function platformHandleProductInquiry(product) {
-            const message = `I'm interested in the ${product.name} (${product.specifications.capacity}). Price: ₦${product.price.toLocaleString()}. Can you provide more details and availability?`;
-            platformHandleWhatsAppClick(message);
+        // Cart Functions
+        function addToCart(product, event) {
+            event.preventDefault();
+            if (product.inStock) {
+                cart.push(product);
+                localStorage.setItem('cart', JSON.stringify(cart));
+                updateCartCount();
+                showCartNotification(product);
+            }
         }
 
-        // View Mode Functions
-        function platformSetViewMode(mode) {
-            platformCurrentViewMode = mode;
-            const gridBtn = document.getElementById('platformGridBtn');
-            const listBtn = document.getElementById('platformListBtn');
-            const productsGrid = document.getElementById('platformProductsGrid');
-
-            if (mode === 'grid') {
-                gridBtn.classList.add('active');
-                listBtn.classList.remove('active');
-                productsGrid.classList.remove('list-view');
-            } else {
-                listBtn.classList.add('active');
-                gridBtn.classList.remove('active');
-                productsGrid.classList.add('list-view');
-            }
-
-            platformRenderProducts();
+        function updateCartCount() {
+            const cartCount = document.getElementById('cartCount');
+            const count = cart.reduce((total, item) => total + (item.quantity || 1), 0);
+            if (cartCount) cartCount.textContent = count;
         }
 
-        function platformToggleFilters() {
-            platformFiltersVisible = !platformFiltersVisible;
-            const filtersRow = document.getElementById('platformFiltersRow');
-            if (platformFiltersVisible) {
-                filtersRow.classList.remove('hidden');
-            } else {
-                filtersRow.classList.add('hidden');
-            }
+        function showCartNotification(product) {
+            const notification = document.getElementById('cartNotification');
+            notification.style.display = 'block';
+            
+            const cartBtn = document.querySelector('.cart-btn');
+            const cartBtnRect = cartBtn.getBoundingClientRect();
+            
+            gsap.fromTo(notification, 
+                { opacity: 0, y: 20 },
+                { 
+                    opacity: 1, 
+                    y: 0, 
+                    duration: 0.5, 
+                    ease: "power2.out",
+                    onComplete: () => {
+                        gsap.to(notification, {
+                            x: cartBtnRect.left - window.innerWidth + cartBtnRect.width / 2 + 100,
+                            y: cartBtnRect.top - window.innerHeight + cartBtnRect.height / 2 + 60,
+                            scale: 0.2,
+                            opacity: 0,
+                            duration: 0.8,
+                            ease: "power2.in",
+                            onComplete: () => {
+                                notification.style.display = 'none';
+                                gsap.set(notification, { x: 0, y: 0, scale: 1, opacity: 1 });
+                            }
+                        });
+                    }
+                }
+            );
         }
 
         // Filter Functions
-        function platformFilterProducts() {
-            const searchQuery = document.getElementById('platformSearchInput').value.toLowerCase();
-            const typeFilter = document.getElementById('platformTypeFilter').value;
-            const capacityFilter = document.getElementById('platformCapacityFilter').value;
-            const priceFilter = document.getElementById('platformPriceFilter').value;
+        function filterProducts() {
+            const searchQuery = document.getElementById('searchInput').value.toLowerCase();
+            const typeFilter = document.getElementById('typeFilter').value;
+            const capacityFilter = document.getElementById('capacityFilter').value;
+            const priceFilter = document.getElementById('priceFilter').value;
 
-            platformFilteredProducts = platformScalesProducts.filter(product => {
-                // Search filter
+            filteredProducts = platformScalesProducts.filter(product => {
                 const matchesSearch = product.name.toLowerCase().includes(searchQuery) ||
                                     product.description.toLowerCase().includes(searchQuery);
 
-                // Type filter
                 const matchesType = typeFilter === 'all' || product.type === typeFilter;
 
-                // Capacity filter
                 let matchesCapacity = true;
                 if (capacityFilter !== 'all') {
                     const capacity = product.capacity;
                     switch (capacityFilter) {
-                        case '0-100':
-                            matchesCapacity = capacity <= 100;
-                            break;
-                        case '101-500':
-                            matchesCapacity = capacity > 100 && capacity <= 500;
-                            break;
-                        case '501-1000':
-                            matchesCapacity = capacity > 500 && capacity <= 1000;
-                            break;
-                        case '1000+':
-                            matchesCapacity = capacity > 1000;
-                            break;
+                        case '0-100': matchesCapacity = capacity <= 100; break;
+                        case '101-500': matchesCapacity = capacity > 100 && capacity <= 500; break;
+                        case '501-1000': matchesCapacity = capacity > 500 && capacity <= 1000; break;
+                        case '1000+': matchesCapacity = capacity > 1000; break;
                     }
                 }
 
-                // Price filter
                 let matchesPrice = true;
                 if (priceFilter !== 'all') {
                     const price = product.price;
                     switch (priceFilter) {
-                        case '0-200000':
-                            matchesPrice = price <= 200000;
-                            break;
-                        case '200001-500000':
-                            matchesPrice = price > 200000 && price <= 500000;
-                            break;
-                        case '500001-1000000':
-                            matchesPrice = price > 500000 && price <= 1000000;
-                            break;
-                        case '1000000+':
-                            matchesPrice = price > 1000000;
-                            break;
+                        case '0-200000': matchesPrice = price <= 200000; break;
+                        case '200001-500000': matchesPrice = price > 200000 && price <= 500000; break;
+                        case '500001-1000000': matchesPrice = price > 500000 && price <= 1000000; break;
+                        case '1000000+': matchesPrice = price > 1000000; break;
                     }
                 }
 
                 return matchesSearch && matchesType && matchesCapacity && matchesPrice;
             });
 
-            platformSortProducts();
-            platformRenderProducts();
-            platformUpdateResultsCount();
+            sortProducts();
+            renderProducts();
+            updateResultsCount();
         }
 
-        function platformSortProducts() {
-            const sortBy = document.getElementById('platformSortSelect').value;
+        function sortProducts() {
+            const sortBy = document.getElementById('sortSelect').value;
 
-            platformFilteredProducts.sort((a, b) => {
+            filteredProducts.sort((a, b) => {
                 switch (sortBy) {
-                    case 'price-low':
-                        return a.price - b.price;
-                    case 'price-high':
-                        return b.price - a.price;
-                    case 'rating':
-                        return b.rating - a.rating;
-                    case 'capacity':
-                        return a.capacity - b.capacity;
-                    default:
-                        return a.name.localeCompare(b.name);
+                    case 'price-low': return a.price - b.price;
+                    case 'price-high': return b.price - a.price;
+                    case 'rating': return b.rating - a.rating;
+                    case 'capacity': return a.capacity - b.capacity;
+                    default: return a.name.localeCompare(b.name);
                 }
             });
+
+            renderProducts();
         }
 
-        function platformUpdateResultsCount() {
-            const resultsCount = document.getElementById('platformResultsCount');
-            resultsCount.textContent = `Showing ${platformFilteredProducts.length} of ${platformScalesProducts.length} products`;
+        function updateResultsCount() {
+            const resultsCount = document.getElementById('resultsCount');
+            resultsCount.textContent = `Showing ${filteredProducts.length} of ${platformScalesProducts.length} products`;
         }
 
-        // Render Functions
-        function platformRenderProducts() {
-            const productsGrid = document.getElementById('platformProductsGrid');
-            const noProducts = document.getElementById('platformNoProducts');
-
-            if (platformFilteredProducts.length === 0) {
-                productsGrid.style.display = 'none';
-                noProducts.classList.remove('hidden');
-                return;
-            }
-
-            productsGrid.style.display = 'grid';
-            noProducts.classList.add('hidden');
-
-            productsGrid.innerHTML = platformFilteredProducts.map(product => `
-                <div class="platform-product-card ${platformCurrentViewMode === 'list' ? 'list-view' : ''}">
-                    <div class="platform-product-image-container">
-                        <img src="${product.image}" alt="${product.name}" class="platform-product-image">
-                        <div class="platform-product-badge" style="${product.badgeColor}">
-                            ${product.badge}
-                        </div>
-                        ${!product.inStock ? `
-                            <div style="position: absolute; inset: 0; background: rgba(0, 0, 0, 0.5); display: flex; align-items: center; justify-content: center;">
-                                <div style="background: #dc2626; color: white; padding: 0.25rem 0.5rem; border-radius: 0.25rem; font-size: 0.75rem; font-weight: 600;">
-                                    Out of Stock
+        // Render Products
+        function renderProducts() {
+            const productsGrid = document.getElementById('productsGrid');
+            productsGrid.innerHTML = filteredProducts.map(product => {
+                const discount = Math.round((1 - (product.price / product.originalPrice)) * 100);
+                return `
+                    <div class="product-card">
+                        <a href="product.html?id=${product.id}" class="product-link">
+                            <div class="product-image-container">
+                                <img src="${product.image}" alt="${product.name}" class="product-image">
+                                <div class="product-badge" style="background: ${product.badgeColor};">${product.badge}</div>
+                                ${discount > 0 ? `<div class="product-discount">-${discount}%</div>` : ''}
+                            </div>
+                            <div class="product-content">
+                                <h3 class="product-name">${product.name}</h3>
+                                <div class="product-price">
+                                    <span class="product-current-price">₦${product.price.toLocaleString()}</span>
+                                    <span class="product-original-price">₦${product.originalPrice.toLocaleString()}</span>
                                 </div>
+                                <div class="product-rating">
+                                    ${product.rating} <svg class="icon star-icon" viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
+                                    (${product.reviews})
+                                </div>
+                                <div class="product-stock">${product.inStock ? 'In Stock' : 'Out of Stock'}</div>
                             </div>
-                        ` : ''}
-                        <div class="platform-product-actions">
-                            <button class="platform-product-action-btn">
-                                <svg class="icon" viewBox="0 0 24 24">
-                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-                                </svg>
-                            </button>
-                            <button class="platform-product-action-btn">
-                                <svg class="icon" viewBox="0 0 24 24">
-                                    <circle cx="18" cy="5" r="3"/>
-                                    <circle cx="6" cy="12" r="3"/>
-                                    <circle cx="18" cy="19" r="3"/>
-                                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
-                                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
-                                </svg>
+                        </a>
+                        <div class="product-content">
+                            <div class="product-negotiable" onclick="handleWhatsAppClick('I want to negotiate the price for ${product.name}')">
+                                Negotiate Price via DM
+                            </div>
+                            <button class="product-btn" ${!product.inStock ? 'disabled' : ''} onclick="addToCart(${JSON.stringify(product).replace(/"/g, '&quot;')}, event)">
+                                Add to Cart
                             </button>
                         </div>
                     </div>
+                `;
+            }).join('');
+        }
 
-                    <div class="platform-product-content">
-                        <div class="platform-product-header">
-                            <div class="platform-product-category">${product.type.charAt(0).toUpperCase() + product.type.slice(1)}</div>
-                            <div class="platform-product-rating">
-                                <svg class="icon icon-filled" style="color: #fbbf24; width: 1rem; height: 1rem;" viewBox="0 0 24 24">
-                                    <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/>
-                                </svg>
-                                <span>${product.rating}</span>
-                                <span style="color: #9ca3af;">(${product.reviews})</span>
-                            </div>
-                        </div>
-
-                        <h3 class="platform-product-name">${product.name}</h3>
-                        <p class="platform-product-description">${product.description}</p>
-
-                        <div class="platform-product-features">
-                            <h4>Key Features:</h4>
-                            <div class="platform-product-features-list">
-                                ${product.features.slice(0, 2).map(feature => 
-                                    `<span class="platform-product-feature-tag">${feature}</span>`
-                                ).join('')}
-                                ${product.features.length > 2 ? 
-                                    `<span class="platform-product-feature-tag">+${product.features.length - 2} more</span>` 
-                                    : ''
-                                }
-                            </div>
-                        </div>
-
-                        <div class="platform-product-specs">
-                            <div class="platform-product-specs-grid">
-                                <div class="platform-product-spec">Capacity:<span>${product.specifications.capacity}</span></div>
-                                <div class="platform-product-spec">Platform:<span>${product.specifications.platform}</span></div>
-                            </div>
-                        </div>
-
-                        <div class="platform-product-price-stock">
-                            <div class="platform-product-price">
-                                <span class="platform-product-current-price">₦${product.price.toLocaleString()}</span>
-                                <span class="platform-product-original-price">₦${product.originalPrice.toLocaleString()}</span>
-                            </div>
-                            <div class="platform-product-stock ${product.inStock ? 'in-stock' : 'out-of-stock'}">
-                                ${product.inStock ? `
-                                    <svg class="icon" style="width: 1rem; height: 1rem;" viewBox="0 0 24 24">
-                                        <path d="M9 12l2 2 4-4"/>
-                                        <circle cx="12" cy="12" r="10"/>
-                                    </svg>
-                                    In Stock
-                                ` : 'Out of Stock'}
-                            </div>
-                        </div>
-
-                        <div class="platform-product-buttons">
-                            <button class="platform-product-btn platform-product-btn-primary" ${!product.inStock ? 'disabled' : ''} onclick="platformHandleProductInquiry(${JSON.stringify(product).replace(/"/g, '&quot;')})">
-                                <svg class="icon" viewBox="0 0 24 24">
-                                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-                                </svg>
-                                Inquire Now
-                            </button>
-                            <button class="platform-product-btn platform-product-btn-secondary">
-                                <svg class="icon" viewBox="0 0 24 24">
-                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                                    <circle cx="12" cy="12" r="3"/>
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
+        // Banner Animation Reset
+        function restartBannerAnimations() {
+            const banner = document.querySelector('.top-banner');
+            banner.classList.remove('animate__animated', 'animate__fadeIn');
+            void banner.offsetWidth;
+            banner.classList.add('animate__animated', 'animate__fadeIn');
         }
 
         // Event Listeners
-        document.getElementById('platformSearchInput').addEventListener('input', platformFilterProducts);
+        document.getElementById('searchInput').addEventListener('input', filterProducts);
 
         // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
-            platformRenderProducts();
-            platformUpdateResultsCount();
-        });
-
-        // Responsive behavior
-        window.addEventListener('resize', function() {
-            if (window.innerWidth >= 768) {
-                document.getElementById('platformFiltersRow').classList.remove('hidden');
-                platformFiltersVisible = true;
-            } else {
-                if (!platformFiltersVisible) {
-                    document.getElementById('platformFiltersRow').classList.add('hidden');
-                }
-            }
+        document.addEventListener('DOMContentLoaded', () => {
+            renderProducts();
+            updateResultsCount();
+            updateCartCount();
+            restartBannerAnimations();
+            setInterval(restartBannerAnimations, 5000);
         });
     </script>
 </body>

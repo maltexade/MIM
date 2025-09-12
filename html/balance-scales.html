@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Balance Scales - MIM Electronics Enterprise</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caveat:wght@400;700&family=Epunda+Slab:ital,wght@0,300..900;1,300..900&family=Karla:ital,wght@0,200..800;1,200..800&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Niconne&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:wght@300;400;500;600;700&family=Stalemate&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <style>
         * {
             margin: 0;
@@ -14,669 +20,654 @@
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             line-height: 1.6;
-            color: #374151;
-            background-color: #ffffff;
+            color: #333;
+            background-color: #fff;
         }
 
-        /* Header with balance- prefix */
-        .balance-header {
-            background: white;
-            border-bottom: 1px solid #e5e7eb;
+        /* Top Banner */
+        .banner-wrapper {
+            position: relative;
+            width: 100%;
+            height: 42px;
+            overflow: hidden;
+            background: #fff;
+        }
+
+        .top-banner {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 1200px;
+            height: 42px;
+            display: block;
+            z-index: 1;
+        }
+
+        .banner-rectangle {
+            position: absolute;
+            top: 0;
+            height: 42px;
+            width: 150px;
+            background: #2563eb;
+            z-index: 2;
+            display: none;
+        }
+
+        .back-rect {
+            left: 0;
+            z-index: 0;
+        }
+
+        .front-rect {
+            right: 0;
+            z-index: 2;
+        }
+
+        @media (min-width: 768px) {
+            .banner-rectangle {
+                display: block;
+            }
+            
+            .top-banner {
+                max-width: calc(100% - 300px);
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .banner-rectangle {
+                width: 400px;
+            }
+            
+            .top-banner {
+                max-width: calc(100% - 800px);
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+
+        @media (max-width: 767px) {
+            .banner-wrapper {
+                height: auto;
+            }
+            
+            .top-banner {
+                position: static;
+                transform: none;
+                max-width: 100%;
+                width: 100%;
+            }
+            
+            .banner-rectangle {
+                display: none !important;
+            }
+        }
+
+        /* Header Styles */
+        .header {
+            background: #fff;
             position: sticky;
             top: 0;
             z-index: 50;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
 
-        .balance-header-container {
-            max-width: 1280px;
+        .header-container {
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 1rem;
+            padding: 0.5rem 1rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
 
-        .balance-logo-section {
+        .logo-section {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 0.5rem;
         }
 
-        .balance-logo-image {
-            width: 2.5rem;
-            height: 2.5rem;
-            border-radius: 0.5rem;
+        .logo-image {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 0.25rem;
             overflow: hidden;
-            background: white;
-            border: 1px solid #e5e7eb;
+            background: #fff;
+            border: 1px solid #e5e5e5;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        .balance-logo-image img {
-            width: 2rem;
-            height: 2rem;
+        .logo-image img {
+            width: 1.5rem;
+            height: 1.5rem;
             object-fit: contain;
         }
 
-        .balance-brand-info h1 {
-            color: #1f2937;
-            font-size: 1.125rem;
-            margin-bottom: 0.125rem;
+        .brand-info h1 {
+            color: #000;
+            font-size: 1rem;
+            margin-bottom: 0;
         }
 
-        .balance-brand-info p {
-            color: #6b7280;
+        .brand-info p {
+            color: #666;
             font-size: 0.75rem;
         }
 
-        .balance-header-actions {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .balance-help-btn {
+        .header-actions {
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            background: transparent;
-            border: 1px solid #d1d5db;
-            border-radius: 0.375rem;
-            color: #374151;
-            cursor: pointer;
-            font-size: 0.875rem;
-            transition: all 0.2s ease;
         }
 
-        .balance-help-btn:hover {
-            background-color: #f9fafb;
-            border-color: #9ca3af;
+        .help-btn, .cart-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem;
+            border: none;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: background 0.2s;
+        }
+
+        .help-btn {
+            background: #f68b1e;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            gap: 0.5rem;
+        }
+
+        .help-btn:hover {
+            background: #e57a0d;
+        }
+
+        .cart-btn {
+            background: #fff;
+            width: 2rem;
+            height: 2rem;
+            position: relative;
+        }
+
+        .cart-btn:hover {
+            background: #f9fafb;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -0.5rem;
+            right: -0.5rem;
+            background: #d32f2f;
+            color: #fff;
+            border-radius: 50%;
+            width: 1.2rem;
+            height: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        /* Breadcrumb Navigation */
+        .breadcrumb {
+            max-width: 100%;
+            margin: 0.5rem auto;
+            font-size: 0.875rem;
+            color: #666;
+            position: sticky;
+            top: 60px;
+            background: #fff;
+            padding: 10px 15px;
+            z-index: 900;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .breadcrumb a {
+            color: #f68b1e;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        @media (min-width: 460px) {
+            .breadcrumb {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 0.5rem 1rem;
+            }
+
+            .breadcrumb a {
+                font-size: 0.875rem;
+            }
         }
 
         /* Hero Section */
-        .balance-hero {
+        .hero {
             background: linear-gradient(to right, #0891b2, #0e7490);
-            color: white;
-            padding: 3rem 0;
-        }
-
-        .balance-hero-container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 1rem;
+            color: #fff;
+            padding: 2rem 0;
             text-align: center;
         }
 
-        .balance-hero-icon {
-            width: 4rem;
-            height: 4rem;
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .hero-icon {
+            width: 3rem;
+            height: 3rem;
             color: #67e8f9;
             margin: 0 auto 1rem;
         }
 
-        .balance-hero h1 {
-            font-size: 2.5rem;
+        .hero h1 {
+            font-size: 2rem;
             margin-bottom: 1rem;
         }
 
-        .balance-hero-description {
-            font-size: 1.25rem;
+        .hero-description {
+            font-size: 1.125rem;
             color: #67e8f9;
-            margin-bottom: 2rem;
-            max-width: 48rem;
+            margin-bottom: 1.5rem;
+            max-width: 600px;
             margin-left: auto;
             margin-right: auto;
         }
 
-        .balance-hero-features {
+        .hero-features {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            max-width: 48rem;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            max-width: 800px;
             margin: 0 auto;
         }
 
-        .balance-hero-feature {
+        .hero-feature {
             text-align: center;
         }
 
-        .balance-hero-feature-icon {
-            width: 3rem;
-            height: 3rem;
+        .hero-feature-icon {
+            width: 2.5rem;
+            height: 2.5rem;
             background: #0e7490;
             border-radius: 0.5rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 0.75rem;
+            margin: 0 auto 0.5rem;
         }
 
-        .balance-hero-feature h3 {
-            margin-bottom: 0.5rem;
-        }
-
-        .balance-hero-feature p {
+        .hero-feature h3 {
             font-size: 0.875rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .hero-feature p {
+            font-size: 0.75rem;
             color: #67e8f9;
         }
 
-        /* Same pattern for filters, products, benefits sections with balance- prefix */
-        .balance-filters {
-            background: #f9fafb;
-            border-bottom: 1px solid #e5e7eb;
-            padding: 1.5rem 0;
+        @media (max-width: 768px) {
+            .hero {
+                padding: 1rem 0;
+            }
+
+            .hero h1 {
+                font-size: 1.5rem;
+            }
+
+            .hero-description {
+                font-size: 0.875rem;
+            }
+
+            .hero-features {
+                display: none;
+            }
         }
 
-        .balance-filters-container {
-            max-width: 1280px;
+        /* Main Content */
+        .main-container {
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 0 1rem;
-        }
-
-        .balance-filters-top {
+            padding: 1rem;
             display: flex;
-            flex-direction: column;
             gap: 1rem;
-            align-items: center;
-            justify-content: space-between;
         }
 
-        .balance-search-container {
+        .sidebar {
+            width: 250px;
+            flex-shrink: 0;
+        }
+
+        .filter-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .filter-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .filter-select {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 0.25rem;
+            background: #fff;
+            font-size: 0.875rem;
+        }
+
+        .content-area {
             flex: 1;
-            max-width: 24rem;
-            position: relative;
         }
 
-        .balance-search-icon {
+        .top-filters {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .search-container {
+            position: relative;
+            width: 300px;
+        }
+
+        .search-icon {
             position: absolute;
             left: 0.75rem;
             top: 50%;
             transform: translateY(-50%);
-            color: #9ca3af;
+            color: #999;
             width: 1rem;
             height: 1rem;
         }
 
-        .balance-search-input {
+        .search-input {
             width: 100%;
-            padding: 0.75rem 1rem 0.75rem 2.5rem;
-            border: 1px solid #d1d5db;
-            border-radius: 0.375rem;
-            font-size: 1rem;
-            transition: border-color 0.2s ease;
-        }
-
-        .balance-search-input:focus {
-            outline: none;
-            border-color: #0891b2;
-            box-shadow: 0 0 0 3px rgba(8, 145, 178, 0.1);
-        }
-
-        .balance-filter-toggle {
-            display: none;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1rem;
-            background: transparent;
-            border: 1px solid #d1d5db;
-            border-radius: 0.375rem;
-            color: #374151;
-            cursor: pointer;
+            padding: 0.5rem 1rem 0.5rem 2.5rem;
+            border: 1px solid #ddd;
+            border-radius: 0.25rem;
             font-size: 0.875rem;
         }
 
-        .balance-view-sort {
-            display: flex;
-            align-items: center;
+        .sort-select {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 0.25rem;
+            font-size: 0.875rem;
+        }
+
+        .results-count {
+            font-size: 0.875rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        /* Products Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
             gap: 1rem;
         }
 
-        .balance-view-toggle {
-            display: flex;
-            border: 1px solid #d1d5db;
-            border-radius: 0.375rem;
+        .product-card {
+            background: #fff;
+            border: 1px solid #e5e5e5;
+            border-radius: 0.25rem;
             overflow: hidden;
-        }
-
-        .balance-view-btn {
-            padding: 0.5rem;
-            background: white;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.2s ease;
-        }
-
-        .balance-view-btn.active {
-            background: #0891b2;
-            color: white;
-        }
-
-        .balance-sort-select {
-            width: 12rem;
-            padding: 0.5rem;
-            border: 1px solid #d1d5db;
-            border-radius: 0.375rem;
-            background: white;
-            font-size: 0.875rem;
-        }
-
-        .balance-filters-row {
-            margin-top: 1rem;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-        }
-
-        .balance-filter-select {
-            padding: 0.5rem;
-            border: 1px solid #d1d5db;
-            border-radius: 0.375rem;
-            background: white;
-            font-size: 0.875rem;
-        }
-
-        .balance-results-count {
-            margin-top: 1rem;
-            font-size: 0.875rem;
-            color: #6b7280;
-        }
-
-        /* All product grid styles follow same pattern with balance- prefix */
-        .balance-products {
-            padding: 2rem 0;
-        }
-
-        .balance-products-container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 1rem;
-        }
-
-        .balance-products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .balance-products-grid.list-view {
-            grid-template-columns: 1fr;
-        }
-
-        .balance-product-card {
-            background: white;
-            border-radius: 0.75rem;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-            overflow: hidden;
-            border: 1px solid #e5e7eb;
-        }
-
-        .balance-product-card:hover {
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-            transform: translateY(-2px);
-        }
-
-        .balance-product-card.list-view {
-            display: flex;
-        }
-
-        .balance-product-image-container {
+            transition: box-shadow 0.2s;
             position: relative;
-            overflow: hidden;
         }
 
-        .balance-product-card:not(.list-view) .balance-product-image-container {
-            aspect-ratio: 1;
+        .product-card:hover {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
 
-        .balance-product-card.list-view .balance-product-image-container {
-            width: 16rem;
-            flex-shrink: 0;
+        .product-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
         }
 
-        .balance-product-image {
+        .product-image-container {
+            position: relative;
+            height: 200px;
+            background: #f8f8f8;
+        }
+
+        .product-image {
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s ease;
+            object-fit: contain;
+            padding: 0.5rem;
         }
 
-        .balance-product-card:hover .balance-product-image {
-            transform: scale(1.05);
-        }
-
-        .balance-product-badge {
+        .product-badge {
             position: absolute;
-            top: 0.75rem;
-            left: 0.75rem;
+            top: 0.5rem;
+            left: 0.5rem;
             padding: 0.25rem 0.5rem;
             border-radius: 0.25rem;
             font-size: 0.75rem;
             font-weight: 600;
-            text-transform: uppercase;
-            color: white;
+            color: #fff;
         }
 
-        .balance-product-actions {
+        .product-discount {
             position: absolute;
-            top: 0.75rem;
-            right: 0.75rem;
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .balance-product-action-btn {
-            width: 2rem;
-            height: 2rem;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.9);
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s ease;
-        }
-
-        .balance-product-action-btn:hover {
-            background: white;
-            transform: scale(1.1);
-        }
-
-        .balance-product-content {
-            padding: 1.5rem;
-            flex: 1;
-        }
-
-        .balance-product-header {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            margin-bottom: 0.5rem;
-        }
-
-        .balance-product-category {
-            display: inline-block;
+            top: 0.5rem;
+            right: 0.5rem;
             padding: 0.25rem 0.5rem;
-            background: #f3f4f6;
-            color: #374151;
+            background: #f68b1e;
+            color: #fff;
             border-radius: 0.25rem;
             font-size: 0.75rem;
-            font-weight: 500;
-        }
-
-        .balance-product-rating {
-            display: flex;
-            align-items: center;
-            gap: 0.25rem;
-            font-size: 0.875rem;
-            color: #6b7280;
-        }
-
-        .balance-product-name {
-            font-size: 1.125rem;
             font-weight: 600;
-            color: #1f2937;
-            margin-bottom: 0.5rem;
-            line-height: 1.4;
         }
 
-        .balance-product-description {
-            font-size: 0.875rem;
-            color: #6b7280;
-            margin-bottom: 1rem;
-            line-height: 1.5;
-        }
-
-        .balance-product-features {
-            margin-bottom: 1rem;
-        }
-
-        .balance-product-features h4 {
-            font-size: 0.875rem;
-            color: #1f2937;
-            margin-bottom: 0.5rem;
-        }
-
-        .balance-product-features-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.25rem;
-        }
-
-        .balance-product-feature-tag {
-            padding: 0.125rem 0.375rem;
-            background: #e5e7eb;
-            color: #374151;
-            border-radius: 0.25rem;
-            font-size: 0.75rem;
-        }
-
-        .balance-product-specs {
-            margin-bottom: 1rem;
-            font-size: 0.875rem;
-        }
-
-        .balance-product-specs-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0.5rem;
-        }
-
-        .balance-product-spec {
-            color: #6b7280;
-        }
-
-        .balance-product-spec span {
-            color: #1f2937;
-            margin-left: 0.25rem;
-        }
-
-        .balance-product-price-stock {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 1rem;
-        }
-
-        .balance-product-price {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .balance-product-current-price {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #1f2937;
-        }
-
-        .balance-product-original-price {
-            font-size: 0.875rem;
-            color: #6b7280;
-            text-decoration: line-through;
-        }
-
-        .balance-product-stock {
-            font-size: 0.875rem;
-            display: flex;
-            align-items: center;
-            gap: 0.25rem;
-        }
-
-        .balance-product-stock.in-stock {
-            color: #059669;
-        }
-
-        .balance-product-stock.out-of-stock {
-            color: #dc2626;
-        }
-
-        .balance-product-buttons {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .balance-product-btn {
-            flex: 1;
-            padding: 0.75rem 1rem;
-            border: none;
-            border-radius: 0.375rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-        }
-
-        .balance-product-btn-primary {
-            background: #0891b2;
-            color: white;
-        }
-
-        .balance-product-btn-primary:hover {
-            background: #0e7490;
-        }
-
-        .balance-product-btn-primary:disabled {
-            background: #9ca3af;
-            cursor: not-allowed;
-        }
-
-        .balance-product-btn-secondary {
-            background: transparent;
-            color: #374151;
-            border: 1px solid #d1d5db;
+        .product-content {
             padding: 0.75rem;
         }
 
-        .balance-product-btn-secondary:hover {
-            background: #f9fafb;
+        .product-name {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 0.25rem;
+            line-height: 1.3;
+            height: 2.6em;
+            overflow: hidden;
+        }
+
+        .product-price {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .product-current-price {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #f68b1e;
+        }
+
+        .product-original-price {
+            font-size: 0.875rem;
+            color: #999;
+            text-decoration: line-through;
+        }
+
+        .product-negotiable {
+            font-size: 0.75rem;
+            color: #25D366;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        .product-negotiable:hover {
+            color: #20b354;
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.75rem;
+            color: #666;
+        }
+
+        .product-stock {
+            font-size: 0.75rem;
+            color: #008000;
+            margin-bottom: 0.25rem;
+        }
+
+        .product-btn {
+            width: 100%;
+            padding: 0.5rem;
+            background: #f68b1e;
+            color: #fff;
+            border: none;
+            border-radius: 0.25rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .product-btn:hover {
+            background: #e57a0d;
+        }
+
+        .product-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        /* Cart Notification */
+        .cart-notification {
+            position: fixed;
+            bottom: 2rem;
+            right: 1rem;
+            background: #28a745;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            border-radius: 0.25rem;
+            display: none;
+            z-index: 100;
+            font-size: 0.875rem;
         }
 
         /* Benefits Section */
-        .balance-benefits {
+        .benefits {
             background: #f9fafb;
-            padding: 4rem 0;
+            padding: 2rem 0;
         }
 
-        .balance-benefits-container {
-            max-width: 1280px;
+        .benefits-container {
+            max-width: 1200px;
             margin: 0 auto;
             padding: 0 1rem;
             text-align: center;
         }
 
-        .balance-benefits h2 {
-            font-size: 2rem;
-            color: #1f2937;
+        .benefits h2 {
+            font-size: 1.5rem;
+            color: #333;
             margin-bottom: 1rem;
         }
 
-        .balance-benefits-description {
-            font-size: 1.25rem;
-            color: #6b7280;
-            margin-bottom: 3rem;
-            max-width: 48rem;
+        .benefits-description {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 2rem;
+            max-width: 600px;
             margin-left: auto;
             margin-right: auto;
         }
 
-        .balance-benefits-grid {
+        .benefits-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
         }
 
-        .balance-benefit-card {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 0.75rem;
-            text-align: center;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            transition: box-shadow 0.3s ease;
+        .benefit-card {
+            background: #fff;
+            padding: 1rem;
+            border-radius: 0.25rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
-        .balance-benefit-card:hover {
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-        }
-
-        .balance-benefit-icon {
-            width: 4rem;
-            height: 4rem;
-            border-radius: 0.75rem;
+        .benefit-icon {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 0.5rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 1rem;
+            margin: 0 auto 0.5rem;
         }
 
-        .balance-benefit-icon.cyan {
-            background: #cffafe;
-            color: #0891b2;
-        }
+        .benefit-icon.yellow { background: #fef3c7; color: #d97706; }
+        .benefit-icon.blue { background: #dbeafe; color: #2563eb; }
+        .benefit-icon.green { background: #d1fae5; color: #059669; }
+        .benefit-icon.purple { background: #e9d5ff; color: #7c3aed; }
 
-        .balance-benefit-icon.blue {
-            background: #dbeafe;
-            color: #2563eb;
-        }
-
-        .balance-benefit-icon.indigo {
-            background: #e0e7ff;
-            color: #4f46e5;
-        }
-
-        .balance-benefit-icon.teal {
-            background: #ccfbf1;
-            color: #0d9488;
-        }
-
-        .balance-benefit-title {
-            font-size: 1.25rem;
+        .benefit-title {
+            font-size: 1rem;
             font-weight: 600;
-            color: #1f2937;
-            margin-bottom: 0.75rem;
+            color: #333;
+            margin-bottom: 0.5rem;
         }
 
-        .balance-benefit-description {
-            color: #6b7280;
+        .benefit-description {
+            font-size: 0.875rem;
+            color: #666;
         }
 
         /* CTA Section */
-        .balance-cta {
+        .cta {
             background: linear-gradient(to right, #dc2626, #991b1b);
-            color: white;
-            padding: 4rem 0;
+            color: #fff;
+            padding: 2rem 0;
             text-align: center;
         }
 
-        .balance-cta-container {
-            max-width: 1280px;
+        .cta-container {
+            max-width: 1200px;
             margin: 0 auto;
             padding: 0 1rem;
         }
 
-        .balance-cta h2 {
-            font-size: 2rem;
+        .cta h2 {
+            font-size: 1.5rem;
             margin-bottom: 1rem;
         }
 
-        .balance-cta-description {
-            font-size: 1.25rem;
+        .cta-description {
+            font-size: 1rem;
             color: #fecaca;
-            margin-bottom: 2rem;
-            max-width: 32rem;
+            margin-bottom: 1.5rem;
+            max-width: 400px;
             margin-left: auto;
             margin-right: auto;
         }
 
-        .balance-cta-buttons {
+        .cta-buttons {
             display: flex;
             flex-direction: column;
             gap: 1rem;
@@ -684,228 +675,281 @@
             align-items: center;
         }
 
-        .balance-cta-btn {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 1rem 2rem;
+        .cta-btn {
+            padding: 0.75rem 1.5rem;
             border: none;
-            border-radius: 0.375rem;
-            font-size: 1.125rem;
+            border-radius: 0.25rem;
+            font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: background 0.2s;
         }
 
-        .balance-cta-btn-primary {
-            background: white;
+        .cta-btn-primary {
+            background: #fff;
             color: #dc2626;
         }
 
-        .balance-cta-btn-primary:hover {
-            background: #f3f4f6;
+        .cta-btn-primary:hover {
+            background: #f3f3f3;
         }
 
-        .balance-cta-btn-secondary {
+        .cta-btn-secondary {
             background: transparent;
-            color: white;
-            border: 1px solid white;
+            color: #fff;
+            border: 1px solid #fff;
         }
 
-        .balance-cta-btn-secondary:hover {
-            background: white;
+        .cta-btn-secondary:hover {
+            background: #fff;
             color: #dc2626;
         }
 
-        /* Contact Section */
-        .balance-contact {
+        /* Footer Section */
+        .footer-section {
             background: #1f2937;
-            color: white;
-            padding: 3rem 0;
+            color: #fff;
+            padding: 2rem 0;
         }
 
-        .balance-contact-container {
-            max-width: 1280px;
+        .footer-container {
+            max-width: 1200px;
             margin: 0 auto;
             padding: 0 1rem;
+        }
+
+        .footer-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 2rem;
-            text-align: center;
+            margin-bottom: 2rem;
         }
 
-        .balance-contact-item {
+        .footer-brand {
+            text-align: left;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-logo-image {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 0.25rem;
+            overflow: hidden;
+            background: #fff;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0.75rem;
         }
 
-        .balance-contact-icon {
+        .footer-logo-image img {
             width: 1.5rem;
             height: 1.5rem;
-            color: #f97316;
+            object-fit: contain;
         }
 
-        .balance-contact-info p:first-child {
-            font-size: 0.875rem;
+        .footer-brand-info h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0;
+        }
+
+        .footer-brand-info p {
+            font-size: 0.75rem;
             color: #9ca3af;
-            margin-bottom: 0.25rem;
         }
 
-        .balance-contact-info p:last-child {
-            font-size: 1.125rem;
+        .footer-description {
+            font-size: 0.875rem;
+            color: #d1d5db;
+            margin-bottom: 1rem;
         }
 
-        /* Floating WhatsApp Button */
-        .balance-whatsapp-float {
-            position: fixed;
-            bottom: 1.5rem;
-            right: 1.5rem;
-            z-index: 50;
+        .footer-social {
+            display: flex;
+            gap: 0.5rem;
         }
 
-        .balance-whatsapp-btn {
-            width: 4rem;
-            height: 4rem;
-            background: #10b981;
-            border: none;
-            border-radius: 50%;
-            color: white;
-            cursor: pointer;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
+        .footer-social-link {
+            width: 2rem;
+            height: 2rem;
+            background: #374151;
+            color: #fff;
+            border-radius: 0.25rem;
             display: flex;
             align-items: center;
             justify-content: center;
+            text-decoration: none;
+            font-size: 1rem;
         }
 
-        .balance-whatsapp-btn:hover {
-            background: #059669;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-            transform: scale(1.05);
+        .footer-social-link:hover {
+            background: #4b5563;
+        }
+
+        .footer-column h4 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: #d1d5db;
+            text-decoration: none;
+            font-size: 0.875rem;
+        }
+
+        .footer-links a:hover {
+            color: #f68b1e;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #374151;
+            padding-top: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-copyright {
+            font-size: 0.875rem;
+            color: #9ca3af;
+        }
+
+        .footer-legal {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .footer-legal a {
+            color: #d1d5db;
+            text-decoration: none;
+            font-size: 0.875rem;
+        }
+
+        .footer-legal a:hover {
+            color: #f68b1e;
         }
 
         /* Icons */
         .icon {
-            width: 1.5rem;
-            height: 1.5rem;
+            width: 1rem;
+            height: 1rem;
             stroke: currentColor;
             fill: none;
             stroke-width: 2;
         }
 
-        .icon-filled {
-            fill: currentColor;
+        .star-icon {
+            fill: #ffa500;
         }
 
         /* Responsive Design */
         @media (min-width: 640px) {
-            .balance-cta-buttons {
-                flex-direction: row;
-            }
-
-            .balance-filters-top {
+            .cta-buttons {
                 flex-direction: row;
             }
         }
 
         @media (max-width: 768px) {
-            .balance-hero h1 {
-                font-size: 2rem;
-            }
-
-            .balance-hero-description {
-                font-size: 1.125rem;
-            }
-
-            .balance-filter-toggle {
-                display: flex;
-            }
-
-            .balance-filters-row.hidden {
-                display: none;
-            }
-
-            .balance-products-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .balance-product-card.list-view {
+            .main-container {
                 flex-direction: column;
             }
 
-            .balance-product-card.list-view .balance-product-image-container {
+            .sidebar {
                 width: 100%;
-                aspect-ratio: 1;
             }
-        }
 
-        /* Utility Classes */
-        .hidden {
-            display: none;
-        }
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
 
-        .no-products {
-            text-align: center;
-            padding: 3rem 0;
-        }
+            .hero h1 {
+                font-size: 1.5rem;
+            }
 
-        .no-products-icon {
-            width: 4rem;
-            height: 4rem;
-            color: #d1d5db;
-            margin: 0 auto 1rem;
-        }
-
-        .no-products h3 {
-            font-size: 1.25rem;
-            color: #6b7280;
-            margin-bottom: 0.5rem;
-        }
-
-        .no-products p {
-            color: #9ca3af;
+            .hero-description {
+                font-size: 0.875rem;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Top Banner -->
+    <div class="banner-wrapper">
+        <div class="banner-rectangle back-rect"></div>
+        <img class="top-banner" src="/MIM/assets/images/cotascale-sept-hot-deal.gif" alt="Hot Deal Banner">
+        <div class="banner-rectangle front-rect"></div>
+    </div>
+
     <!-- Header -->
-    <header class="balance-header">
-        <div class="balance-header-container">
-            <div class="balance-logo-section">
-                <div class="balance-logo-image">
-                    <a href="https://Cotascales.com"><img src="/MIM/assets/images/cota.png" alt="logo" class="logo-image"></a>
+    <header class="header">
+        <div class="header-container">
+            <div class="logo-section">
+                <div class="logo-image">
+                    <a href="https://Cotascales.com"><img src="/MIM/assets/images/cota.png" alt="logo"></a>
                 </div>
-                <div class="balance-brand-info">
+                <div class="brand-info">
                     <h1>MIM Electronics</h1>
                     <p>Balance Scales</p>
                 </div>
             </div>
             
-            <div class="balance-header-actions">
-                <button class="balance-help-btn" onclick="balanceHandleWhatsAppClick('I need help choosing the right balance scale for my laboratory')">
+            <div class="header-actions">
+                <button class="help-btn" onclick="handleWhatsAppClick('I need help choosing the right balance scale for my laboratory')">
                     <svg class="icon" viewBox="0 0 24 24">
                         <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
                     </svg>
                     Get Help
                 </button>
+                <a href="cart.html" class="cart-btn">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <circle cx="9" cy="21" r="1"/>
+                        <circle cx="20" cy="21" r="1"/>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                    </svg>
+                    <span class="cart-count" id="cartCount">0</span>
+                </a>
             </div>
         </div>
     </header>
 
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb">
+        <a href="index.html">Home</a> &gt; Balance Scales
+    </nav>
+
     <!-- Hero Section -->
-    <section class="balance-hero">
-        <div class="balance-hero-container">
-            <svg class="balance-hero-icon" fill="currentColor" height="28px" width="28px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M511.991,459.768c-0.004-0.184-0.01-0.367-0.027-0.552c-0.012-0.127-0.033-0.251-0.05-0.376 c-0.019-0.128-0.034-0.255-0.059-0.384c-0.035-0.18-0.081-0.354-0.127-0.53c-0.017-0.064-0.027-0.128-0.046-0.192l-0.026-0.088 c-0.005-0.016-0.009-0.033-0.014-0.048l-42.013-142.845c-0.986-3.356-4.067-5.66-7.564-5.66h-42.58v-29.963 c0-4.356-3.529-7.885-7.885-7.885h-59.4V117.224c0-21.74-17.686-39.425-39.425-39.425h-6.834V17.873h8.936 c4.356,0,7.885-3.529,7.885-7.885c0-4.356-3.529-7.885-7.885-7.885h-117.75c-4.355,0-7.885,3.529-7.885,7.885 c0,4.356,3.53,7.885,7.885,7.885h8.936v59.926h-6.834c-21.739,0-39.425,17.686-39.425,39.425v154.021h-59.4 c-4.355,0-7.885,3.529-7.885,7.885v29.963H49.938c-3.498,0-6.577,2.303-7.564,5.66L0.361,457.599 c-0.005,0.015-0.008,0.031-0.014,0.045l-0.026,0.09c-0.019,0.065-0.029,0.13-0.046,0.195c-0.046,0.174-0.093,0.349-0.126,0.528 c-0.025,0.126-0.04,0.253-0.058,0.38c-0.018,0.127-0.04,0.252-0.052,0.382c-0.017,0.181-0.022,0.361-0.027,0.54 C0.008,459.825,0,459.891,0,459.959v0.095c0,0.015,0,0.03,0,0.045v41.914c0,4.356,3.53,7.885,7.885,7.885h288.066 c4.356,0,7.885-3.529,7.885-7.885c0-4.356-3.529-7.885-7.885-7.885H15.77v-26.283h480.46v26.283H347.466 c-4.356,0-7.885,3.529-7.885,7.885c0,4.356,3.529,7.885,7.885,7.885h156.649c4.356,0,7.885-3.529,7.885-7.885v-41.91 c0-0.018,0-0.036,0-0.054v-0.089C512,459.895,511.992,459.832,511.991,459.768z M175.573,117.224 c0-13.043,10.611-23.655,23.655-23.655h14.719c4.355,0,7.885-3.529,7.885-7.885V17.873h68.337v67.811 c0,4.356,3.529,7.885,7.885,7.885h14.719c13.043,0,23.655,10.612,23.655,23.655v6.834H175.573V117.224z M175.573,139.827h160.854 V157.7h-29.963c-4.356,0-7.885,3.529-7.885,7.885c0,4.356,3.529,7.885,7.885,7.885h29.963v17.873h-29.963 c-4.356,0-7.885,3.529-7.885,7.885c0,4.356,3.529,7.885,7.885,7.885h29.963v17.873h-29.963c-4.356,0-7.885,3.529-7.885,7.885 c0,4.356,3.529,7.885,7.885,7.885h29.963v30.489H175.573V139.827z M108.287,287.014h295.425v22.078H108.287V287.014z M18.424,452.074l37.415-127.211h400.324l37.415,127.211H18.424z"></path> </g> </g> <g> <g> <path d="M403.187,346.94H108.813c-4.355,0-7.885,3.529-7.885,7.885v63.08c0,4.356,3.53,7.885,7.885,7.885h294.374 c4.356,0,7.885-3.529,7.885-7.885v-63.08C411.072,350.47,407.543,346.94,403.187,346.94z M395.302,410.021H116.698v-47.31h278.604 V410.021z"></path> </g> </g> <g> <g> <path d="M70.965,363.762c-13.623,0-24.706,11.083-24.706,24.706c0,13.623,11.083,24.706,24.706,24.706 c13.623,0,24.706-11.083,24.706-24.706C95.671,374.845,84.588,363.762,70.965,363.762z M70.965,397.405 c-4.928,0-8.936-4.009-8.936-8.936s4.009-8.936,8.936-8.936s8.936,4.009,8.936,8.936S75.893,397.405,70.965,397.405z"></path> </g> </g> <g> <g> <path d="M441.035,363.762c-13.623,0-24.706,11.083-24.706,24.706c0,13.623,11.083,24.706,24.706,24.706 c13.623,0,24.706-11.083,24.706-24.706C465.741,374.845,454.658,363.762,441.035,363.762z M441.035,397.405 c-4.928,0-8.936-4.009-8.936-8.936s4.01-8.936,8.936-8.936c4.928,0,8.936,4.009,8.936,8.936S445.963,397.405,441.035,397.405z"></path> </g> </g> <g> <g> <path d="M196.074,153.495c-4.355,0-7.885,3.529-7.885,7.885v46.259c0,4.356,3.53,7.885,7.885,7.885s7.885-3.529,7.885-7.885 V161.38C203.959,157.024,200.429,153.495,196.074,153.495z"></path> </g> </g> <g> <g> <path d="M196.074,224.986c-4.355,0-7.885,3.529-7.885,7.885v4.69c0,4.356,3.53,7.885,7.885,7.885s7.885-3.529,7.885-7.885v-4.69 C203.959,228.515,200.429,224.986,196.074,224.986z"></path> </g> </g> </g></svg>
+    <section class="hero">
+        <div class="hero-container">
+            <svg class="hero-icon" fill="currentColor" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+                <path d="M511.991,459.768c-0.004-0.184-0.01-0.367-0.027-0.552c-0.012-0.127-0.033-0.251-0.05-0.376 c-0.019-0.128-0.034-0.255-0.059-0.384c-0.035-0.18-0.081-0.354-0.127-0.53c-0.017-0.064-0.027-0.128-0.046-0.192l-0.026-0.088 c-0.005-0.016-0.009-0.033-0.014-0.048l-42.013-142.845c-0.986-3.356-4.067-5.66-7.564-5.66h-42.58v-29.963 c0-4.356-3.529-7.885-7.885-7.885h-59.4V117.224c0-21.74-17.686-39.425-39.425-39.425h-6.834V17.873h8.936 c4.356,0,7.885-3.529,7.885-7.885c0-4.356-3.529-7.885-7.885-7.885h-117.75c-4.355,0-7.885,3.529-7.885,7.885 c0,4.356,3.53,7.885,7.885,7.885h8.936v59.926h-6.834c-21.739,0-39.425,17.686-39.425,39.425v154.021h-59.4 c-4.355,0-7.885,3.529-7.885,7.885v29.963H49.938c-3.498,0-6.577,2.303-7.564,5.66L0.361,457.599 c-0.005,0.015-0.008,0.031-0.014,0.045l-0.026,0.09c-0.019,0.065-0.029,0.13-0.046,0.195c-0.046,0.174-0.093,0.349-0.126,0.528 c-0.025,0.126-0.04,0.253-0.058,0.38c-0.018,0.127-0.04,0.252-0.052,0.382c-0.017,0.181-0.022,0.361-0.027,0.54 C0.008,459.825,0,459.891,0,459.959v0.095c0,0.015,0,0.03,0,0.045v41.914c0,4.356,3.53,7.885,7.885,7.885h288.066 c4.356,0,7.885-3.529,7.885-7.885c0-4.356-3.529-7.885-7.885-7.885H15.77v-26.283h480.46v26.283H347.466 c-4.356,0-7.885,3.529-7.885,7.885c0,4.356,3.529,7.885,7.885,7.885h156.649c4.356,0,7.885-3.529,7.885-7.885v-41.91 c0-0.018,0-0.036,0-0.054v-0.089C512,459.895,511.992,459.832,511.991,459.768z M175.573,117.224 c0-13.043,10.611-23.655,23.655-23.655h14.719c4.355,0,7.885-3.529,7.885-7.885V17.873h68.337v67.811 c0,4.356,3.529,7.885,7.885,7.885h14.719c13.043,0,23.655,10.612,23.655,23.655v6.834H175.573V117.224z M175.573,139.827h160.854 V157.7h-29.963c-4.356,0-7.885,3.529-7.885,7.885c0,4.356,3.529,7.885,7.885,7.885h29.963v17.873h-29.963 c-4.356,0-7.885,3.529-7.885,7.885c0,4.356,3.529,7.885,7.885,7.885h29.963v17.873h-29.963c-4.356,0-7.885,3.529-7.885,7.885 c0,4.356,3.529,7.885,7.885,7.885h29.963v30.489H175.573V139.827z M108.287,287.014h295.425v22.078H108.287V287.014z M18.424,452.074l37.415-127.211h400.324l37.415,127.211H18.424z"/>
+                <path d="M403.187,346.94H108.813c-4.355,0-7.885,3.529-7.885,7.885v63.08c0,4.356,3.53,7.885,7.885,7.885h294.374 c4.356,0,7.885-3.529,7.885-7.885v-63.08C411.072,350.47,407.543,346.94,403.187,346.94z M395.302,410.021H116.698v-47.31h278.604 V410.021z"/>
+                <path d="M70.965,363.762c-13.623,0-24.706,11.083-24.706,24.706c0,13.623,11.083,24.706,24.706,24.706 c13.623,0,24.706-11.083,24.706-24.706C95.671,374.845,84.588,363.762,70.965,363.762z M70.965,397.405 c-4.928,0-8.936-4.009-8.936-8.936s4.009-8.936,8.936-8.936s8.936,4.009,8.936,8.936S75.893,397.405,70.965,397.405z"/>
+                <path d="M441.035,363.762c-13.623,0-24.706,11.083-24.706,24.706c0,13.623,11.083,24.706,24.706,24.706 c13.623,0,24.706-11.083,24.706-24.706C465.741,374.845,454.658,363.762,441.035,363.762z M441.035,397.405 c-4.928,0-8.936-4.009-8.936-8.936s4.01-8.936,8.936-8.936c4.928,0,8.936,4.009,8.936,8.936S445.963,397.405,441.035,397.405z"/>
+                <path d="M196.074,153.495c-4.355,0-7.885,3.529-7.885,7.885v46.259c0,4.356,3.53,7.885,7.885,7.885s7.885-3.529,7.885-7.885 V161.38C203.959,157.024,200.429,153.495,196.074,153.495z"/>
+                <path d="M196.074,224.986c-4.355,0-7.885,3.529-7.885,7.885v4.69c0,4.356,3.53,7.885,7.885,7.885s7.885-3.529,7.885-7.885v-4.69 C203.959,228.515,200.429,224.986,196.074,224.986z"/>
+            </svg>
             <h1>Balance Scales Collection</h1>
-            <p class="balance-hero-description">
-                Precision balance scales for laboratory, analytical, and scientific applications. 
-                Offering exceptional accuracy and reliability for the most demanding measurements.
+            <p class="hero-description">
+                Precision balance scales for laboratory, analytical, and scientific applications. Offering exceptional accuracy and reliability for the most demanding measurements.
             </p>
-            <div class="balance-hero-features">
-                <div class="balance-hero-feature">
-                    <div class="balance-hero-feature-icon">
+            <div class="hero-features">
+                <div class="hero-feature">
+                    <div class="hero-feature-icon">
                         <svg class="icon" viewBox="0 0 24 24">
                             <circle cx="12" cy="12" r="10"/>
                             <circle cx="12" cy="12" r="6"/>
@@ -915,8 +959,8 @@
                     <h3>High Precision</h3>
                     <p>Exceptional accuracy down to 0.1mg resolution</p>
                 </div>
-                <div class="balance-hero-feature">
-                    <div class="balance-hero-feature-icon">
+                <div class="hero-feature">
+                    <div class="hero-feature-icon">
                         <svg class="icon" viewBox="0 0 24 24">
                             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
                         </svg>
@@ -924,8 +968,8 @@
                     <h3>Laboratory Grade</h3>
                     <p>Built for scientific and analytical applications</p>
                 </div>
-                <div class="balance-hero-feature">
-                    <div class="balance-hero-feature-icon">
+                <div class="hero-feature">
+                    <div class="hero-feature-icon">
                         <svg class="icon" viewBox="0 0 24 24">
                             <path d="M9 12l2 2 4-4"/>
                             <circle cx="12" cy="12" r="10"/>
@@ -938,75 +982,40 @@
         </div>
     </section>
 
-    <!-- Filters Section -->
-    <section class="balance-filters">
-        <div class="balance-filters-container">
-            <div class="balance-filters-top">
-                <div class="balance-search-container">
-                    <svg class="balance-search-icon" viewBox="0 0 24 24">
-                        <circle cx="11" cy="11" r="8"/>
-                        <path d="m21 21-4.35-4.35"/>
-                    </svg>
-                    <input type="text" class="balance-search-input" placeholder="Search balance scales..." id="balanceSearchInput">
-                </div>
+    <!-- Cart Notification -->
+    <div class="cart-notification" id="cartNotification">
+        Added to Cart
+    </div>
 
-                <button class="balance-filter-toggle" onclick="balanceToggleFilters()">
-                    <svg class="icon" viewBox="0 0 24 24">
-                        <polygon points="22,3 2,3 10,12.46 10,19 14,21 14,12.46"/>
-                    </svg>
-                    Filters
-                </button>
-
-                <div class="balance-view-sort">
-                    <div class="balance-view-toggle">
-                        <button class="balance-view-btn active" id="balanceGridBtn" onclick="balanceSetViewMode('grid')">
-                            <svg class="icon" viewBox="0 0 24 24">
-                                <rect x="3" y="3" width="7" height="7"/>
-                                <rect x="14" y="3" width="7" height="7"/>
-                                <rect x="14" y="14" width="7" height="7"/>
-                                <rect x="3" y="14" width="7" height="7"/>
-                            </svg>
-                        </button>
-                        <button class="balance-view-btn" id="balanceListBtn" onclick="balanceSetViewMode('list')">
-                            <svg class="icon" viewBox="0 0 24 24">
-                                <line x1="8" y1="6" x2="21" y2="6"/>
-                                <line x1="8" y1="12" x2="21" y2="12"/>
-                                <line x1="8" y1="18" x2="21" y2="18"/>
-                                <line x1="3" y1="6" x2="3.01" y2="6"/>
-                                <line x1="3" y1="12" x2="3.01" y2="12"/>
-                                <line x1="3" y1="18" x2="3.01" y2="18"/>
-                            </svg>
-                        </button>
-                    </div>
-                    
-                    <select class="balance-sort-select" id="balanceSortSelect" onchange="balanceSortProducts()">
-                        <option value="name">Name A-Z</option>
-                        <option value="price-low">Price: Low to High</option>
-                        <option value="price-high">Price: High to Low</option>
-                        <option value="rating">Highest Rated</option>
-                        <option value="capacity">Capacity</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="balance-filters-row" id="balanceFiltersRow">
-                <select class="balance-filter-select" id="balanceTypeFilter" onchange="balanceFilterProducts()">
+    <!-- Main Content -->
+    <div class="main-container">
+        <!-- Sidebar Filters -->
+        <aside class="sidebar">
+            <div class="filter-group">
+                <div class="filter-title">Type</div>
+                <select class="filter-select" id="typeFilter" onchange="filterProducts()">
                     <option value="all">All Types</option>
                     <option value="analytical">Analytical Balance</option>
                     <option value="precision">Precision Balance</option>
                     <option value="micro">Micro Balance</option>
                     <option value="semi-micro">Semi-Micro Balance</option>
                 </select>
+            </div>
 
-                <select class="balance-filter-select" id="balanceCapacityFilter" onchange="balanceFilterProducts()">
+            <div class="filter-group">
+                <div class="filter-title">Capacity</div>
+                <select class="filter-select" id="capacityFilter" onchange="filterProducts()">
                     <option value="all">All Capacities</option>
                     <option value="0-100">0-100g</option>
                     <option value="101-500">101-500g</option>
                     <option value="501-1000">501-1000g</option>
                     <option value="1000+">1000g+</option>
                 </select>
+            </div>
 
-                <select class="balance-filter-select" id="balancePriceFilter" onchange="balanceFilterProducts()">
+            <div class="filter-group">
+                <div class="filter-title">Price</div>
+                <select class="filter-select" id="priceFilter" onchange="filterProducts()">
                     <option value="all">All Prices</option>
                     <option value="0-500000">₦0-₦500,000</option>
                     <option value="500001-1000000">₦500,001-₦1,000,000</option>
@@ -1014,104 +1023,106 @@
                     <option value="2000000+">₦2,000,000+</option>
                 </select>
             </div>
+        </aside>
 
-            <div class="balance-results-count" id="balanceResultsCount">
+        <!-- Content Area -->
+        <section class="content-area">
+            <div class="top-filters">
+                <div class="search-container">
+                    <svg class="search-icon" viewBox="0 0 24 24">
+                        <circle cx="11" cy="11" r="8"/>
+                        <path d="m21 21-4.35-4.35"/>
+                    </svg>
+                    <input type="text" class="search-input" placeholder="Search balance scales..." id="searchInput">
+                </div>
+
+                <select class="sort-select" id="sortSelect" onchange="sortProducts()">
+                    <option value="name">Name A-Z</option>
+                    <option value="price-low">Price: Low to High</option>
+                    <option value="price-high">Price: High to Low</option>
+                    <option value="rating">Highest Rated</option>
+                    <option value="capacity">Capacity</option>
+                </select>
+            </div>
+
+            <div class="results-count" id="resultsCount">
                 Showing 6 of 6 products
             </div>
-        </div>
-    </section>
 
-    <!-- Products Section -->
-    <section class="balance-products">
-        <div class="balance-products-container">
-            <div class="balance-products-grid" id="balanceProductsGrid">
+            <div class="products-grid" id="productsGrid">
                 <!-- Products will be generated by JavaScript -->
             </div>
-            
-            <div class="no-products hidden" id="balanceNoProducts">
-                <svg class="no-products-icon" viewBox="0 0 24 24">
-                    <circle cx="12" cy="12" r="3"/>
-                    <circle cx="12" cy="12" r="7"/>
-                    <circle cx="12" cy="12" r="11"/>
-                </svg>
-                <h3>No products found</h3>
-                <p>Try adjusting your search or filters</p>
-            </div>
-        </div>
-    </section>
+        </section>
+    </div>
 
     <!-- Benefits Section -->
-    <section class="balance-benefits">
-        <div class="balance-benefits-container">
+    <section class="benefits">
+        <div class="benefits-container">
             <h2>Why Choose Balance Scales?</h2>
-            <p class="balance-benefits-description">
+            <p class="benefits-description">
                 Precision balance scales provide exceptional accuracy for laboratory and analytical applications
             </p>
-            
-            <div class="balance-benefits-grid">
-                <div class="balance-benefit-card">
-                    <div class="balance-benefit-icon cyan">
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon yellow">
                         <svg class="icon" viewBox="0 0 24 24">
                             <circle cx="12" cy="12" r="10"/>
                             <circle cx="12" cy="12" r="6"/>
                             <circle cx="12" cy="12" r="2"/>
                         </svg>
                     </div>
-                    <h3 class="balance-benefit-title">Ultra Precision</h3>
-                    <p class="balance-benefit-description">Exceptional accuracy down to 0.1mg for critical measurements</p>
+                    <h3 class="benefit-title">Ultra Precision</h3>
+                    <p class="benefit-description">Exceptional accuracy down to 0.1mg for critical measurements</p>
                 </div>
-                
-                <div class="balance-benefit-card">
-                    <div class="balance-benefit-icon blue">
+                <div class="benefit-card">
+                    <div class="benefit-icon blue">
                         <svg class="icon" viewBox="0 0 24 24">
                             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
                         </svg>
                     </div>
-                    <h3 class="balance-benefit-title">Laboratory Grade</h3>
-                    <p class="balance-benefit-description">Built to meet stringent laboratory standards and requirements</p>
+                    <h3 class="benefit-title">Laboratory Grade</h3>
+                    <p class="benefit-description">Built to meet stringent laboratory standards and requirements</p>
                 </div>
-                
-                <div class="balance-benefit-card">
-                    <div class="balance-benefit-icon indigo">
+                <div class="benefit-card">
+                    <div class="benefit-icon green">
                         <svg class="icon" viewBox="0 0 24 24">
                             <path d="M9 12l2 2 4-4"/>
                             <circle cx="12" cy="12" r="10"/>
                         </svg>
                     </div>
-                    <h3 class="balance-benefit-title">Built-in Calibration</h3>
-                    <p class="balance-benefit-description">Automatic calibration features ensure consistent accuracy</p>
+                    <h3 class="benefit-title">Built-in Calibration</h3>
+                    <p class="benefit-description">Automatic calibration features ensure consistent accuracy</p>
                 </div>
-                
-                <div class="balance-benefit-card">
-                    <div class="balance-benefit-icon teal">
+                <div class="benefit-card">
+                    <div class="benefit-icon purple">
                         <svg class="icon" viewBox="0 0 24 24">
                             <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
                             <circle cx="8.5" cy="7" r="4"/>
                             <polyline points="17,11 19,13 23,9"/>
                         </svg>
                     </div>
-                    <h3 class="balance-benefit-title">Expert Support</h3>
-                    <p class="balance-benefit-description">Professional installation and calibration services</p>
+                    <h3 class="benefit-title">Expert Support</h3>
+                    <p class="benefit-description">Professional installation and calibration services</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- CTA Section -->
-    <section class="balance-cta">
-        <div class="balance-cta-container">
+    <section class="cta">
+        <div class="cta-container">
             <h2>Need Precision Weighing Solutions?</h2>
-            <p class="balance-cta-description">
+            <p class="cta-description">
                 Our balance scale experts can help you choose the perfect precision instrument for your laboratory
             </p>
-            <div class="balance-cta-buttons">
-                <button class="balance-cta-btn balance-cta-btn-primary" onclick="balanceHandleWhatsAppClick('I need expert advice on choosing the right balance scale for my laboratory applications')">
+            <div class="cta-buttons">
+                <button class="cta-btn cta-btn-primary" onclick="handleWhatsAppClick('I need expert advice on choosing the right balance scale for my laboratory applications')">
                     <svg class="icon" viewBox="0 0 24 24">
                         <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
                     </svg>
                     Get Expert Consultation
                 </button>
-                <button class="balance-cta-btn balance-cta-btn-secondary" onclick="balanceHandleWhatsAppClick('Please send me a complete catalog of balance scales with specifications and pricing')">
+                <button class="cta-btn cta-btn-secondary" onclick="handleWhatsAppClick('Please send me a complete catalog of balance scales with specifications and pricing')">
                     <svg class="icon" viewBox="0 0 24 24">
                         <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
                     </svg>
@@ -1121,53 +1132,94 @@
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section class="balance-contact">
-        <div class="balance-contact-container">
-            <div class="balance-contact-item">
-                <svg class="balance-contact-icon" viewBox="0 0 24 24">
-                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-                </svg>
-                <div class="balance-contact-info">
-                    <p>Call Us</p>
-                    <p>+234 803 355 4867</p>
+    <!-- Footer Section -->
+    <footer class="footer-section">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <div class="footer-logo-image">
+                            <img src="/MIM/assets/images/cota.png" alt="MIM Electronics Logo">
+                        </div>
+                        <div class="footer-brand-info">
+                            <h3>MIM Electronics</h3>
+                            <p class="footer-brand-subtitle">Enterprise</p>
+                        </div>
+                    </div>
+                    <p class="footer-description">
+                        Your trusted partner for precision weighing solutions and industrial scale equipment across Nigeria. We specialize in analog scales, platform scales, crane scales, and more, with a commitment to quality and customer satisfaction.
+                    </p>
+                    <div class="footer-social">
+                        <a href="#" class="footer-social-link">f</a>
+                        <a href="#" class="footer-social-link">t</a>
+                        <a href="#" class="footer-social-link">in</a>
+                    </div>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Products</h4>
+                    <ul class="footer-links">
+                        <li><a href="html/analog-scales.html">Analog Scales</a></li>
+                        <li><a href="html/platform-scales.html">Platform Scales</a></li>
+                        <li><a href="html/crane-scales.html">Crane Scales</a></li>
+                        <li><a href="html/pricing-scales.html">Pricing Scales</a></li>
+                        <li><a href="html/balance-scales.html">Balance Scales</a></li>
+                        <li><a href="html/weighbridge.html">Weighbridge</a></li>
+                        <li><a href="html/loadcell-and-scale-parts.html">Loadcell & Scale Parts</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Services</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Installation</a></li>
+                        <li><a href="#">Calibration</a></li>
+                        <li><a href="#">Maintenance</a></li>
+                        <li><a href="#">Repair Services</a></li>
+                        <li><a href="#">Technical Support</a></li>
+                        <li><a href="#">Parts Supply</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Company</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Support</a></li>
+                        <li><a href="#">Warranty</a></li>
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">Careers</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Contact Us</h4>
+                    <ul class="footer-links">
+                        <li><a href="tel:+2348033554867">+234 803 355 4867</a></li>
+                        <li><a href="mailto:info@mimelectronics.com">info@mimelectronics.com</a></li>
+                        <li><a href="#">Lagos, Nigeria</a></li>
+                        <li><a href="#" onclick="handleWhatsAppClick('I have a question about your products or services')">Chat with Us</a></li>
+                    </ul>
                 </div>
             </div>
-            <div class="balance-contact-item">
-                <svg class="balance-contact-icon" viewBox="0 0 24 24">
-                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                    <polyline points="22,6 12,13 2,6"/>
-                </svg>
-                <div class="balance-contact-info">
-                    <p>Email</p>
-                    <p>info@mimelectronics.com</p>
-                </div>
-            </div>
-            <div class="balance-contact-item">
-                <svg class="balance-contact-icon" viewBox="0 0 24 24">
-                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                    <circle cx="12" cy="10" r="3"/>
-                </svg>
-                <div class="balance-contact-info">
-                    <p>Location</p>
-                    <p>Lagos, Nigeria</p>
+
+            <div class="footer-bottom">
+                <p class="footer-copyright">&copy; 2025 MIM Electronics Enterprise. All rights reserved.</p>
+                <div class="footer-legal">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Cookie Policy</a>
                 </div>
             </div>
         </div>
-    </section>
-
-    <!-- Floating WhatsApp Button -->
-    <div class="balance-whatsapp-float">
-        <button class="balance-whatsapp-btn" onclick="balanceHandleWhatsAppClick()">
-            <svg class="icon" viewBox="0 0 24 24">
-                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-            </svg>
-        </button>
-    </div>
+    </footer>
 
     <script>
-        const balanceWhatsappNumber = "+2348033554867";
-        
+        // WhatsApp Number
+        const whatsappNumber = "+2348033554867";
+
+        // Product Data
         const balanceScalesProducts = [
             {
                 id: 1,
@@ -1180,16 +1232,8 @@
                 reviews: 145,
                 image: "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=400&h=300&fit=crop",
                 badge: "ANALYTICAL",
-                badgeColor: "background: #0891b2;",
+                badgeColor: "#0891b2",
                 inStock: true,
-                features: ["0.1mg Readability", "Internal Calibration", "Anti-Draft Chamber", "Data Interface"],
-                specifications: {
-                    capacity: "220g",
-                    readability: "0.1mg",
-                    pan: "90mm diameter",
-                    calibration: "Internal",
-                    warranty: "3 Years"
-                },
                 description: "High-precision analytical balance for laboratory applications requiring exceptional accuracy and reliability."
             },
             {
@@ -1203,16 +1247,8 @@
                 reviews: 98,
                 image: "https://images.unsplash.com/photo-1574634534894-89d7576c8259?w=400&h=300&fit=crop",
                 badge: "PRECISION",
-                badgeColor: "background: #2563eb;",
+                badgeColor: "#2563eb",
                 inStock: true,
-                features: ["0.01g Precision", "Large Capacity", "Multiple Units", "RS232 Interface"],
-                specifications: {
-                    capacity: "5200g",
-                    readability: "0.01g",
-                    pan: "180mm x 180mm",
-                    calibration: "External",
-                    warranty: "2 Years"
-                },
                 description: "High-capacity precision balance ideal for industrial and research applications requiring accurate measurements."
             },
             {
@@ -1226,16 +1262,8 @@
                 reviews: 67,
                 image: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=400&h=300&fit=crop",
                 badge: "ULTRA PRECISION",
-                badgeColor: "background: #7c3aed;",
+                badgeColor: "#7c3aed",
                 inStock: false,
-                features: ["0.001mg Resolution", "Vibration Filter", "Ionizer", "Climate Module"],
-                specifications: {
-                    capacity: "5.1g",
-                    readability: "0.001mg",
-                    pan: "26mm diameter",
-                    calibration: "Automatic Internal",
-                    warranty: "5 Years"
-                },
                 description: "Ultra-high precision micro balance for the most demanding analytical applications and research work."
             },
             {
@@ -1249,16 +1277,8 @@
                 reviews: 89,
                 image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop",
                 badge: "SEMI-MICRO",
-                badgeColor: "background: #059669;",
+                badgeColor: "#059669",
                 inStock: true,
-                features: ["0.01mg Readability", "Dual Range", "Built-in Ionizer", "Touch Screen"],
-                specifications: {
-                    capacity: "120g",
-                    readability: "0.01mg",
-                    pan: "80mm diameter",
-                    calibration: "Motorized Internal",
-                    warranty: "3 Years"
-                },
                 description: "Advanced semi-micro balance combining high precision with user-friendly operation for laboratory environments."
             },
             {
@@ -1272,16 +1292,8 @@
                 reviews: 156,
                 image: "https://images.unsplash.com/photo-1586864387967-d02ef85d93e8?w=400&h=300&fit=crop",
                 badge: "LABORATORY",
-                badgeColor: "background: #f97316;",
+                badgeColor: "#f97316",
                 inStock: true,
-                features: ["Color Touch Display", "Multiple Applications", "Draft Shield", "Ethernet Connection"],
-                specifications: {
-                    capacity: "2200g",
-                    readability: "0.01g",
-                    pan: "160mm diameter",
-                    calibration: "External",
-                    warranty: "2 Years"
-                },
                 description: "Versatile laboratory balance with modern features and connectivity options for efficient workflow integration."
             },
             {
@@ -1295,91 +1307,95 @@
                 reviews: 123,
                 image: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=400&h=300&fit=crop",
                 badge: "COMPACT",
-                badgeColor: "background: #dc2626;",
+                badgeColor: "#dc2626",
                 inStock: true,
-                features: ["Space Saving Design", "Fast Stabilization", "Memory Storage", "USB Interface"],
-                specifications: {
-                    capacity: "120g",
-                    readability: "0.1mg",
-                    pan: "85mm diameter",
-                    calibration: "Internal",
-                    warranty: "3 Years"
-                },
                 description: "Compact analytical balance perfect for laboratories with limited space while maintaining high precision and reliability."
             }
         ];
 
-        let balanceCurrentViewMode = 'grid';
-        let balanceFilteredProducts = [...balanceScalesProducts];
-        let balanceFiltersVisible = false;
+        // Cart State
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-        function balanceHandleWhatsAppClick(message = "Hello! I'm interested in your balance scales. Can you help me?") {
+        // State Variables
+        let filteredProducts = [...balanceScalesProducts];
+
+        // WhatsApp Integration
+        function handleWhatsAppClick(message = "Hello! I'm interested in your balance scales. Can you help me?") {
             const encodedMessage = encodeURIComponent(message);
-            const url = `https://wa.me/${balanceWhatsappNumber}?text=${encodedMessage}`;
+            const url = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
             window.open(url, '_blank');
         }
 
-        function balanceHandleProductInquiry(product) {
-            const message = `I'm interested in the ${product.name} (${product.specifications.capacity}). Price: ₦${product.price.toLocaleString()}. Can you provide more details and availability?`;
-            balanceHandleWhatsAppClick(message);
-        }
-
-        function balanceSetViewMode(mode) {
-            balanceCurrentViewMode = mode;
-            const gridBtn = document.getElementById('balanceGridBtn');
-            const listBtn = document.getElementById('balanceListBtn');
-            const productsGrid = document.getElementById('balanceProductsGrid');
-
-            if (mode === 'grid') {
-                gridBtn.classList.add('active');
-                listBtn.classList.remove('active');
-                productsGrid.classList.remove('list-view');
-            } else {
-                listBtn.classList.add('active');
-                gridBtn.classList.remove('active');
-                productsGrid.classList.add('list-view');
-            }
-
-            balanceRenderProducts();
-        }
-
-        function balanceToggleFilters() {
-            balanceFiltersVisible = !balanceFiltersVisible;
-            const filtersRow = document.getElementById('balanceFiltersRow');
-            if (balanceFiltersVisible) {
-                filtersRow.classList.remove('hidden');
-            } else {
-                filtersRow.classList.add('hidden');
+        // Cart Functions
+        function addToCart(product, event) {
+            event.preventDefault();
+            if (product.inStock) {
+                cart.push(product);
+                localStorage.setItem('cart', JSON.stringify(cart));
+                updateCartCount();
+                showCartNotification(product);
             }
         }
 
-        function balanceFilterProducts() {
-            const searchQuery = document.getElementById('balanceSearchInput').value.toLowerCase();
-            const typeFilter = document.getElementById('balanceTypeFilter').value;
-            const capacityFilter = document.getElementById('balanceCapacityFilter').value;
-            const priceFilter = document.getElementById('balancePriceFilter').value;
+        function updateCartCount() {
+            const cartCount = document.getElementById('cartCount');
+            const count = cart.reduce((total, item) => total + (item.quantity || 1), 0);
+            if (cartCount) cartCount.textContent = count;
+        }
 
-            balanceFilteredProducts = balanceScalesProducts.filter(product => {
+        function showCartNotification(product) {
+            const notification = document.getElementById('cartNotification');
+            notification.style.display = 'block';
+            
+            const cartBtn = document.querySelector('.cart-btn');
+            const cartBtnRect = cartBtn.getBoundingClientRect();
+            
+            gsap.fromTo(notification, 
+                { opacity: 0, y: 20 },
+                { 
+                    opacity: 1, 
+                    y: 0, 
+                    duration: 0.5, 
+                    ease: "power2.out",
+                    onComplete: () => {
+                        gsap.to(notification, {
+                            x: cartBtnRect.left - window.innerWidth + cartBtnRect.width / 2 + 100,
+                            y: cartBtnRect.top - window.innerHeight + cartBtnRect.height / 2 + 60,
+                            scale: 0.2,
+                            opacity: 0,
+                            duration: 0.8,
+                            ease: "power2.in",
+                            onComplete: () => {
+                                notification.style.display = 'none';
+                                gsap.set(notification, { x: 0, y: 0, scale: 1, opacity: 1 });
+                            }
+                        });
+                    }
+                }
+            );
+        }
+
+        // Filter Functions
+        function filterProducts() {
+            const searchQuery = document.getElementById('searchInput').value.toLowerCase();
+            const typeFilter = document.getElementById('typeFilter').value;
+            const capacityFilter = document.getElementById('capacityFilter').value;
+            const priceFilter = document.getElementById('priceFilter').value;
+
+            filteredProducts = balanceScalesProducts.filter(product => {
                 const matchesSearch = product.name.toLowerCase().includes(searchQuery) ||
                                     product.description.toLowerCase().includes(searchQuery);
+
                 const matchesType = typeFilter === 'all' || product.type === typeFilter;
 
                 let matchesCapacity = true;
                 if (capacityFilter !== 'all') {
                     const capacity = product.capacity;
                     switch (capacityFilter) {
-                        case '0-100':
-                            matchesCapacity = capacity <= 100;
-                            break;
-                        case '101-500':
-                            matchesCapacity = capacity > 100 && capacity <= 500;
-                            break;
-                        case '501-1000':
-                            matchesCapacity = capacity > 500 && capacity <= 1000;
-                            break;
-                        case '1000+':
-                            matchesCapacity = capacity > 1000;
-                            break;
+                        case '0-100': matchesCapacity = capacity <= 100; break;
+                        case '101-500': matchesCapacity = capacity > 100 && capacity <= 500; break;
+                        case '501-1000': matchesCapacity = capacity > 500 && capacity <= 1000; break;
+                        case '1000+': matchesCapacity = capacity > 1000; break;
                     }
                 }
 
@@ -1387,184 +1403,99 @@
                 if (priceFilter !== 'all') {
                     const price = product.price;
                     switch (priceFilter) {
-                        case '0-500000':
-                            matchesPrice = price <= 500000;
-                            break;
-                        case '500001-1000000':
-                            matchesPrice = price > 500000 && price <= 1000000;
-                            break;
-                        case '1000001-2000000':
-                            matchesPrice = price > 1000000 && price <= 2000000;
-                            break;
-                        case '2000000+':
-                            matchesPrice = price > 2000000;
-                            break;
+                        case '0-500000': matchesPrice = price <= 500000; break;
+                        case '500001-1000000': matchesPrice = price > 500000 && price <= 1000000; break;
+                        case '1000001-2000000': matchesPrice = price > 1000000 && price <= 2000000; break;
+                        case '2000000+': matchesPrice = price > 2000000; break;
                     }
                 }
 
                 return matchesSearch && matchesType && matchesCapacity && matchesPrice;
             });
 
-            balanceSortProducts();
-            balanceRenderProducts();
-            balanceUpdateResultsCount();
+            sortProducts();
+            renderProducts();
+            updateResultsCount();
         }
 
-        function balanceSortProducts() {
-            const sortBy = document.getElementById('balanceSortSelect').value;
+        function sortProducts() {
+            const sortBy = document.getElementById('sortSelect').value;
 
-            balanceFilteredProducts.sort((a, b) => {
+            filteredProducts.sort((a, b) => {
                 switch (sortBy) {
-                    case 'price-low':
-                        return a.price - b.price;
-                    case 'price-high':
-                        return b.price - a.price;
-                    case 'rating':
-                        return b.rating - a.rating;
-                    case 'capacity':
-                        return a.capacity - b.capacity;
-                    default:
-                        return a.name.localeCompare(b.name);
+                    case 'price-low': return a.price - b.price;
+                    case 'price-high': return b.price - a.price;
+                    case 'rating': return b.rating - a.rating;
+                    case 'capacity': return a.capacity - b.capacity;
+                    default: return a.name.localeCompare(b.name);
                 }
             });
+
+            renderProducts();
         }
 
-        function balanceUpdateResultsCount() {
-            const resultsCount = document.getElementById('balanceResultsCount');
-            resultsCount.textContent = `Showing ${balanceFilteredProducts.length} of ${balanceScalesProducts.length} products`;
+        function updateResultsCount() {
+            const resultsCount = document.getElementById('resultsCount');
+            resultsCount.textContent = `Showing ${filteredProducts.length} of ${balanceScalesProducts.length} products`;
         }
 
-        function balanceRenderProducts() {
-            const productsGrid = document.getElementById('balanceProductsGrid');
-            const noProducts = document.getElementById('balanceNoProducts');
-
-            if (balanceFilteredProducts.length === 0) {
-                productsGrid.style.display = 'none';
-                noProducts.classList.remove('hidden');
-                return;
-            }
-
-            productsGrid.style.display = 'grid';
-            noProducts.classList.add('hidden');
-
-            productsGrid.innerHTML = balanceFilteredProducts.map(product => `
-                <div class="balance-product-card ${balanceCurrentViewMode === 'list' ? 'list-view' : ''}">
-                    <div class="balance-product-image-container">
-                        <img src="${product.image}" alt="${product.name}" class="balance-product-image">
-                        <div class="balance-product-badge" style="${product.badgeColor}">
-                            ${product.badge}
-                        </div>
-                        ${!product.inStock ? `
-                            <div style="position: absolute; inset: 0; background: rgba(0, 0, 0, 0.5); display: flex; align-items: center; justify-content: center;">
-                                <div style="background: #dc2626; color: white; padding: 0.25rem 0.5rem; border-radius: 0.25rem; font-size: 0.75rem; font-weight: 600;">
-                                    Out of Stock
+        // Render Products
+        function renderProducts() {
+            const productsGrid = document.getElementById('productsGrid');
+            productsGrid.innerHTML = filteredProducts.map(product => {
+                const discount = Math.round((1 - (product.price / product.originalPrice)) * 100);
+                return `
+                    <div class="product-card">
+                        <a href="product.html?id=${product.id}" class="product-link">
+                            <div class="product-image-container">
+                                <img src="${product.image}" alt="${product.name}" class="product-image">
+                                <div class="product-badge" style="background: ${product.badgeColor};">${product.badge}</div>
+                                ${discount > 0 ? `<div class="product-discount">-${discount}%</div>` : ''}
+                            </div>
+                            <div class="product-content">
+                                <h3 class="product-name">${product.name}</h3>
+                                <div class="product-price">
+                                    <span class="product-current-price">₦${product.price.toLocaleString()}</span>
+                                    <span class="product-original-price">₦${product.originalPrice.toLocaleString()}</span>
                                 </div>
+                                <div class="product-rating">
+                                    ${product.rating} <svg class="icon star-icon" viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
+                                    (${product.reviews})
+                                </div>
+                                <div class="product-stock">${product.inStock ? 'In Stock' : 'Out of Stock'}</div>
                             </div>
-                        ` : ''}
-                        <div class="balance-product-actions">
-                            <button class="balance-product-action-btn">
-                                <svg class="icon" viewBox="0 0 24 24">
-                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-                                </svg>
-                            </button>
-                            <button class="balance-product-action-btn">
-                                <svg class="icon" viewBox="0 0 24 24">
-                                    <circle cx="18" cy="5" r="3"/>
-                                    <circle cx="6" cy="12" r="3"/>
-                                    <circle cx="18" cy="19" r="3"/>
-                                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
-                                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
-                                </svg>
+                        </a>
+                        <div class="product-content">
+                            <div class="product-negotiable" onclick="handleWhatsAppClick('I want to negotiate the price for ${product.name}')">
+                                Negotiate Price via DM
+                            </div>
+                            <button class="product-btn" ${!product.inStock ? 'disabled' : ''} onclick="addToCart(${JSON.stringify(product).replace(/"/g, '&quot;')}, event)">
+                                Add to Cart
                             </button>
                         </div>
                     </div>
-
-                    <div class="balance-product-content">
-                        <div class="balance-product-header">
-                            <div class="balance-product-category">${product.type.charAt(0).toUpperCase() + product.type.slice(1)}</div>
-                            <div class="balance-product-rating">
-                                <svg class="icon icon-filled" style="color: #fbbf24; width: 1rem; height: 1rem;" viewBox="0 0 24 24">
-                                    <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/>
-                                </svg>
-                                <span>${product.rating}</span>
-                                <span style="color: #9ca3af;">(${product.reviews})</span>
-                            </div>
-                        </div>
-
-                        <h3 class="balance-product-name">${product.name}</h3>
-                        <p class="balance-product-description">${product.description}</p>
-
-                        <div class="balance-product-features">
-                            <h4>Key Features:</h4>
-                            <div class="balance-product-features-list">
-                                ${product.features.slice(0, 2).map(feature => 
-                                    `<span class="balance-product-feature-tag">${feature}</span>`
-                                ).join('')}
-                                ${product.features.length > 2 ? 
-                                    `<span class="balance-product-feature-tag">+${product.features.length - 2} more</span>` 
-                                    : ''
-                                }
-                            </div>
-                        </div>
-
-                        <div class="balance-product-specs">
-                            <div class="balance-product-specs-grid">
-                                <div class="balance-product-spec">Capacity:<span>${product.specifications.capacity}</span></div>
-                                <div class="balance-product-spec">Readability:<span>${product.specifications.readability}</span></div>
-                            </div>
-                        </div>
-
-                        <div class="balance-product-price-stock">
-                            <div class="balance-product-price">
-                                <span class="balance-product-current-price">₦${product.price.toLocaleString()}</span>
-                                <span class="balance-product-original-price">₦${product.originalPrice.toLocaleString()}</span>
-                            </div>
-                            <div class="balance-product-stock ${product.inStock ? 'in-stock' : 'out-of-stock'}">
-                                ${product.inStock ? `
-                                    <svg class="icon" style="width: 1rem; height: 1rem;" viewBox="0 0 24 24">
-                                        <path d="M9 12l2 2 4-4"/>
-                                        <circle cx="12" cy="12" r="10"/>
-                                    </svg>
-                                    In Stock
-                                ` : 'Out of Stock'}
-                            </div>
-                        </div>
-
-                        <div class="balance-product-buttons">
-                            <button class="balance-product-btn balance-product-btn-primary" ${!product.inStock ? 'disabled' : ''} onclick="balanceHandleProductInquiry(${JSON.stringify(product).replace(/"/g, '&quot;')})">
-                                <svg class="icon" viewBox="0 0 24 24">
-                                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-                                </svg>
-                                Inquire Now
-                            </button>
-                            <button class="balance-product-btn balance-product-btn-secondary">
-                                <svg class="icon" viewBox="0 0 24 24">
-                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                                    <circle cx="12" cy="12" r="3"/>
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
+                `;
+            }).join('');
         }
 
-        document.getElementById('balanceSearchInput').addEventListener('input', balanceFilterProducts);
+        // Banner Animation Reset
+        function restartBannerAnimations() {
+            const banner = document.querySelector('.top-banner');
+            banner.classList.remove('animate__animated', 'animate__fadeIn');
+            void banner.offsetWidth;
+            banner.classList.add('animate__animated', 'animate__fadeIn');
+        }
 
-        document.addEventListener('DOMContentLoaded', function() {
-            balanceRenderProducts();
-            balanceUpdateResultsCount();
-        });
+        // Event Listeners
+        document.getElementById('searchInput').addEventListener('input', filterProducts);
 
-        window.addEventListener('resize', function() {
-            if (window.innerWidth >= 768) {
-                document.getElementById('balanceFiltersRow').classList.remove('hidden');
-                balanceFiltersVisible = true;
-            } else {
-                if (!balanceFiltersVisible) {
-                    document.getElementById('balanceFiltersRow').classList.add('hidden');
-                }
-            }
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            renderProducts();
+            updateResultsCount();
+            updateCartCount();
+            restartBannerAnimations();
+            setInterval(restartBannerAnimations, 5000);
         });
     </script>
 </body>

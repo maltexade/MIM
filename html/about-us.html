@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - MIM Electronics Enterprise</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'background': '#ffffff',
+                        'foreground': '#1f2937',
+                        'card': '#ffffff',
+                        'card-foreground': '#1f2937',
+                        'primary': '#030213',
+                        'primary-foreground': '#ffffff',
+                        'secondary': '#f3f4f6',
+                        'secondary-foreground': '#030213',
+                        'muted': '#f9fafb',
+                        'muted-foreground': '#6b7280',
+                        'accent': '#f3f4f6',
+                        'accent-foreground': '#030213',
+                        'destructive': '#ef4444',
+                        'destructive-foreground': '#ffffff',
+                        'border': 'rgba(0, 0, 0, 0.1)',
+                        'input': '#f3f4f6',
+                        'ring': '#3b82f6',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+        }
+        .gradient-orange {
+            background: linear-gradient(135deg, #f97316 0%, #dc2626 100%);
+        }
+        .gradient-dark {
+            background: linear-gradient(135deg, #111827 0%, #374151 100%);
+        }
+        .animate-pulse-slow {
+            animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        .backdrop-blur {
+            backdrop-filter: blur(8px);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .timeline-line {
+            background: linear-gradient(to bottom, #3b82f6, #3b82f6);
+        }
+        .float-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .slide-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        .slide-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .company-logo {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-background">
+    <!-- Header -->
+    <!-- Header -->
+<header class="bg-white border-b shadow-sm sticky top-0 z-50">
+    <div class="container mx-auto px-4 py-3">
+        <div class="flex items-center justify-between">
+            <!-- Logo -->
+            <div class="flex items-center space-x-2">
+                <div class="company-logo">C</div>
+                <div>
+                    <h1 class="text-lg md:text-xl font-bold text-gray-900">MIM Electronics</h1>
+                    <p class="text-xs md:text-sm text-gray-400">About Us</p>
+                </div>
+            </div>
+
+            <!-- Desktop Navigation -->
+            <div class="hidden md:flex items-center space-x-4">
+                <button onclick="goBackToHome()" class="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                    <span>Back to Home</span>
+                </button>
+                <button onclick="handleWhatsAppClick('I\'d like to learn more about your company and services.')" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg flex items-center space-x-2 transition-colors">
+                    <i data-lucide="message-circle" class="w-4 h-4"></i>
+                    <span>Contact Us</span>
+                </button>
+            </div>
+
+            <!-- Mobile Hamburger Menu -->
+            <button class="md:hidden text-gray-700 hover:text-blue-600 focus:outline-none" id="menuToggle">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="md:hidden hidden flex-col space-y-2 mt-2 bg-gray-50 border-t border-gray-200 py-2" id="mobileMenu">
+            <button onclick="goBackToHome()" class="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors px-2 py-1">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                <span>Back to Home</span>
+            </button>
+            <button onclick="handleWhatsAppClick('I\'d like to learn more about your company and services.')" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg flex items-center space-x-2 transition-colors">
+                <i data-lucide="message-circle" class="w-4 h-4"></i>
+                <span>Contact Us</span>
+            </button>
+        </div>
+    </div>
+</header>
+
+    <!-- Hero Section -->
+    <section class="py-16 gradient-bg text-white relative overflow-hidden">
+        <div class="absolute inset-0 bg-black opacity-20"></div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="max-w-4xl mx-auto text-center slide-in">
+                <h1 class="text-5xl lg:text-6xl font-bold mb-6">Precision. Reliability. Excellence.</h1>
+                <p class="text-xl text-blue-100 mb-8 leading-relaxed">
+                    For over two decades, MIM Electronics Enterprise has been Nigeria's trusted partner in 
+                    precision weighing solutions, serving industries from manufacturing to retail with 
+                    uncompromising quality and exceptional service.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button onclick="handleWhatsAppClick('I\'m interested in learning more about your company history and services.')" 
+                            class="bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-lg text-lg flex items-center justify-center space-x-2 transition-colors">
+                        <i data-lucide="message-circle" class="w-5 h-5"></i>
+                        <span>Get in Touch</span>
+                    </button>
+                    <button onclick="scrollToSection('company-story')" 
+                            class="border-2 border-white text-white hover:bg-white hover:text-blue-600 px-8 py-4 rounded-lg text-lg transition-colors">
+                        Our Story
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="text-center group slide-in">
+                    <div class="text-4xl lg:text-5xl font-bold mb-2 text-gray-900">20+</div>
+                    <p class="text-gray-600">Years of Excellence</p>
+                </div>
+                <div class="text-center group slide-in">
+                    <div class="text-4xl lg:text-5xl font-bold mb-2 text-gray-900">500+</div>
+                    <p class="text-gray-600">Satisfied Clients</p>
+                </div>
+                <div class="text-center group slide-in">
+                    <div class="text-4xl lg:text-5xl font-bold mb-2 text-gray-900">1000+</div>
+                    <p class="text-gray-600">Equipment Installed</p>
+                </div>
+                <div class="text-center group slide-in">
+                    <div class="text-4xl lg:text-5xl font-bold mb-2 text-gray-900">50+</div>
+                    <p class="text-gray-600">Expert Technicians</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Company Story -->
+    <section id="company-story" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-12 slide-in">
+                    <h2 class="text-4xl font-bold mb-4 text-gray-900">Our Story</h2>
+                    <p class="text-xl text-gray-600 leading-relaxed">
+                        From humble beginnings to becoming Nigeria's leading weighing solutions provider
+                    </p>
+                </div>
+                
+                <div class="grid lg:grid-cols-2 gap-12 items-center mb-16">
+                    <div class="slide-in">
+                        <h3 class="text-2xl font-bold mb-6 text-gray-900">Where It All Began</h3>
+                        <p class="text-gray-600 mb-6 leading-relaxed">
+                            Founded in 2003 by Engineer Michael Ibrahim, MIM Electronics Enterprise started as a 
+                            small weighing equipment retailer in Lagos. Driven by a vision to provide accurate, 
+                            reliable weighing solutions to Nigerian businesses, we began with just three employees 
+                            and a commitment to excellence.
+                        </p>
+                        <p class="text-gray-600 mb-6 leading-relaxed">
+                            What started as a passion for precision engineering has grown into Nigeria's most 
+                            trusted name in industrial weighing solutions. Today, we serve over 500 clients 
+                            across various industries, from small retail businesses to large manufacturing companies.
+                        </p>
+                        <div class="flex items-center space-x-4">
+                            <i data-lucide="quote" class="w-8 h-8 text-blue-600"></i>
+                            <p class="italic text-gray-700">
+                                "Every scale we install, every service we provide, carries our commitment to 
+                                helping Nigerian businesses grow with precision and confidence."
+                            </p>
+                        </div>
+                    </div>
+                    <div class="space-y-6 slide-in">
+                        <img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=600&h=400&fit=crop" 
+                             alt="MIM Electronics warehouse" 
+                             class="w-full rounded-lg shadow-lg card-hover">
+                        <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=600&h=300&fit=crop" 
+                             alt="Weighing equipment installation" 
+                             class="w-full rounded-lg shadow-lg card-hover">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline -->
+    <!-- Timeline -->
+<section class="py-12 bg-white">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-10 slide-in">
+            <h2 class="text-3xl md:text-4xl font-bold mb-3 text-gray-900">Our Journey</h2>
+            <p class="text-lg md:text-xl text-gray-600">Key milestones that shaped our company</p>
+        </div>
+        
+        <div class="max-w-4xl mx-auto">
+            <div class="relative space-y-8 md:space-y-12">
+                <!-- Timeline line (hidden on mobile) -->
+                <div class="hidden md:block absolute left-1/2 transform -translate-x-px h-full w-0.5 bg-blue-600 timeline-line"></div>
+                
+                <!-- Timeline items -->
+                <!-- 2003 -->
+                <div class="relative flex flex-col md:flex-row items-center md:justify-start slide-in">
+                    <div class="w-full md:w-1/2 md:pr-8 md:text-right">
+                        <div class="bg-white p-4 md:p-6 rounded-lg shadow-lg card-hover border">
+                            <div class="flex items-center justify-center md:justify-end space-x-2 md:space-x-3 mb-2 md:mb-3">
+                                <div class="p-1.5 md:p-2 bg-blue-100 rounded-lg text-blue-600">
+                                    <i data-lucide="building" class="w-5 h-5 md:w-6 md:h-6"></i>
+                                </div>
+                                <span class="px-2 md:px-3 py-0.5 md:py-1 bg-blue-100 text-blue-600 rounded-full text-xs md:text-sm font-medium">2003</span>
+                            </div>
+                            <h3 class="text-base md:text-lg font-bold mb-1 md:mb-2 text-gray-900">Company Founded</h3>
+                            <p class="text-gray-600 text-xs md:text-sm">Started as a small weighing equipment retailer in Lagos</p>
+                        </div>
+                    </div>
+                    <div class="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-blue-600 rounded-full border-4 border-white shadow-lg"></div>
+                    <div class="block md:hidden w-0.5 h-6 bg-blue-600 mx-auto mt-2"></div>
+                </div>
+
+                <!-- 2008 -->
+                <div class="relative flex flex-col md:flex-row items-center md:justify-end slide-in">
+                    <div class="w-full md:w-1/2 md:pl-8 md:text-left">
+                        <div class="bg-white p-4 md:p-6 rounded-lg shadow-lg card-hover border">
+                            <div class="flex items-center justify-center md:justify-start space-x-2 md:space-x-3 mb-2 md:mb-3">
+                                <div class="p-1.5 md:p-2 bg-blue-100 rounded-lg text-blue-600">
+                                    <i data-lucide="award" class="w-5 h-5 md:w-6 md:h-6"></i>
+                                </div>
+                                <span class="px-2 md:px-3 py-0.5 md:py-1 bg-blue-100 text-blue-600 rounded-full text-xs md:text-sm font-medium">2008</span>
+                            </div>
+                            <h3 class="text-base md:text-lg font-bold mb-1 md:mb-2 text-gray-900">First Major Contract</h3>
+                            <p class="text-gray-600 text-xs md:text-sm">Secured installation of 50+ weighbridges across Nigeria</p>
+                        </div>
+                    </div>
+                    <div class="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-blue-600 rounded-full border-4 border-white shadow-lg"></div>
+                    <div class="block md:hidden w-0.5 h-6 bg-blue-600 mx-auto mt-2"></div>
+                </div>
+
+                <!-- 2012 -->
+                <div class="relative flex flex-col md:flex-row items-center md:justify-start slide-in">
+                    <div class="w-full md:w-1/2 md:pr-8 md:text-right">
+                        <div class="bg-white p-4 md:p-6 rounded-lg shadow-lg card-hover border">
+                            <div class="flex items-center justify-center md:justify-end space-x-2 md:space-x-3 mb-2 md:mb-3">
+                                <div class="p-1.5 md:p-2 bg-blue-100 rounded-lg text-blue-600">
+                                    <i data-lucide="zap" class="w-5 h-5 md:w-6 md:h-6"></i>
+                                </div>
+                                <span class="px-2 md:px-3 py-0.5 md:py-1 bg-blue-100 text-blue-600 rounded-full text-xs md:text-sm font-medium">2012</span>
+                            </div>
+                            <h3 class="text-base md:text-lg font-bold mb-1 md:mb-2 text-gray-900">Expanded Services</h3>
+                            <p class="text-gray-600 text-xs md:text-sm">Added calibration and maintenance services nationwide</p>
+                        </div>
+                    </div>
+                    <div class="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-blue-600 rounded-full border-4 border-white shadow-lg"></div>
+                    <div class="block md:hidden w-0.5 h-6 bg-blue-600 mx-auto mt-2"></div>
+                </div>
+
+                <!-- 2018 -->
+                <div class="relative flex flex-col md:flex-row items-center md:justify-end slide-in">
+                    <div class="w-full md:w-1/2 md:pl-8 md:text-left">
+                        <div class="bg-white p-4 md:p-6 rounded-lg shadow-lg card-hover border">
+                            <div class="flex items-center justify-center md:justify-start space-x-2 md:space-x-3 mb-2 md:mb-3">
+                                <div class="p-1.5 md:p-2 bg-blue-100 rounded-lg text-blue-600">
+                                    <i data-lucide="globe" class="w-5 h-5 md:w-6 md:h-6"></i>
+                                </div>
+                                <span class="px-2 md:px-3 py-0.5 md:py-1 bg-blue-100 text-blue-600 rounded-full text-xs md:text-sm font-medium">2018</span>
+                            </div>
+                            <h3 class="text-base md:text-lg font-bold mb-1 md:mb-2 text-gray-900">Technology Integration</h3>
+                            <p class="text-gray-600 text-xs md:text-sm">Introduced digital solutions and IoT-enabled scales</p>
+                        </div>
+                    </div>
+                    <div class="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-blue-600 rounded-full border-4 border-white shadow-lg"></div>
+                    <div class="block md:hidden w-0.5 h-6 bg-blue-600 mx-auto mt-2"></div>
+                </div>
+
+                <!-- 2023 -->
+                <div class="relative flex flex-col md:flex-row items-center md:justify-start slide-in">
+                    <div class="w-full md:w-1/2 md:pr-8 md:text-right">
+                        <div class="bg-white p-4 md:p-6 rounded-lg shadow-lg card-hover border">
+                            <div class="flex items-center justify-center md:justify-end space-x-2 md:space-x-3 mb-2 md:mb-3">
+                                <div class="p-1.5 md:p-2 bg-blue-100 rounded-lg text-blue-600">
+                                    <i data-lucide="trending-up" class="w-5 h-5 md:w-6 md:h-6"></i>
+                                </div>
+                                <span class="px-2 md:px-3 py-0.5 md:py-1 bg-blue-100 text-blue-600 rounded-full text-xs md:text-sm font-medium">2023</span>
+                            </div>
+                            <h3 class="text-base md:text-lg font-bold mb-1 md:mb-2 text-gray-900">Market Leader</h3>
+                            <p class="text-gray-600 text-xs md:text-sm">Became Nigeria's leading weighing solutions provider</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- Mission, Vision, Values -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="max-w-6xl mx-auto">
+                <div class="grid lg:grid-cols-3 gap-8 mb-16">
+                    <div class="bg-white text-center p-8 rounded-lg shadow-lg card-hover border-0">
+                        <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i data-lucide="target" class="w-8 h-8 text-blue-600"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4 text-gray-900">Our Mission</h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            To provide accurate, reliable weighing solutions that empower Nigerian businesses 
+                            to operate with precision, efficiency, and confidence in their daily operations.
+                        </p>
+                    </div>
+
+                    <div class="bg-white text-center p-8 rounded-lg shadow-lg card-hover border-0">
+                        <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i data-lucide="globe" class="w-8 h-8 text-green-600"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4 text-gray-900">Our Vision</h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            To be West Africa's leading provider of precision weighing solutions, known for 
+                            innovation, quality, and exceptional customer service across all industries.
+                        </p>
+                    </div>
+
+                    <div class="bg-white text-center p-8 rounded-lg shadow-lg card-hover border-0">
+                        <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i data-lucide="heart" class="w-8 h-8 text-orange-600"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4 text-gray-900">Our Purpose</h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            To support Nigerian business growth by providing the precise measurement tools 
+                            needed for accurate operations, fair trade, and regulatory compliance.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Core Values -->
+                <div class="text-center mb-12 slide-in">
+                    <h2 class="text-4xl font-bold mb-4 text-gray-900">Our Core Values</h2>
+                    <p class="text-xl text-gray-600">The principles that guide everything we do</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="bg-white text-center p-6 rounded-lg shadow-md card-hover border-0">
+                        <div class="w-16 h-16 bg-gray-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+                            <i data-lucide="target" class="w-8 h-8 text-blue-600"></i>
+                        </div>
+                        <h3 class="text-lg font-bold mb-3 text-gray-900">Precision</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">We deliver accurate weighing solutions that meet the highest industry standards and regulatory requirements.</p>
+                    </div>
+
+                    <div class="bg-white text-center p-6 rounded-lg shadow-md card-hover border-0">
+                        <div class="w-16 h-16 bg-gray-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+                            <i data-lucide="shield" class="w-8 h-8 text-blue-600"></i>
+                        </div>
+                        <h3 class="text-lg font-bold mb-3 text-gray-900">Reliability</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">Our equipment and services are built to last, ensuring consistent performance for your business operations.</p>
+                    </div>
+
+                    <div class="bg-white text-center p-6 rounded-lg shadow-md card-hover border-0">
+                        <div class="w-16 h-16 bg-gray-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+                            <i data-lucide="heart" class="w-8 h-8 text-blue-600"></i>
+                        </div>
+                        <h3 class="text-lg font-bold mb-3 text-gray-900">Customer First</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">We prioritize customer satisfaction through exceptional service and personalized solutions.</p>
+                    </div>
+
+                    <div class="bg-white text-center p-6 rounded-lg shadow-md card-hover border-0">
+                        <div class="w-16 h-16 bg-gray-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+                            <i data-lucide="check-circle" class="w-8 h-8 text-blue-600"></i>
+                        </div>
+                        <h3 class="text-lg font-bold mb-3 text-gray-900">Quality</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">We source and maintain only the highest quality equipment from trusted global manufacturers.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12 slide-in">
+                <h2 class="text-4xl font-bold mb-4 text-gray-900">Meet Our Leadership Team</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Our experienced leadership team brings decades of industry expertise and a shared 
+                    commitment to delivering exceptional weighing solutions.
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <div class="bg-white rounded-lg shadow-lg card-hover border-0 overflow-hidden">
+                    <div class="aspect-square overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop&crop=face" 
+                             alt="Engr. Michael Ibrahim" 
+                             class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-1 text-gray-900">Engr. Michael Ibrahim</h3>
+                        <p class="text-blue-600 mb-3 font-medium">CEO & Founder</p>
+                        <p class="text-gray-600 mb-4 text-sm leading-relaxed">20+ years in industrial equipment. Led company growth from startup to market leader.</p>
+                        <div class="space-y-2">
+                            <span class="inline-block bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs mr-2">Strategic Planning</span>
+                            <span class="inline-block bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs mr-2">Business Development</span>
+                            <span class="inline-block bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs">Industry Relations</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-lg card-hover border-0 overflow-hidden">
+                    <div class="aspect-square overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1494790108755-2616b9f4e6b1?w=300&h=300&fit=crop&crop=face" 
+                             alt="Mrs. Sarah Adebayo" 
+                             class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-1 text-gray-900">Mrs. Sarah Adebayo</h3>
+                        <p class="text-blue-600 mb-3 font-medium">Technical Director</p>
+                        <p class="text-gray-600 mb-4 text-sm leading-relaxed">Expert in weighing systems with 15+ years experience in calibration and maintenance.</p>
+                        <div class="space-y-2">
+                            <span class="inline-block bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs mr-2">Technical Operations</span>
+                            <span class="inline-block bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs mr-2">Quality Control</span>
+                            <span class="inline-block bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs">Team Leadership</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-lg card-hover border-0 overflow-hidden">
+                    <div class="aspect-square overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=300&fit=crop&crop=face" 
+                             alt="Engr. David Okafor" 
+                             class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-1 text-gray-900">Engr. David Okafor</h3>
+                        <p class="text-blue-600 mb-3 font-medium">Operations Manager</p>
+                        <p class="text-gray-600 mb-4 text-sm leading-relaxed">Oversees nationwide installations and ensures timely project delivery.</p>
+                        <div class="space-y-2">
+                            <span class="inline-block bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs mr-2">Project Management</span>
+                            <span class="inline-block bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs mr-2">Logistics</span>
+                            <span class="inline-block bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs">Customer Relations</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certifications & Awards -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-12 slide-in">
+                    <h2 class="text-4xl font-bold mb-4 text-gray-900">Certifications & Compliance</h2>
+                    <p class="text-xl text-gray-600">
+                        We maintain the highest industry standards and regulatory compliance
+                    </p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-white p-6 rounded-lg shadow-md border-0">
+                        <div class="flex items-center space-x-2 mb-4">
+                            <i data-lucide="shield" class="w-6 h-6 text-green-600"></i>
+                            <h3 class="text-xl font-bold">Certifications</h3>
+                        </div>
+                        <ul class="space-y-3">
+                            <li class="flex items-center space-x-3">
+                                <i data-lucide="check-circle" class="w-5 h-5 text-green-600 flex-shrink-0"></i>
+                                <span class="text-gray-600">ISO 9001:2015 Quality Management</span>
+                            </li>
+                            <li class="flex items-center space-x-3">
+                                <i data-lucide="check-circle" class="w-5 h-5 text-green-600 flex-shrink-0"></i>
+                                <span class="text-gray-600">NMDRA Licensed Calibration Center</span>
+                            </li>
+                            <li class="flex items-center space-x-3">
+                                <i data-lucide="check-circle" class="w-5 h-5 text-green-600 flex-shrink-0"></i>
+                                <span class="text-gray-600">SONCAP Certified Equipment Supplier</span>
+                            </li>
+                            <li class="flex items-center space-x-3">
+                                <i data-lucide="check-circle" class="w-5 h-5 text-green-600 flex-shrink-0"></i>
+                                <span class="text-gray-600">Professional Engineers Registration (COREN)</span>
+                            </li>
+                            <li class="flex items-center space-x-3">
+                                <i data-lucide="check-circle" class="w-5 h-5 text-green-600 flex-shrink-0"></i>
+                                <span class="text-gray-600">Industrial Safety Compliance Certified</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-lg shadow-md border-0">
+                        <div class="flex items-center space-x-2 mb-4">
+                            <i data-lucide="award" class="w-6 h-6 text-blue-600"></i>
+                            <h3 class="text-xl font-bold">Recognition</h3>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex items-start space-x-3">
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-500 mt-1"></i>
+                                <div>
+                                    <h4 class="text-gray-900 font-medium mb-1">Best Equipment Supplier 2023</h4>
+                                    <p class="text-sm text-gray-600">Nigerian Industrial Equipment Association</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-500 mt-1"></i>
+                                <div>
+                                    <h4 class="text-gray-900 font-medium mb-1">Excellence in Service Award</h4>
+                                    <p class="text-sm text-gray-600">Lagos Chamber of Commerce 2022</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-500 mt-1"></i>
+                                <div>
+                                    <h4 class="text-gray-900 font-medium mb-1">Top Calibration Service Provider</h4>
+                                    <p class="text-sm text-gray-600">Industrial Safety Council 2021</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="py-16 gradient-bg text-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-4xl font-bold mb-8">Why Businesses Choose MIM Electronics</h2>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="bg-white bg-opacity-10 p-6 rounded-lg backdrop-blur">
+                        <i data-lucide="clock" class="w-12 h-12 mx-auto mb-4 text-blue-200"></i>
+                        <h3 class="text-xl font-bold mb-3">24/7 Support</h3>
+                        <p class="text-blue-100">Round-the-clock technical support and emergency service calls to keep your operations running.</p>
+                    </div>
+                    <div class="bg-white bg-opacity-10 p-6 rounded-lg backdrop-blur">
+                        <i data-lucide="users" class="w-12 h-12 mx-auto mb-4 text-blue-200"></i>
+                        <h3 class="text-xl font-bold mb-3">Expert Team</h3>
+                        <p class="text-blue-100">Certified technicians with decades of experience in weighing equipment installation and maintenance.</p>
+                    </div>
+                    <div class="bg-white bg-opacity-10 p-6 rounded-lg backdrop-blur">
+                        <i data-lucide="shield" class="w-12 h-12 mx-auto mb-4 text-blue-200"></i>
+                        <h3 class="text-xl font-bold mb-3">Quality Guarantee</h3>
+                        <p class="text-blue-100">All equipment comes with comprehensive warranty and our commitment to long-term reliability.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact CTA -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-4xl font-bold mb-6 text-gray-900">Ready to Experience the MIM Difference?</h2>
+                <p class="text-xl text-gray-600 mb-8 leading-relaxed">
+                    Join hundreds of satisfied customers who trust MIM Electronics Enterprise for their 
+                    weighing solutions. Let's discuss how we can help your business achieve precision and efficiency.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <button onclick="handleWhatsAppClick('I\'d like to discuss weighing solutions for my business. Can we schedule a consultation?')" 
+                            class="bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-lg text-lg flex items-center space-x-2 transition-colors">
+                        <i data-lucide="message-circle" class="w-5 h-5"></i>
+                        <span>Schedule Consultation</span>
+                    </button>
+                    <button onclick="handleWhatsAppClick('I\'d like to request a quote for weighing equipment.')" 
+                            class="border-2 border-gray-300 text-gray-700 hover:bg-gray-50 px-8 py-4 rounded-lg text-lg flex items-center space-x-2 transition-colors">
+                        <i data-lucide="phone" class="w-5 h-5"></i>
+                        <span>Get Quote</span>
+                    </button>
+                </div>
+                <div class="mt-8 flex flex-col sm:flex-row justify-center items-center space-y-2 sm:space-y-0 sm:space-x-8 text-gray-600">
+                    <div class="flex items-center space-x-2">
+                        <i data-lucide="phone" class="w-4 h-4"></i>
+                        <span>+234 123 456 7890</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <i data-lucide="mail" class="w-4 h-4"></i>
+                        <span>info@mimelectronics.com</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <i data-lucide="map-pin" class="w-4 h-4"></i>
+                        <span>Lagos, Nigeria</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="company-logo">C</div>
+                        <div>
+                            <h3 class="font-bold">MIM Electronics</h3>
+                            <p class="text-sm text-gray-400">Enterprise</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">
+                        Your trusted partner for precision weighing solutions and industrial scale equipment across Nigeria.
+                    </p>
+                    <div class="flex space-x-4">
+                        <div class="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center cursor-pointer hover:bg-gray-700 transition-colors">
+                            <span class="text-xs">f</span>
+                        </div>
+                        <div class="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center cursor-pointer hover:bg-gray-700 transition-colors">
+                            <span class="text-xs">t</span>
+                        </div>
+                        <div class="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center cursor-pointer hover:bg-gray-700 transition-colors">
+                            <span class="text-xs">in</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="font-bold mb-4">Products</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li class="hover:text-white cursor-pointer transition-colors">Analog Scales</li>
+                        <li class="hover:text-white cursor-pointer transition-colors">Pricing Scales</li>
+                        <li class="hover:text-white cursor-pointer transition-colors">Platform Scales</li>
+                        <li class="hover:text-white cursor-pointer transition-colors">Weighbridge Scales</li>
+                        <li class="hover:text-white cursor-pointer transition-colors">Crane Scales</li>
+                        <li class="hover:text-white cursor-pointer transition-colors">Scale Parts</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold mb-4">Services</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li class="hover:text-white cursor-pointer transition-colors">Installation</li>
+                        <li class="hover:text-white cursor-pointer transition-colors">Calibration</li>
+                        <li class="hover:text-white cursor-pointer transition-colors">Maintenance</li>
+                        <li class="hover:text-white cursor-pointer transition-colors">Repair Services</li>
+                        <li class="hover:text-white cursor-pointer transition-colors">Technical Support</li>
+                        <li class="hover:text-white cursor-pointer transition-colors">Parts Supply</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold mb-4">Company</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li class="hover:text-white cursor-pointer transition-colors">About Us</li>
+                        <li class="hover:text-white cursor-pointer transition-colors">Contact</li>
+                        <li class="hover:text-white cursor-pointer transition-colors">Support</li>
+                        <li class="hover:text-white cursor-pointer transition-colors">Warranty</li>
+                        <li class="hover:text-white cursor-pointer transition-colors">Documentation</li>
+                        <li class="hover:text-white cursor-pointer transition-colors">Careers</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-400">
+                <p>&copy; 2025 MIM Electronics Enterprise. All rights reserved.</p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <span class="hover:text-white cursor-pointer transition-colors">Privacy Policy</span>
+                    <span class="hover:text-white cursor-pointer transition-colors">Terms of Service</span>
+                    <span class="hover:text-white cursor-pointer transition-colors">Cookie Policy</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+
+        // WhatsApp Integration
+    const whatsappNumber = "+2348033554867";
+
+    function handleWhatsAppClick(message = "Hello! I'd like to know more about MIM Electronics Enterprise.") {
+        const encodedMessage = encodeURIComponent(message);
+        window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
+    }
+
+    function goBackToHome() {
+        window.history.back();
+    }
+
+    // Initialize Lucide Icons
+    document.addEventListener('DOMContentLoaded', () => {
+        lucide.createIcons();
+    });
+
+    // Hamburger Menu Toggle
+    const menuToggle = document.getElementById('menuToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    menuToggle.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+        // Update icon to 'X' when menu is open, 'menu' when closed
+        const icon = menuToggle.querySelector('i');
+        if (mobileMenu.classList.contains('hidden')) {
+            icon.setAttribute('data-lucide', 'menu');
+        } else {
+            icon.setAttribute('data-lucide', 'x');
+        }
+        lucide.createIcons();
+    });
+        
+        function handleWhatsAppClick(message = "Hello! I'd like to know more about MIM Electronics Enterprise.") {
+            const encodedMessage = encodeURIComponent(message);
+            window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
+        }
+
+        function goBackToHome() {
+            window.history.back();
+        }
+        
+        function scrollToSection(sectionId) {
+            document.getElementById(sectionId).scrollIntoView({ 
+                behavior: 'smooth' 
+            });
+        }
+
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Scroll animations
+        function revealOnScroll() {
+            const reveals = document.querySelectorAll('.slide-in');
+            
+            reveals.forEach(reveal => {
+                const windowHeight = window.innerHeight;
+                const elementTop = reveal.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < windowHeight - elementVisible) {
+                    reveal.classList.add('visible');
+                }
+            });
+        }
+
+        // Add scroll event listener
+        window.addEventListener('scroll', revealOnScroll);
+        
+        // Initial check for elements already in viewport
+        document.addEventListener('DOMContentLoaded', () => {
+            revealOnScroll();
+        });
+
+        // Smooth scroll behavior for timeline
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add floating animation to key elements
+        window.addEventListener('load', () => {
+            const floatingElements = document.querySelectorAll('.float-animation');
+            floatingElements.forEach((el, index) => {
+                el.style.animationDelay = `${index * 0.5}s`;
+            });
+        });
+
+        // Stats counter animation
+        function animateStats() {
+            const stats = document.querySelectorAll('.text-4xl');
+            stats.forEach(stat => {
+                const finalValue = stat.textContent;
+                const numberMatch = finalValue.match(/\d+/);
+                if (numberMatch) {
+                    const number = parseInt(numberMatch[0]);
+                    const suffix = finalValue.replace(number.toString(), '');
+                    let current = 0;
+                    const increment = number / 50;
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= number) {
+                            stat.textContent = number + suffix;
+                            clearInterval(timer);
+                        } else {
+                            stat.textContent = Math.floor(current) + suffix;
+                        }
+                    }, 40);
+                }
+            });
+        }
+
+        // Trigger stats animation when visible
+        const statsSection = document.querySelector('.py-16.bg-white');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateStats();
+                    observer.unobserve(entry.target);
+                }
+            });
+        });
+        
+        if (statsSection) {
+            observer.observe(statsSection);
+        }
+    </script>
+</body>
+</html>

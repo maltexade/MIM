@@ -1255,76 +1255,56 @@
         </div>
     `).join('');
 }
+// Checkout Modal Functions
+function showCheckoutModal() {
+    const modal = document.getElementById('checkoutModal');
+    const modalItems = document.getElementById('modalItems');
+    const modalTotal = document.getElementById('modalTotal');
 
-        // Checkout Modal Functions
-        function showCheckoutModal() {
-            const modal = document.getElementById('checkoutModal');
-            const modalItems = document.getElementById('modalItems');
-            const modalTotal = document.getElementById('modalTotal');
+    // Use cart directly, respecting existing quantities
+    modalItems.innerHTML = cart.map(item => `
+        <div class="modal-item">${item.name} (x${item.quantity || 1}): ₦${(item.price * (item.quantity || 1)).toLocaleString()}</div>
+    `).join('');
 
-            const cartWithQuantities = cart.reduce((acc, item) => {
-                const existing = acc.find(i => i.id === item.id);
-                if (existing) {
-                    existing.quantity = (existing.quantity || 1) + 1;
-                } else {
-                    acc.push({ ...item, quantity: 1 });
-                }
-                return acc;
-            }, []);
+    const total = cart.reduce((sum, item) => sum + item.price * (item.quantity || 1), 0);
+    modalTotal.textContent = `Total: ₦${total.toLocaleString()}`;
 
-            modalItems.innerHTML = cartWithQuantities.map(item => `
-                <div class="modal-item">${item.name} (x${item.quantity || 1}): ₦${(item.price * (item.quantity || 1)).toLocaleString()}</div>
-            `).join('');
+    modal.style.display = 'flex';
+    gsap.fromTo(modal, 
+        { opacity: 0, scale: 0.8 },
+        { opacity: 1, scale: 1, duration: 0.3, ease: "power2.out" }
+    );
+}
 
-            const total = cartWithQuantities.reduce((sum, item) => sum + item.price * (item.quantity || 1), 0);
-            modalTotal.textContent = `Total: ₦${total.toLocaleString()}`;
-
-            modal.style.display = 'flex';
-            gsap.fromTo(modal, 
-                { opacity: 0, scale: 0.8 },
-                { opacity: 1, scale: 1, duration: 0.3, ease: "power2.out" }
-            );
+function closeCheckoutModal() {
+    const modal = document.getElementById('checkoutModal');
+    gsap.to(modal, {
+        opacity: 0,
+        scale: 0.8,
+        duration: 0.3,
+        ease: "power2.in",
+        onComplete: () => {
+            modal.style.display = 'none';
         }
+    });
+}
 
-        function closeCheckoutModal() {
-            const modal = document.getElementById('checkoutModal');
-            gsap.to(modal, {
-                opacity: 0,
-                scale: 0.8,
-                duration: 0.3,
-                ease: "power2.in",
-                onComplete: () => {
-                    modal.style.display = 'none';
-                }
-            });
-        }
+function confirmCheckout() {
+    // Use cart directly, respecting existing quantities
+    const message = `I want to checkout the following items:\n${cart.map(item => `- ${item.name} (x${item.quantity || 1}): ₦${(item.price * (item.quantity || 1)).toLocaleString()}`).join('\n')}\nTotal: ₦${cart.reduce((sum, item) => sum + item.price * (item.quantity || 1), 0).toLocaleString()}\nPlease provide details for negotiation, additional information, and delivery process.`;
+    handleWhatsAppClick(message);
+    closeCheckoutModal();
+    cart = [];
+    localStorage.setItem('cart', JSON.stringify(cart));
+    renderCart();
+    updateCartCount();
+}
 
-        function confirmCheckout() {
-            const cartWithQuantities = cart.reduce((acc, item) => {
-                const existing = acc.find(i => i.id === item.id);
-                if (existing) {
-                    existing.quantity = (existing.quantity || 1) + 1;
-                } else {
-                    acc.push({ ...item, quantity: 1 });
-                }
-                return acc;
-            }, []);
-
-            const total = cartWithQuantities.reduce((sum, item) => sum + item.price * (item.quantity || 1), 0);
-            const message = `I want to checkout the following items:\n${cartWithQuantities.map(item => `- ${item.name} (x${item.quantity || 1}): ₦${(item.price * (item.quantity || 1)).toLocaleString()}`).join('\n')}\nTotal: ₦${total.toLocaleString()}\nPlease provide details for negotiation, additional information, and delivery process.`;
-            handleWhatsAppClick(message);
-            closeCheckoutModal();
-            cart = [];
-            localStorage.setItem('cart', JSON.stringify(cart));
-            renderCart();
-            updateCartCount();
-        }
-
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            renderCart();
-            updateCartCount();
-        });
+// Initialize
+document.addEventListener('DOMContentLoaded', () => {
+    renderCart();
+    updateCartCount();
+});
     </script>
 </body>
 </html>

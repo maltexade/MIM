@@ -1206,3 +1206,68 @@ Requirements: ${message}`;
                 }
             });
         });
+
+
+// Cart State
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+// Update Cart Count
+function updateCartCount() {
+    const cartCount = document.getElementById('cartCount');
+    const mobileCartCount = document.getElementById('mobileCartCount');
+    const count = cart.reduce((total, item) => total + (item.quantity || 1), 0);
+    if (cartCount) cartCount.textContent = count;
+    if (mobileCartCount) mobileCartCount.textContent = count;
+}
+
+// Show Cart Notification
+function showCartNotification() {
+    const notification = document.getElementById('cartNotification');
+    if (!notification) return;
+
+    // Use mobile cart button for animation target on mobile
+    const cartBtn = window.innerWidth <= 768 ? 
+        document.querySelector('.mobile-cart-btn') : 
+        document.querySelector('.cart-btn');
+    if (!cartBtn) return;
+
+    const cartBtnRect = cartBtn.getBoundingClientRect();
+
+    notification.style.display = 'block';
+
+    gsap.fromTo(notification, 
+        { opacity: 0, y: 20 },
+        { 
+            opacity: 1, 
+            y: 0, 
+            duration: 0.5, 
+            ease: "power2.out",
+            onComplete: () => {
+                gsap.to(notification, {
+                    x: cartBtnRect.left - window.innerWidth + cartBtnRect.width / 2 + 100,
+                    y: cartBtnRect.top - window.innerHeight + cartBtnRect.height / 2 + 60,
+                    scale: 0.2,
+                    opacity: 0,
+                    duration: 0.8,
+                    ease: "power2.in",
+                    onComplete: () => {
+                        notification.style.display = 'none';
+                        gsap.set(notification, { x: 0, y: 0, scale: 1, opacity: 1 });
+                    }
+                });
+            }
+        }
+    );
+}
+
+// WhatsApp Integration
+function openWhatsApp(message = "Hello! I'm interested in your weighing equipment. Can you help me?") {
+    const encodedMessage = encodeURIComponent(message);
+    const url = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+    window.open(url, '_blank');
+}
+
+// Initialize Cart on Page Load
+document.addEventListener('DOMContentLoaded', () => {
+    updateCartCount();
+});
